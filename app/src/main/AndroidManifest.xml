@@ -16,6 +16,8 @@
         <activity
             android:name=".EventDetailsPage"
             android:exported="false" />
+        <activity android:name=".profile_page"
+            android:exported="false"></activity>
         <activity
             android:name=".NavDrawer"
             android:exported="false"

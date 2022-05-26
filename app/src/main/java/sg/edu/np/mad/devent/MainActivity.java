@@ -23,6 +23,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(navDraw);
             }
         });
+
+        // Go to Profile button
+        Button to_profile = findViewById(R.id.to_profile);
+        to_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent open_profile = new Intent(MainActivity.this, profile_page.class);
+                startActivity(open_profile);
+            }
+        });
     }
 
 }
