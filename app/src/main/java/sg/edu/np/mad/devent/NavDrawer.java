@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import sg.edu.np.mad.devent.databinding.ActivityNavDrawerBinding;
+import sg.edu.np.mad.devent.databinding.FragmentGalleryBinding;
 
 public class NavDrawer extends AppCompatActivity {
 
@@ -29,7 +30,7 @@ public class NavDrawer extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarNavDrawer.toolbar);
-        binding.appBarNavDrawer.fab.setOnClickListener(new View.OnClickListener() {
+        binding.appBarNavDrawer.fab.setOnClickListener(new View.OnClickListener() { // for the bottom right email icon
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
