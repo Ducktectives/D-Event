@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dark_coral">#F38484</color>
+    <color name="coral">#F79489</color>
+    <color name="dusty_rose">#F8AFA6</color>
+    <color name="rose_quartz">#FADCD9</color>
 </resources>
