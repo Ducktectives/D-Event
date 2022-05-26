@@ -30,7 +30,8 @@ public class GalleryFragment extends Fragment {
         View root = binding.getRoot();
 
         final GridView gridView = binding.gridView;
-        int[] imageList = {R.drawable.a1,R.drawable.a2,R.drawable.a3, R.drawable.a4};
+        int[] imageList = {R.drawable.a1,R.drawable.a2,R.drawable.a3, R.drawable.a4, R.drawable.me,
+        R.drawable.kirby_drawing};
 
         GalleryGridAdapter gridAdapter = new GalleryGridAdapter(container.getContext(),imageList);
         binding.gridView.setAdapter(gridAdapter);

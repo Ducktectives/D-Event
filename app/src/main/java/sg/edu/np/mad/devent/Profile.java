@@ -1,12 +1,27 @@
 package sg.edu.np.mad.devent;
+
+import java.util.Random;
+
 public class Profile {
     String Username;
-    String Description;
-    Boolean Followed;
+    String Title;
+    int Id;
+    int Contactnum;
+    int Eventsattended;
+    int Saltvalue;
 
-    public Profile(String username, String description, boolean followed){
+
+    public Profile() {}
+
+    public Profile(String username, String title, Integer contact, int id){
+        Id = id;
         Username = username;
-        Description = description;
-        Followed = followed;
+        Title = title;
+        Contactnum = contact;
+        Random rand = new Random();
+        int lowerbound = 10000;
+        int upperbound = 99999;
+        int randomnum = rand.nextInt(upperbound);
+        //Uncomment this later Saltvalue =
     }
 }

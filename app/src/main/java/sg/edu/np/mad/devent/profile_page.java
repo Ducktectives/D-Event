@@ -13,7 +13,7 @@ public class profile_page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
-        Profile p = new Profile("TestName","TestDesc",true);
+        //Uncomment this later Profile p = new Profile("TestName","TestDesc",true);
         // Idk if im actually supposed to make the profile class or if we even need one
 
         // Getting all the views as variables
@@ -22,8 +22,8 @@ public class profile_page extends AppCompatActivity {
         TextView UserName = findViewById(R.id.username);
 
         // Set default texts
-        UserDesc.setText(p.Description);
-        UserName.setText(p.Username);
+        //Uncomment this laterUserDesc.setText(p.Title);
+        //Uncomment this later UserName.setText(p.Username);
 
         // OnClickListener to start the edit description activity
         EditDesc.setOnClickListener(new View.OnClickListener() {
@@ -35,10 +35,15 @@ public class profile_page extends AppCompatActivity {
         });
 
         // Get new Description
-        Intent fromEdit = new Intent();
-        String newDesc = fromEdit.getStringExtra("new");
-        UserDesc.setText(newDesc);
-        p.Username = newDesc;
+        // Don't change if there is none set.
+        Intent fromEdit = getIntent();
+        Bundle newDesc = fromEdit.getExtras();
+        if(newDesc != null){
+            String setNewDesc = (String) newDesc.get("new");
+            UserDesc.setText(setNewDesc);
+            //Uncomment this later p.Description = setNewDesc;
+        }
+
 
 
     }
