@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EventDetailsPage">
+
+    <ImageView
+        android:id="@+id/bigC"
+        android:layout_width="492dp"
+        android:layout_height="414dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="352dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/pink_circle" />
+
+    <ImageView
+        android:id="@+id/smallC"
+        android:layout_width="370dp"
+        android:layout_height="365dp"
+        android:layout_marginEnd="192dp"
+        android:layout_marginBottom="368dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/red_circle" />
+
+    <com.denzcoskun.imageslider.ImageSlider
+        android:id="@+id/imageslider"
+        android:layout_width="match_parent"
+        android:layout_height="196dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:iss_auto_cycle="true"
+        app:iss_corner_radius="@android:integer/config_mediumAnimTime"
+        app:iss_period="3000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.155">
+
+    </com.denzcoskun.imageslider.ImageSlider>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
