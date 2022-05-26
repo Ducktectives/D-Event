@@ -22,7 +22,7 @@ public class profile_page extends AppCompatActivity {
         TextView UserName = findViewById(R.id.username);
 
         // Set default texts
-        UserDesc.setText(p.Description);
+        UserDesc.setText(p.Title);
         UserName.setText(p.Username);
 
         // OnClickListener to start the edit description activity
