@@ -35,9 +35,14 @@ public class profile_page extends AppCompatActivity {
         });
 
         // Get new Description
-        Intent fromEdit = new Intent();
-        String newDesc = fromEdit.getStringExtra("new");
-        UserDesc.setText(newDesc);
+        // Don't change if there is none set.
+        Intent fromEdit = getIntent();
+        Bundle newDesc = fromEdit.getExtras();
+        if(newDesc != null){
+            String setNewDesc = (String) newDesc.get("new");
+            UserDesc.setText(setNewDesc);
+            p.Description = setNewDesc;
+        }
 
 
 

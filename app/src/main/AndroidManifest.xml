@@ -17,9 +17,9 @@
             android:name=".EventDetailsPage"
             android:exported="false" />
         <activity android:name=".profile_page"
-            android:exported="false"></activity>
+            android:exported="false"/>
         <activity android:name=".EditDescription"
-            android:exported="false"></activity>
+            android:exported="false"/>
         <activity
             android:name=".NavDrawer"
             android:exported="false"
