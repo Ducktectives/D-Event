@@ -38,7 +38,7 @@ public class profile_page extends AppCompatActivity {
         Intent fromEdit = new Intent();
         String newDesc = fromEdit.getStringExtra("new");
         UserDesc.setText(newDesc);
-        p.Username = newDesc;
+
 
 
     }
