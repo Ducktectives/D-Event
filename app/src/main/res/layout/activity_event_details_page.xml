@@ -1,48 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EventDetailsPage">
 
-    <ImageView
-        android:id="@+id/bigC"
-        android:layout_width="492dp"
-        android:layout_height="414dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="352dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/pink_circle" />
-
-    <ImageView
-        android:id="@+id/smallC"
-        android:layout_width="370dp"
-        android:layout_height="365dp"
-        android:layout_marginEnd="192dp"
-        android:layout_marginBottom="368dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/red_circle" />
-
-    <com.denzcoskun.imageslider.ImageSlider
-        android:id="@+id/imageslider"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="196dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:iss_auto_cycle="true"
-        app:iss_corner_radius="@android:integer/config_mediumAnimTime"
-        app:iss_period="3000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.155">
+        android:layout_height="match_parent">
 
-    </com.denzcoskun.imageslider.ImageSlider>
+        <ImageView
+            android:id="@+id/bigC"
+            android:layout_width="492dp"
+            android:layout_height="414dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="-120dp"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/pink_circle" />
+
+        <ImageView
+            android:id="@+id/smallC"
+            android:layout_width="430dp"
+            android:layout_height="371dp"
+            android:layout_marginTop="-100dp"
+            android:layout_marginEnd="112dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/red_circle" />
+
+        <com.denzcoskun.imageslider.ImageSlider
+            android:id="@+id/imageslider"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:iss_auto_cycle="true"
+            app:iss_corner_radius="@android:integer/config_mediumAnimTime"
+            app:iss_period="3000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.108">
+
+        </com.denzcoskun.imageslider.ImageSlider>
+
+        <TextView
+            android:id="@+id/EventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="70dp"
+            android:scrollbars="vertical"
+            android:text="Event Name"
+            app:layout_constraintStart_toEndOf="@+id/EventMonth"
+            app:layout_constraintTop_toBottomOf="@+id/imageslider" />
+
+        <TextView
+            android:id="@+id/EventOrganiser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="84dp"
+            android:layout_marginTop="4dp"
+            android:scrollbars="vertical"
+            android:text="by Who"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EventLocation" />
+
+        <TextView
+            android:id="@+id/EventMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="76dp"
+            android:scrollbars="vertical"
+            android:text="OCT"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageslider" />
+
+        <TextView
+            android:id="@+id/EventDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="84dp"
+            android:layout_marginTop="16dp"
+            android:scrollbars="vertical"
+            android:text="Event Description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EventOrganiser" />
+
+        <TextView
+            android:id="@+id/EventLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:scrollbars="vertical"
+            android:text="Event Location"
+            app:layout_constraintStart_toEndOf="@+id/EventDate"
+            app:layout_constraintTop_toBottomOf="@+id/EventName" />
+
+        <TextView
+            android:id="@+id/EventDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="4dp"
+            android:scrollbars="vertical"
+            android:text="30"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EventMonth" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="40dp"
+            android:text="Details"
+            app:layout_constraintStart_toEndOf="@+id/EventDate"
+            app:layout_constraintTop_toBottomOf="@+id/EventDescription" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
