@@ -40,4 +40,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Login" />
 
+    <ImageView
+        android:id="@+id/smallC5"
+        android:layout_width="430dp"
+        android:layout_height="371dp"
+        android:layout_marginTop="-200dp"
+        android:layout_marginEnd="112dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/red_circle" />
+
+    <ImageView
+        android:id="@+id/bigC5"
+        android:layout_width="492dp"
+        android:layout_height="414dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="-220dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pink_circle" />
+
+    <ImageView
+        android:id="@+id/bigC4"
+        android:layout_width="492dp"
+        android:layout_height="414dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="-200dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/pink_circle" />
+
+    <ImageView
+        android:id="@+id/smallC4"
+        android:layout_width="430dp"
+        android:layout_height="371dp"
+        android:layout_marginEnd="-100dp"
+        android:layout_marginBottom="-200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/red_circle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

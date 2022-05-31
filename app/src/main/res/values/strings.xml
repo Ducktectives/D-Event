@@ -11,4 +11,7 @@
     <string name="menu_home"></string> <!-- Changes the Title of ActionBar of respective Activity -->
     <string name="menu_gallery"></string>
     <string name="menu_slideshow"></string>
+    <string name="d_vent_application_logo">D\'Vent Application Logo</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
 </resources>
