@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/d_vent_app_logo" />
+        app:srcCompat="@drawable/playstore" />
 
     <Button
         android:id="@+id/Login"
