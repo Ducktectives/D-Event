@@ -24,6 +24,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Go to Login Page button
+        Button login = findViewById(R.id.loginpage);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginpage = new Intent(MainActivity.this, loginpage.class);
+                startActivity(loginpage);
+            }
+        });
+
         // Go to Profile button
         Button to_profile = findViewById(R.id.to_profile);
         to_profile.setOnClickListener(new View.OnClickListener() {
