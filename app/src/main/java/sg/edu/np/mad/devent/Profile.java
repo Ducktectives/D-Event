@@ -7,6 +7,7 @@ import java.util.Random;
 public class Profile {
     String Username;
     String Title;
+    String Email;
     int Id;
     int Contactnum;
     int Eventsattended;
@@ -17,11 +18,12 @@ public class Profile {
 
     public Profile() {}
 
-    public Profile(String username, String title, Integer contact, String password, int id){
+    public Profile(String username, String title, String email,Integer contact, String password, int id){
         Id = id;
         Username = username;
         Title = title;
         Contactnum = contact;
+        Email = email;
         Random rand = new Random();
         int lowerbound = 10000;
         int upperbound = 99999;

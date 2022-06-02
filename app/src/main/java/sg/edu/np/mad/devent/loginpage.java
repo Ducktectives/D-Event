@@ -20,8 +20,12 @@ public class loginpage extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
         DatabaseReference Ref = database.getReference("Users");
 
+        //Intent prevuser = new Intent(loginpage.this, );
+        //startActivity(prevuser);
 
 
+        Intent newuser = new Intent(loginpage.this, NewUserRegistration.class);
+        startActivity(newuser);
     }
 
 
