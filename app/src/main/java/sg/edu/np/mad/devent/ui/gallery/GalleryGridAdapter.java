@@ -1,12 +1,14 @@
 package sg.edu.np.mad.devent.ui.gallery;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import sg.edu.np.mad.devent.EventDetailsPage;
 import sg.edu.np.mad.devent.R;
 
 public class GalleryGridAdapter extends BaseAdapter {
@@ -47,6 +49,13 @@ public class GalleryGridAdapter extends BaseAdapter {
         ImageView imageView = view.findViewById(R.id.gridImage);
 
         imageView.setImageResource(image[i]);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent eventAct = new Intent(context, EventDetailsPage.class);
+                context.startActivity(eventAct);
+            }
+        });
 
         return view;
     }
