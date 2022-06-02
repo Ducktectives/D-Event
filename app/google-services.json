@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "828347912380",
+    "firebase_url": "https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "dvent---ducktectives",
+    "storage_bucket": "dvent---ducktectives.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828347912380:android:cdba8d7598562bd675c0b9",
+        "android_client_info": {
+          "package_name": "sg.edu.np.mad.devent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "828347912380-rfvtd3uoag9u8030bf0gj709oi2dfutf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwRAjl183s3Y77Nnq4BnlnqPhW4vvZmpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "828347912380-rfvtd3uoag9u8030bf0gj709oi2dfutf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
