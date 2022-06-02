@@ -25,7 +25,7 @@ public class EventDetailsPage extends AppCompatActivity {
 
         //For firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        DatabaseReference Ref = database.getReference("Event/Event1");
+        DatabaseReference Ref = database.getReference("Users");
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -37,7 +37,7 @@ public class EventDetailsPage extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("Error","An error occured!"); //Don't ignore errors!
+                Log.d("Error","An error occured!");
             }
 
         };
