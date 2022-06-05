@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.TextView;
 
 public class profile_page extends AppCompatActivity {
@@ -43,6 +44,10 @@ public class profile_page extends AppCompatActivity {
             UserDesc.setText(setNewDesc);
             //Uncomment this later p.Description = setNewDesc;
         }
+
+        // Setting fragments
+        GridView gridView = (GridView) findViewById(R.id.gallery);
+        gridView.setAdapter(new ProfileAdapter(this));
 
 
 
