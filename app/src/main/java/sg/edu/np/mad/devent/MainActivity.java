@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loginpage = new Intent(MainActivity.this, EventDetailsPage.class);
+                Intent loginpage = new Intent(MainActivity.this, loginpage.class);
                 startActivity(loginpage);
             }
         });
