@@ -1,11 +1,9 @@
 package sg.edu.np.mad.devent;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 public class ProfileAdapter extends BaseAdapter {
@@ -30,6 +28,7 @@ public class ProfileAdapter extends BaseAdapter {
 
         if(convertView == null){
             imageView = new ImageView(mContext);
+            // Need to fix the image params because idk wtf to do with it wth alfnDLFgnn
             imageView.setLayoutParams(new ViewGroup.LayoutParams(305,305));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(8,8,8,8);
@@ -42,6 +41,7 @@ public class ProfileAdapter extends BaseAdapter {
     }
 
     // Keep all Images in array
+    // Change these images to something else set by the database
     public Integer[] mThumbIds = {
             R.drawable.a1,R.drawable.a2,R.drawable.a3,
             R.drawable.a4,R.drawable.me,R.drawable.kirby_drawing
