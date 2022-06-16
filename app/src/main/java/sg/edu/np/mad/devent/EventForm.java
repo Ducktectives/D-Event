@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -17,8 +18,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,21 +29,27 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
-import java.io.IOException;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class EventForm extends AppCompatActivity{
     TextView imgPath, updateAddress;
     private static final int PICK_IMAGE_REQUEST = 9544;
     ImageView image;
     Uri selectedImage;
-    EditText date, location;
+    EditText date, location, eventDetail;
     Button retrieveAddress;
 
     private int _day, _month, _birthYear;
@@ -53,7 +58,7 @@ public class EventForm extends AppCompatActivity{
 
     // Permissions for accessing the storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
+    private static final String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
@@ -76,6 +81,9 @@ public class EventForm extends AppCompatActivity{
         retrieveAddress = findViewById(R.id.locate_address);
 
         updateAddress = findViewById(R.id.event_form_address);
+
+
+        eventDetail = findViewById(R.id.txt_Event_Details);
 
 
         Geocoder geocoder = new Geocoder(EventForm.this, Locale.getDefault());
@@ -128,9 +136,10 @@ public class EventForm extends AppCompatActivity{
             }
         });
 
-//        storageReference = FirebaseStorage.getInstance().getReference();
-//        firebaseDatabase = FirebaseDatabase.getInstance();
-//        databaseReference = firebaseDatabase.getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+
+
     }
 
 
@@ -142,6 +151,9 @@ public class EventForm extends AppCompatActivity{
         launcher.launch(intent);
     }
 
+    public void submit_form(View view){
+        uploadImage();
+    }
 
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -151,12 +163,18 @@ public class EventForm extends AppCompatActivity{
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         selectedImage = data.getData(); // get the file uri
-                        if (null != selectedImage) {
-                            // update the preview image in the layout
+                        if (selectedImage != null) {
+                            try{
+
+                                // update the preview image in the layout
 //                            image.setImageURI(selectedImage);
 
-                            // Glide is an API that supports fetching of images.
-                            Glide.with(EventForm.this).load(selectedImage).into(image);
+                                // Glide is an API that supports fetching of images.
+                                // here we are setting image on image view using Glide
+                                Glide.with(EventForm.this).load(selectedImage).into(image);
+                            }catch (Exception ex){
+                                Log.d("Image upload error", String.valueOf(ex));
+                            }
                         }
                     }
                 }
@@ -185,5 +203,56 @@ public class EventForm extends AppCompatActivity{
 
     }
 
+    // uploadimage method
+    private void uploadImage(){
+        if(selectedImage != null){
+
+            // progressDialogue while uploading
+            ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+
+            // Defining the child of storageReference
+            //
+            // SorageReference represents a reference to Google Cloud Storage Object
+            StorageReference reference = storageReference.child(
+                    // UUID is a class that represents immutable universally unique identifier (UUID)
+                    //
+                    // A UUID represents a 128-bit value
+                    "images/" + UUID.randomUUID().toString());
+
+            // adding listeners on event progression of image upload
+            reference.putFile(selectedImage).addOnSuccessListener(
+                    new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Image uploaded successfully
+                            progressDialog.dismiss();
+                            Toast.makeText(EventForm.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            ).addOnFailureListener(new OnFailureListener(){
+                @Override
+                public void onFailure(@NonNull Exception e){
+                    // Error, Image not uploaded
+                    progressDialog.dismiss();
+                    Toast.makeText(EventForm.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                // Progress listneer for loading on the dialog box
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    double progress = (100.0 * snapshot.getBytesTransferred()
+                            / snapshot.getTotalByteCount());
+                    progressDialog.setMessage(
+                            "Uploaded " + (int) progress + "%"
+                    );
+                }
+            });
+
+
+        }
+    }
 
 }

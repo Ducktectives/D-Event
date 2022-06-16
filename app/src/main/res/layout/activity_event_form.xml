@@ -183,9 +183,11 @@
                 android:hint="ENTER DETAILS"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_Event_Details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="120dp" />
@@ -210,6 +212,25 @@
                     android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/btn_submit_form"
+                android:layout_width="265dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="18dp"
+                android:background="@drawable/file_upload_field"
+                android:clickable="true"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:onClick="submit_form"
+                android:text="Submit form"
+                android:textColor="@color/white"
+                android:textCursorDrawable="@null"
+                />
+
         </LinearLayout>
     </ScrollView>
 
