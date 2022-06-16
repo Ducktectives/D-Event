@@ -23,7 +23,7 @@ public class profile_page extends AppCompatActivity {
 
         // !!! Change this to get profile from database
         Profile p = new Profile("TestName","TestTitle","TestEmail"
-                ,123,"TestPassword",1
+                ,"arthurchongs@gmail.com",87978979,"sdwefewgew"
                 );
 
 
@@ -40,7 +40,7 @@ public class profile_page extends AppCompatActivity {
         // !!! Also should not show follow button on own profile
         // !!! Someone teach me how to use database
         Button followButton = findViewById(R.id.FollowButton);
-        if(p.Id == 1) // Change ID to reflect actual user ID
+        if(p.Id == "1") // Change ID to reflect actual user ID
         {
             followButton.setVisibility(View.VISIBLE);
         }

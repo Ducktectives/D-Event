@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/Ducketive" />
+        app:srcCompat="@drawable/ducketive" />
 
     <!--  CONSIDER ADDING FONT   -->
     <TextView
@@ -113,7 +113,7 @@
 
 
     <Button
-        android:id="@+id/button22"
+        android:id="@+id/registration_button"
         android:layout_width="240dp"
         android:layout_height="80dp"
         android:background="@drawable/btn_rounded_background"

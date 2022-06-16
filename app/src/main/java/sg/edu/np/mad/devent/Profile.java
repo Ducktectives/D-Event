@@ -8,7 +8,7 @@ public class Profile {
     String Username;
     String Title;
     String Email;
-    int Id;
+    String Id;
     int Contactnum;
     int Eventsattended;
     int Saltvalue;
@@ -18,7 +18,7 @@ public class Profile {
 
     public Profile() {}
 
-    public Profile(String username, String title, String email,Integer contact, String password, int id){
+    public Profile(String id, String username, String title, String email,Integer contact, String password){
         Id = id;
         Username = username;
         Title = title;
@@ -64,4 +64,76 @@ public class Profile {
         System.out.println("Encrypted password using MD5: " + Hashedpassword);
     }
 
+
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String username) {
+        Username = username;
+    }
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String title) {
+        Title = title;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
+
+    public int getContactnum() {
+        return Contactnum;
+    }
+
+    public void setContactnum(int contactnum) {
+        Contactnum = contactnum;
+    }
+
+    public int getEventsattended() {
+        return Eventsattended;
+    }
+
+    public void setEventsattended(int eventsattended) {
+        Eventsattended = eventsattended;
+    }
+
+    public int getSaltvalue() {
+        return Saltvalue;
+    }
+
+    public void setSaltvalue(int saltvalue) {
+        Saltvalue = saltvalue;
+    }
+
+    public String getSaltpassword() {
+        return Saltpassword;
+    }
+
+    public void setSaltpassword(String saltpassword) {
+        Saltpassword = saltpassword;
+    }
+
+    public String getHashedpassword() {
+        return Hashedpassword;
+    }
+
+    public void setHashedpassword(String hashedpassword) {
+        Hashedpassword = hashedpassword;
+    }
 }
