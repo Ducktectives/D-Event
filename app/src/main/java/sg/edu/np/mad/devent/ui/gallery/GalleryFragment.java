@@ -29,16 +29,18 @@ public class GalleryFragment extends Fragment {
         binding = FragmentGalleryBinding.inflate(getLayoutInflater());
         View root = binding.getRoot();
 
+        /*
         final GridView gridView = binding.gridView;
         int[] imageList = {R.drawable.a1,R.drawable.a2,R.drawable.a3, R.drawable.a4, R.drawable.me,
         R.drawable.kirby_drawing};
+         */
 
-        GalleryGridAdapter gridAdapter = new GalleryGridAdapter(container.getContext(),imageList);
-        binding.gridView.setAdapter(gridAdapter);
-        // final TextView textView = binding.textGallery;
+        // GalleryGridAdapter gridAdapter = new GalleryGridAdapter(container.getContext(),imageList);
+        // binding.gridView.setAdapter(gridAdapter);
+        final TextView textView = binding.textGallery;
         // final ImageView imageView = binding.imageView3;
         // galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        //textView.setText("test");
+        textView.setText("test");
 
         return root;
     }

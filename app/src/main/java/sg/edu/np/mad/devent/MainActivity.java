@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent navDraw = new Intent(MainActivity.this, NavDrawer.class);
                 startActivity(navDraw);
             }
@@ -41,6 +42,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent open_profile = new Intent(MainActivity.this, profile_page.class);
                 startActivity(open_profile);
+            }
+        });
+
+        // Go to Profile button
+        Button eventForms = findViewById(R.id.eventForm);
+        eventForms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent eventFormPage = new Intent(MainActivity.this, loginpage.class);
+                startActivity(eventFormPage);
             }
         });
     }

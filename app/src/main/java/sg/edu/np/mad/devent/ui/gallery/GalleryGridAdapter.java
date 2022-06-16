@@ -1,3 +1,4 @@
+/*
 package sg.edu.np.mad.devent.ui.gallery;
 
 import android.content.Context;
@@ -60,3 +61,6 @@ public class GalleryGridAdapter extends BaseAdapter {
         return view;
     }
 }
+
+
+ */
