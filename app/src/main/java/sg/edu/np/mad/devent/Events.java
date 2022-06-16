@@ -6,12 +6,21 @@ public class Events{
     String Event_Date;
     String Event_Description;
     String Event_UserID;
+    int image;
     boolean Bookmarked;
 
 
-    public Events(String Name,String Description, boolean Bookmark){
+    public Events(String Name,String Description, boolean Bookmark, int image){
         Event_Name = Name;
         Event_Description = Description;
         Bookmarked = Bookmark;
+        this.image = image;
+    }
+
+    public int getImage(){
+        return image;
+    }
+    public String getName(){
+        return Event_Name;
     }
 }

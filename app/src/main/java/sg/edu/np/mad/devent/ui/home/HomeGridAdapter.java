@@ -6,25 +6,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import sg.edu.np.mad.devent.EventDetailsPage;
+import sg.edu.np.mad.devent.Events;
 import sg.edu.np.mad.devent.R;
 
-public class HomeGridAdapter extends BaseAdapter {
-    Context context;
-    int[] image;
+public class HomeGridAdapter extends BaseAdapter implements Filterable {
+    private Context context;
+    private List<Events> eventsList;
+    private List<Events> filteredEventsList;
 
     LayoutInflater inflater;
 
-    public HomeGridAdapter(Context context, int[] image) {
+    public HomeGridAdapter(Context context, List<Events> eventsList) {
         this.context = context;
-        this.image = image;
+        this.eventsList = eventsList;
+        this.filteredEventsList = eventsList;
     }
 
     @Override
     public int getCount() {
-        return image.length;
+        return filteredEventsList.size();
     }
 
     @Override
@@ -34,7 +44,7 @@ public class HomeGridAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
@@ -47,8 +57,10 @@ public class HomeGridAdapter extends BaseAdapter {
         }
 
         ImageView imageView = view.findViewById(R.id.gridImage);
+        TextView textView = view.findViewById(R.id.eventTitle);
 
-        imageView.setImageResource(image[i]);
+        imageView.setImageResource(filteredEventsList.get(i).getImage());
+        textView.setText(filteredEventsList.get(i).getName());
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,5 +70,40 @@ public class HomeGridAdapter extends BaseAdapter {
         });
 
         return view;
+    }
+
+    @Override
+    public Filter getFilter() {
+        Filter filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                FilterResults filterResults = new FilterResults();
+                if (charSequence == null || charSequence.length() == 0){
+                    filterResults.count = eventsList.size();
+                    filterResults.values = eventsList;
+                }
+                else{
+                    String searchStr = charSequence.toString().toLowerCase();
+                    List<Events> resultData = new ArrayList<>();
+
+                    for (Events event:eventsList){
+                        // add if it contains event description
+                        if (event.getName().contains(searchStr)){
+                            resultData.add(event);
+                        }
+                        filterResults.count = resultData.size();
+                        filterResults.values = resultData;
+                    }
+                }
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                filteredEventsList = (List<Events>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+        return filter;
     }
 }

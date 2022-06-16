@@ -34,14 +34,5 @@
         app:layout_anchorGravity="top|center"
         app:popupTheme="@style/Theme.DEvent.PopupOverlay" />
 
-    <EditText
-        android:id="@+id/searchBar"
-        android:layout_width="272dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Search"
-        app:layout_anchor="@+id/toolbar"
-        app:layout_anchorGravity="center" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
