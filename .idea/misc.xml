@@ -35,7 +35,12 @@
         <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/nav_header_nav_drawer.xml" value="0.25" />
         <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/menu/activity_main_drawer.xml" value="0.25" />
         <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/menu/nav_drawer.xml" value="0.25" />
+        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/drawable/btn_rounded_background.xml" value="0.1" />
+        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/drawable/file_upload_field.xml" value="0.1" />
+        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/drawable/txt_rounded_background.xml" value="0.1" />
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_event_form.xml" value="0.25" />
+        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_new_user_registration.xml" value="0.1" />
+        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_registration.xml" value="0.25" />
       </map>
     </option>
   </component>

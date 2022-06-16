@@ -2,8 +2,6 @@ package sg.edu.np.mad.devent;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,7 +22,7 @@ public class loginpage extends AppCompatActivity {
         //startActivity(prevuser);
 
 
-        Intent newuser = new Intent(loginpage.this, NewUserRegistration.class);
+        Intent newuser = new Intent(loginpage.this, RegistrationActivity.class);
         startActivity(newuser);
     }
 
