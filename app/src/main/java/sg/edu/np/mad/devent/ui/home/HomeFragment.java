@@ -44,11 +44,10 @@ public class HomeFragment extends Fragment {
                 "My mental health", "Amazing Kirby Exhibit"};
 
         for (int i = 0; i < titleList.length; i++){
-            Events event = new Events(titleList[i], "randDescription", false,
-                    imageList[i]);
+            Events event = new Events(titleList[i], "Location", "17 June", "randDescription", "1",
+                    imageList[i] + "", true);
             eventsList.add(event);
         }
-
 
         gridAdapter = new HomeGridAdapter(container.getContext(),eventsList);
         binding.gridView.setAdapter(gridAdapter);

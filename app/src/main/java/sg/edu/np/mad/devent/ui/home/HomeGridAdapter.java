@@ -60,8 +60,8 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
         ImageView imageView = view.findViewById(R.id.gridImage);
         TextView textView = view.findViewById(R.id.eventTitle);
 
-        imageView.setImageResource(filteredEventsList.get(i).getImage());
-        textView.setText(filteredEventsList.get(i).getName());
+        imageView.setImageResource(Integer.parseInt(filteredEventsList.get(i).getEvent_Picture()));
+        textView.setText(filteredEventsList.get(i).getEvent_Name());
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +89,7 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
                     List<Events> resultData = new ArrayList<>();
                     for (Events event:eventsList){
                         // add if it contains event description
-                        if (event.getName().toLowerCase().contains(searchStr)){
+                        if (event.getEvent_Name().toLowerCase().contains(searchStr)){
                             resultData.add(event);
                         }
                         filterResults.count = resultData.size();
