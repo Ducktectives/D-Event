@@ -76,6 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/item_img">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txt_event_form_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

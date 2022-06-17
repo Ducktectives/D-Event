@@ -3,6 +3,7 @@ package sg.edu.np.mad.devent;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
@@ -49,22 +50,28 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 // Create an object of Firebase Database Reference
-
                 DatabaseReference reference ;
                 reference = database.getReference();
 
 
-
+                String profileID = UUID.randomUUID().toString();
                 String name  = userName.getText().toString();
                 String email  = userEmail.getText().toString();
                 Integer contact  = Integer.parseInt(userContact.getText().toString());
                 String password  = userPassword.getText().toString();
 
                 //Profile(int id, String username, String title, String email,Integer contact, String password)
-                user = new Profile(UUID.randomUUID().toString(), name, null, email, contact, password);
+                user = new Profile(profileID, name, null, email, contact, password);
 
                 // Insert the user-defined object to the database
                 reference.child("Users").setValue(user);
+
+                // Afterward, I would like to send ID of user to the EventFormActivity
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("profile_id", profileID);
+
+                // Start the intent
+                startActivity(intent);
             }
         });
 
