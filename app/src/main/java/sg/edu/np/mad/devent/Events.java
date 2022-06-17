@@ -6,22 +6,74 @@ public class Events{
     String Event_Date;
     String Event_Description;
     String Event_UserID;
-    int image;
+    String Event_Picture;
     boolean Bookmarked;
 
+    public Events() {}
 
-    public Events(String Name,String Description, boolean Bookmark, int image){
-        Event_Name = Name;
-        Event_Description = Description;
-        Bookmarked = Bookmark;
-        this.image = image;
+    public Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked) {
+        Event_Name = event_Name;
+        Event_Location = event_Location;
+        Event_Date = event_Date;
+        Event_Description = event_Description;
+        Event_UserID = event_UserID;
+        Event_Picture = event_Picture;
+        Bookmarked = bookmarked;
     }
 
-    // both of these are used for display in homepage gridview
-    public int getImage(){
-        return image;
+    public String getEvent_Name() {
+        return Event_Name;
     }
-    public String getName(){
-        return this.Event_Name;
+
+    public void setEvent_Name(String event_Name) {
+        Event_Name = event_Name;
+    }
+
+    public String getEvent_Location() {
+        return Event_Location;
+    }
+
+    public void setEvent_Location(String event_Location) {
+        Event_Location = event_Location;
+    }
+
+    public String getEvent_Date() {
+        return Event_Date;
+    }
+
+    public void setEvent_Date(String event_Date) {
+        Event_Date = event_Date;
+    }
+
+    public String getEvent_Description() {
+        return Event_Description;
+    }
+
+    public void setEvent_Description(String event_Description) {
+        Event_Description = event_Description;
+    }
+
+    public String getEvent_UserID() {
+        return Event_UserID;
+    }
+
+    public void setEvent_UserID(String event_UserID) {
+        Event_UserID = event_UserID;
+    }
+
+    public String getEvent_Picture() {
+        return Event_Picture;
+    }
+
+    public void setEvent_Picture(String event_Picture) {
+        Event_Picture = event_Picture;
+    }
+
+    public boolean isBookmarked() {
+        return Bookmarked;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        Bookmarked = bookmarked;
     }
 }

@@ -50,13 +50,22 @@ public class EventFormActivity extends AppCompatActivity{
     TextView imgPath, updateAddress;
     private static final int PICK_IMAGE_REQUEST = 9544;
     ImageView image;
-    Uri selectedImage;
-    EditText date, location, eventDetail;
+
+    //  Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked)
+    Uri selectedImage; // event_Picture
+    EditText date, location, eventDetail, eventName; // event_Date, event_Location, event_Description
     Button retrieveAddress;
 
     private int _day, _month, _birthYear;
 
-    private String zip;
+    // Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, boolean bookmarked)
+    // Declaring the variables to upload the values to firebase
+    private String event_Name, event_Location, event_Date, event_Description, userID;
+    private Boolean bookmarked;
+
+
+    // Create a event-defined object
+    Events event = new Events();
 
     // Permissions for accessing the storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -67,8 +76,7 @@ public class EventFormActivity extends AppCompatActivity{
 
     // Firebase for storing Image
     private StorageReference storageReference;
-    private DatabaseReference databaseReference;
-    private FirebaseDatabase firebaseDatabase;
+    private FirebaseDatabase database;
 
 
 
@@ -78,17 +86,37 @@ public class EventFormActivity extends AppCompatActivity{
         setContentView(R.layout.activity_event_form);
         imgPath = findViewById(R.id.item_img);
         image = findViewById(R.id.img);
-        date = (EditText) findViewById(R.id.txt_Date);
+
+        // Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, boolean bookmarked)
+        // EDITTEXT
+        eventName = (EditText) findViewById(R.id.txt_event_form_name);
         location = (EditText) findViewById(R.id.txt_event_form_location);
+        date = (EditText) findViewById(R.id.txt_Date);
+        eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
+
+
+
+
         retrieveAddress = findViewById(R.id.locate_address);
 
         updateAddress = findViewById(R.id.event_form_address);
 
 
-        eventDetail = findViewById(R.id.txt_Event_Details);
+
+        database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+
 
 
         Geocoder geocoder = new Geocoder(EventFormActivity.this, Locale.getDefault());
+
+        // create the GET intent object
+        Intent intent = getIntent();
+
+        // receive the value by getStringExtra() method
+        // and key must be same which is send by first activity
+        userID = intent.getStringExtra("user_id");
+
+        Log.d("Profile ID at EventForm", String.valueOf(userID));
 
 
         date.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +183,8 @@ public class EventFormActivity extends AppCompatActivity{
 
     public void submit_form(View view){
         uploadImage();
+        uploadForm();
+
     }
 
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
@@ -255,6 +285,33 @@ public class EventFormActivity extends AppCompatActivity{
 
 
         }
+    }
+
+    private void uploadForm(){
+        // Create an object of Firebase Database Reference
+        DatabaseReference reference ;
+        reference = database.getReference();
+
+//        eventName = (EditText) findViewById(R.id.txt_event_form_name);
+//        location = (EditText) findViewById(R.id.txt_event_form_location);
+//        date = (EditText) findViewById(R.id.txt_Date);
+//        eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
+
+        String event_Name  = eventName.getText().toString();
+        String event_Location  = location.getText().toString();
+        String event_Date  = date.getText().toString();
+        String event_Description  = eventDetail.getText().toString();
+        Boolean bookmarked = false;
+
+//        private String event_Name, event_Location, event_Date, event_Description, userID;
+//        private Boolean bookmarked;
+//            public Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked) {
+
+        event = new Events(event_Name, event_Location, event_Date, event_Description, userID, selectedImage.toString(), bookmarked);
+
+
+        // Insert the user-defined object to the database
+        reference.child("Event").setValue(event);
     }
 
     public static String getCurrentTimeStamp(){

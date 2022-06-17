@@ -7,10 +7,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent navDraw = new Intent(MainActivity.this, NavDrawer.class);
                 startActivity(navDraw);
             }
@@ -45,13 +46,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Go to Profile button
-        Button eventForms = findViewById(R.id.eventForm);
-        eventForms.setOnClickListener(new View.OnClickListener() {
+
+
+        /*
+        * TODO
+        *
+        * I need to get USERID so I know it was that user that posted the EVENT
+        *
+        * */
+        // create the GET intent object
+        Intent intent = getIntent();
+
+
+        // receive the value by getStringExtra() method
+        // and key must be same which is send by first activity
+        userID = intent.getStringExtra("profile_id");
+
+        Log.d("Profile ID", String.valueOf(userID));
+        // Go to EventFormActivity
+        Button to_eventForm = findViewById(R.id.to_eventForm);
+        to_eventForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent eventFormPage = new Intent(MainActivity.this, loginpage.class);
-                startActivity(eventFormPage);
+
+
+
+                Intent eventFormActivity = new Intent(MainActivity.this, EventFormActivity.class);
+                eventFormActivity.putExtra("user_id", userID);
+                startActivity(eventFormActivity);
+
             }
         });
     }
