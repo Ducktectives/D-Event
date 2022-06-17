@@ -2,6 +2,7 @@ package sg.edu.np.mad.devent.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +79,7 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 FilterResults filterResults = new FilterResults();
+
                 if (charSequence == null || charSequence.length() == 0){
                     filterResults.count = eventsList.size();
                     filterResults.values = eventsList;
@@ -85,10 +87,9 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
                 else{
                     String searchStr = charSequence.toString().toLowerCase();
                     List<Events> resultData = new ArrayList<>();
-
                     for (Events event:eventsList){
                         // add if it contains event description
-                        if (event.getName().contains(searchStr)){
+                        if (event.getName().toLowerCase().contains(searchStr)){
                             resultData.add(event);
                         }
                         filterResults.count = resultData.size();

@@ -17,10 +17,11 @@ public class Events{
         this.image = image;
     }
 
+    // both of these are used for display in homepage gridview
     public int getImage(){
         return image;
     }
     public String getName(){
-        return Event_Name;
+        return this.Event_Name;
     }
 }

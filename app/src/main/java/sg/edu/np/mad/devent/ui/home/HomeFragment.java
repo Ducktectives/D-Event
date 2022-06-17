@@ -1,6 +1,7 @@
 package sg.edu.np.mad.devent.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,6 +49,7 @@ public class HomeFragment extends Fragment {
             eventsList.add(event);
         }
 
+
         gridAdapter = new HomeGridAdapter(container.getContext(),eventsList);
         binding.gridView.setAdapter(gridAdapter);
 
@@ -65,6 +67,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.nav_drawer, menu);
         MenuItem menuItem = menu.findItem(R.id.search_view);
         SearchView searchView = (SearchView) menuItem.getActionView();
