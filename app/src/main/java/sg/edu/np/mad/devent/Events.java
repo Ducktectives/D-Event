@@ -8,12 +8,13 @@ public class Events{
     String Event_Description;
     String Event_UserID;
     String Event_Picture;
+    String Event_StorageReferenceID;
     boolean Bookmarked;
 
     public Events() {}
 
 
-    public Events(String event_ID, String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked) {
+    public Events(String event_ID, String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, String event_StorageReferenceID, boolean bookmarked) {
         Event_ID = event_ID;
         Event_Name = event_Name;
         Event_Location = event_Location;
@@ -21,6 +22,7 @@ public class Events{
         Event_Description = event_Description;
         Event_UserID = event_UserID;
         Event_Picture = event_Picture;
+        Event_StorageReferenceID = event_StorageReferenceID;
         Bookmarked = bookmarked;
     }
 
@@ -78,6 +80,14 @@ public class Events{
 
     public void setEvent_Picture(String event_Picture) {
         Event_Picture = event_Picture;
+    }
+
+    public String getEvent_StorageReferenceID() {
+        return Event_StorageReferenceID;
+    }
+
+    public void setEvent_StorageReferenceID(String event_StorageReferenceID) {
+        Event_StorageReferenceID = event_StorageReferenceID;
     }
 
     public boolean isBookmarked() {

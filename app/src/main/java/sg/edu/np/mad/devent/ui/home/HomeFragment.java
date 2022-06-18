@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
         //    Events(String event_ID, String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked)
         for (int i = 0; i < titleList.length; i++){
             Events event = new Events("5",titleList[i], "Location", "17 June", "randDescription", "1",
-                    imageList[i] + "", true);
+                    imageList[i] + "", "435435", true);
             eventsList.add(event);
         }
 
