@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="sg.edu.np.mad.devent" >
+    package="sg.edu.np.mad.devent">
 
     <application
         android:allowBackup="true"
@@ -11,16 +11,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.DEvent"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".RegistrationActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
             >
-
         </activity>
-
-
         <activity
             android:name=".EventDetailsPage"
             android:exported="false" />
@@ -37,7 +37,7 @@
             android:theme="@style/Theme.DEvent.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,9 +47,7 @@
         <activity
             android:name=".EventFormActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>
