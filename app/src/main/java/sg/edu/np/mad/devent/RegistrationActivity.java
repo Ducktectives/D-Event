@@ -8,6 +8,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -41,7 +42,10 @@ public class RegistrationActivity extends AppCompatActivity {
         EditText userName = (EditText)findViewById(R.id.registration_userName);
         EditText userEmail = (EditText)findViewById(R.id.registration_userEmail);
         EditText userContact = (EditText)findViewById(R.id.registration_userContact);
+        EditText jobtitle = (EditText)findViewById(R.id.registration_userJob);
         EditText userPassword = (EditText)findViewById(R.id.registration_userPassword);
+        EditText confirmpassword = (EditText)findViewById(R.id.registration_confirmuserpassword);
+        CheckBox checkboxvalue = (CheckBox)findViewById(R.id.Termsandcondition);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
@@ -58,22 +62,37 @@ public class RegistrationActivity extends AppCompatActivity {
                 String name  = userName.getText().toString();
                 String email  = userEmail.getText().toString();
                 Integer contact  = Integer.parseInt(userContact.getText().toString());
+                String job  = jobtitle.getText().toString();
                 String password  = userPassword.getText().toString();
+                String cpass  = confirmpassword.getText().toString();
 
-                //Profile(int id, String username, String title, String email,Integer contact, String password)
-                user = new Profile(profileID, name, null, email, contact, password);
 
-                // Insert the user-defined object to the database
-                reference.child("Users").setValue(user);
+                if (password == cpass && checkboxvalue.isChecked()){
+                    //Profile(int id, String username, String title, String email,Integer contact, String password)
+                    user = new Profile(profileID, name, null, email, contact, password);
 
-                // Afterward, I would like to send ID of user to the EventFormActivity
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("profile_id", profileID);
+                    // Insert the user-defined object to the database
+                    reference.child("Users").setValue(user);
 
-                // Start the intent
-                startActivity(intent);
+                    // Afterward, I would like to send ID of user to the EventFormActivity
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("profile_id", profileID);
+
+                    // Start the intent
+                    startActivity(intent);
+                }
+                else {
+                    if (!checkboxvalue.isChecked()){
+
+                    }
+                    if (password != cpass){
+
+                    }
+                    if (name == "" | email == "" | contact != null | job == ""){
+
+                    }
+                }
             }
         });
-
     }
 }

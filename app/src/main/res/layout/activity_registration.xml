@@ -14,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:text="Number"
         android:textColor="@color/black"
-        android:textSize="60px"
+        android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Contact" />
 
@@ -26,7 +26,7 @@
         android:layout_marginTop="16dp"
         android:text="Contact"
         android:textColor="@color/black"
-        android:textSize="60px"
+        android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email2" />
 
@@ -37,6 +37,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
+        android:contentDescription="D'Vent Logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +52,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:gravity="center_horizontal"
-        android:text="Registration"
+        android:text="@string/registration"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -68,6 +69,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/txt_rounded_background"
+        android:importantForAutofill="no"
+        android:inputType="text"
         android:paddingLeft="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_title"
@@ -80,6 +83,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/txt_rounded_background"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
         android:paddingLeft="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_userName"
@@ -93,10 +98,12 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/txt_rounded_background"
+        android:inputType="phone"
         android:paddingLeft="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_userEmail"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:importantForAutofill="no" />
 
 
     <EditText
@@ -106,6 +113,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/txt_rounded_background"
+        android:importantForAutofill="no"
+        android:inputType="text"
         android:paddingLeft="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_userContact"
@@ -119,6 +128,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/txt_rounded_background"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
         android:paddingLeft="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_userJob"
@@ -132,6 +143,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/txt_rounded_background"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
         android:paddingLeft="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_userPassword"
@@ -147,7 +160,7 @@
         android:background="@drawable/btn_rounded_background"
         android:backgroundTint="@color/dusty_rose"
         android:text="Submit"
-        android:textColor="@color/white"
+        android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -163,7 +176,7 @@
         android:layout_marginTop="30dp"
         android:text="Name"
         android:textColor="@color/black"
-        android:textSize="60px"
+        android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_title" />
 
@@ -175,7 +188,7 @@
         android:layout_marginTop="32dp"
         android:text="Email"
         android:textColor="@color/black"
-        android:textSize="60px"
+        android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Name" />
 
@@ -186,7 +199,7 @@
         android:layout_marginStart="16dp"
         android:text="Address"
         android:textColor="@color/black"
-        android:textSize="60px"
+        android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
@@ -198,7 +211,7 @@
         android:layout_marginTop="28dp"
         android:text="Job Title"
         android:textColor="@color/black"
-        android:textSize="60px"
+        android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contact2" />
 
@@ -210,7 +223,7 @@
         android:layout_marginTop="40dp"
         android:text="Password"
         android:textColor="@color/black"
-        android:textSize="60px"
+        android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Jobtitle" />
 
@@ -222,7 +235,7 @@
         android:layout_marginTop="32dp"
         android:text="Confirm"
         android:textColor="@color/black"
-        android:textSize="60px"
+        android:textSize="23sp"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Password" />
@@ -234,7 +247,7 @@
         android:layout_marginStart="16dp"
         android:text="Password"
         android:textColor="@color/black"
-        android:textSize="60px"
+        android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ConfirmPassword" />
 
@@ -242,11 +255,11 @@
         android:id="@+id/Termsandcondition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="24dp"
         android:text="I accept and Understand the Terms and Conditions"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_confirmuserpassword" />
