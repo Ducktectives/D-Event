@@ -52,4 +52,5 @@
     <!--Account shit-->
     <string name="change_username">Change Username</string>
     <string name="change_password">Change Password</string>
+    <string name="change_pic">Change Profile Picture</string>
 </resources>

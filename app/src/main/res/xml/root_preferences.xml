@@ -11,6 +11,10 @@
             app:title="@string/change_password"
             android:inputType="textPassword"
             />
+        <Preference
+            app:key="profile_pic"
+            app:title="@string/change_pic"
+            />
 
     </PreferenceCategory>
 
