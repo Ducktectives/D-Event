@@ -233,9 +233,11 @@ public class Settings extends AppCompatActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Log.d("help","i want die");
-                    Settings s = new Settings();
-                    s.pick(getView());
-                    s.uploadImage();
+//                    Settings s = new Settings();
+//                    s.pick(getView());
+//                    s.uploadImage();
+                    Intent i = new Intent(getActivity(),Change_ProfilePic.class);
+                    startActivity(i);
                     return false;
                 }
             });
