@@ -197,7 +197,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     reference.child("Users").push().setValue(user);
 
                     // Afterward, I would like to send ID of user to the EventFormActivity
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), profile_page.class);
                     intent.putExtra("profile_id", profileID);
 
                     // Start the intent

@@ -61,7 +61,7 @@ public class Profile {
 
     }
 
-    public String HashPassword(int saltvalue, String pass){
+    public static String HashPassword(int saltvalue, String pass){
         try
         {
             String Saltpassword = saltvalue + pass;
@@ -82,8 +82,7 @@ public class Profile {
             }
 
             /* Complete hashed password in hexadecimal format */
-            Hashedpassword = s.toString();
-            return Hashedpassword;
+            return s.toString();
         }
         catch (NoSuchAlgorithmException e)
         {
