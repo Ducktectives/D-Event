@@ -72,7 +72,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 if (password == cpass && checkboxvalue.isChecked()){
                     //Profile(int id, String username, String title, String email,Integer contact, String password)
-                    user = new Profile(profileID, name, null, email, contact, password);
+                    user = new Profile(profileID, name, job, email, contact, password);
 
                     // Insert the user-defined object to the database
                     reference.child("Users").setValue(user);
