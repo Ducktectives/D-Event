@@ -13,6 +13,9 @@
         android:theme="@style/Theme.DEvent"
         tools:targetApi="31">
         <activity
+            android:name=".BookingPage"
+            android:exported="false" />
+        <activity
             android:name=".Settings"
             android:exported="false"
             android:label="@string/title_activity_settings" />
@@ -25,7 +28,7 @@
         <activity
             android:name=".RegistrationActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".EventDetailsPage"
             android:exported="false" />
@@ -52,7 +55,7 @@
         <activity
             android:name=".EventFormActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
