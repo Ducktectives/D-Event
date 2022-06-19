@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -47,6 +48,8 @@ public class RegistrationActivity extends AppCompatActivity {
         EditText confirmpassword = (EditText)findViewById(R.id.registration_confirmuserpassword);
         CheckBox checkboxvalue = (CheckBox)findViewById(R.id.Termsandcondition);
 
+        TextView errormessage = (TextView)findViewById(R.id.errormessage);
+
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -82,14 +85,14 @@ public class RegistrationActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    if (!checkboxvalue.isChecked()){
-
+                    if (name == "" | email == "" | contact != null | job == ""){
+                        errormessage.setText("Please enter a input for all the fields above");
                     }
                     if (password != cpass){
-
+                        errormessage.setText("The password fields do not match");
                     }
-                    if (name == "" | email == "" | contact != null | job == ""){
-
+                    if (!checkboxvalue.isChecked()){
+                        errormessage.setText("Please agree to our terms and conditions");
                     }
                 }
             }
