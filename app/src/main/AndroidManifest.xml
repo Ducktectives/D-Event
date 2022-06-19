@@ -13,15 +13,23 @@
         android:theme="@style/Theme.DEvent"
         tools:targetApi="31">
         <activity
-            android:name=".loginpage"
+            android:name=".Change_ProfilePic"
             android:exported="false" />
+        <activity
+            android:name=".Settings"
+            android:exported="false"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
+            android:name=".loginpage"
+            android:exported="false" />
+        <activity
             android:name=".RegistrationActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".EventDetailsPage"
             android:exported="false" />

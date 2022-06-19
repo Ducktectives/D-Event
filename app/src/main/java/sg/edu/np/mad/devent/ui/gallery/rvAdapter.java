@@ -30,6 +30,7 @@ public class rvAdapter extends RecyclerView.Adapter<ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Profile user = data.get(position);
         holder.username.setText(user.getUsername());
+        // I need Profile to have a pic attribute to set and get profile pic
         // holder.profilePic.setImageResource();
     }
 

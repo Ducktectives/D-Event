@@ -3,8 +3,12 @@ package sg.edu.np.mad.devent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -25,11 +29,12 @@ public class EventDetailsPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details_page);
 
-        String eventID ="Event1"; //to be changed when instance is passed
+        String eventID ="-N4qHSwXLyl0PNG654qf"; //to be changed when instance is passed
 
         //For firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
         DatabaseReference Ref = database.getReference("Event");
+        DatabaseReference Ref2 = database.getReference("Users");
 
         //Using get to get info from database once, rather than setting an event listener
         Ref.child(eventID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -37,16 +42,30 @@ public class EventDetailsPage extends AppCompatActivity {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data. Please reload.", task.getException());
+
                 }
                 else {
-                    Log.d("firebase", String.valueOf(task.getResult().child("Pricing").getValue()));
-                    String eventName = String.valueOf(task.getResult().child("Name").getValue());
+                    Log.d("firebase", String.valueOf(task.getResult().child("event_Name").getValue()));
+
+                    //Retrieving Data
+                    String eventNamedb = String.valueOf(task.getResult().child("event_Name").getValue());
+                    String eventLocdb = String.valueOf(task.getResult().child("event_Location").getValue());
+                    String eventDetaildb = String.valueOf(task.getResult().child("event_Details").getValue());
+                    String eventDatedb = String.valueOf(task.getResult().child("event_Date").getValue());
+
+                    //set the content in the activity
+                    TextView eventName = findViewById(R.id.EventName);
+                    eventName.setText(eventNamedb);
+                    TextView eventLocation = findViewById(R.id.EventLocation);
+                    eventLocation.setText(eventLocdb);
+                    TextView eventDetail = findViewById(R.id.eventDetails);
+                    eventDetail.setText(eventDetaildb);
 
                 }
             }
         });
 
-
+        //for slideshow of images
         imageSlider =findViewById(R.id.imageslider);
 
         ArrayList<SlideModel> imageList = new ArrayList<>();
@@ -55,5 +74,22 @@ public class EventDetailsPage extends AppCompatActivity {
         imageList.add(new SlideModel(R.drawable.a3,null));
 
         imageSlider.setImageList(imageList);
+
+        //event listener for booking
+        Button bookEvent = findViewById(R.id.bookbutton);
+        bookEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent book = new Intent(EventDetailsPage.this,BookingPage.class);
+                //startActivity(book);
+            }
+        });
+
+
+        //get user's name - foreign key ref not too sure where 
+
+
+
+
     }
 }
