@@ -60,7 +60,7 @@ public class EventFormActivity extends AppCompatActivity{
 
     // Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, boolean bookmarked)
     // Declaring the variables to upload the values to firebase
-    private String event_Name, event_Location, event_Date, event_Description, userID;
+    private String event_ID, event_Name, event_Location, event_Date, event_Description, userID, storageReference_ID;
     private Boolean bookmarked;
 
 
@@ -93,7 +93,6 @@ public class EventFormActivity extends AppCompatActivity{
         location = (EditText) findViewById(R.id.txt_event_form_location);
         date = (EditText) findViewById(R.id.txt_Date);
         eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
-
 
 
 
@@ -244,6 +243,7 @@ public class EventFormActivity extends AppCompatActivity{
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
+            storageReference_ID = UUID.randomUUID().toString();
 
             // Defining the child of storageReference
             //
@@ -252,7 +252,7 @@ public class EventFormActivity extends AppCompatActivity{
                     // UUID is a class that represents immutable universally unique identifier (UUID)
                     //
                     // A UUID represents a 128-bit value
-                    "images/" + UUID.randomUUID().toString()) ;
+                    "images/" + storageReference_ID) ;
 
             // adding listeners on event progression of image upload
             reference.putFile(selectedImage).addOnSuccessListener(
@@ -296,22 +296,22 @@ public class EventFormActivity extends AppCompatActivity{
 //        location = (EditText) findViewById(R.id.txt_event_form_location);
 //        date = (EditText) findViewById(R.id.txt_Date);
 //        eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
-
-        String event_Name  = eventName.getText().toString();
-        String event_Location  = location.getText().toString();
-        String event_Date  = date.getText().toString();
-        String event_Description  = eventDetail.getText().toString();
-        Boolean bookmarked = false;
+        event_ID = UUID.randomUUID().toString();
+        event_Name  = eventName.getText().toString();
+        event_Location  = location.getText().toString();
+        event_Date  = date.getText().toString();
+        event_Description  = eventDetail.getText().toString();
+        bookmarked = false;
 
 //        private String event_Name, event_Location, event_Date, event_Description, userID;
 //        private Boolean bookmarked;
 //            public Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked) {
 
-        event = new Events(event_Name, event_Location, event_Date, event_Description, userID, selectedImage.toString(), bookmarked);
+        event = new Events(event_ID, event_Name, event_Location, event_Date, event_Description, userID, selectedImage.toString(), storageReference_ID, bookmarked);
 
 
         // Insert the user-defined object to the database
-        reference.child("Event").setValue(event);
+        reference.child("Event").push().setValue(event);
     }
 
     public static String getCurrentTimeStamp(){

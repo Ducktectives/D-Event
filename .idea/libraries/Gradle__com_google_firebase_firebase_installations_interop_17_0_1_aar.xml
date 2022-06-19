@@ -2,11 +2,15 @@
   <library name="Gradle: com.google.firebase:firebase-installations-interop:17.0.1@aar">
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6ea94c8c3940eca9a487bbb15aeda15a/transformed/firebase-installations-interop-17.0.1/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/bd7980ab072435721ed47c0969187a7c/transformed/firebase-installations-interop-17.0.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bd7980ab072435721ed47c0969187a7c/transformed/firebase-installations-interop-17.0.1/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bd7980ab072435721ed47c0969187a7c/transformed/firebase-installations-interop-17.0.1/res" />
+      <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/5a9f41142ea6f5676b72efa08046cd36/transformed/jetified-firebase-installations-interop-17.0.1/res" />
+      <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/5a9f41142ea6f5676b72efa08046cd36/transformed/jetified-firebase-installations-interop-17.0.1/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/5a9f41142ea6f5676b72efa08046cd36/transformed/jetified-firebase-installations-interop-17.0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bd7980ab072435721ed47c0969187a7c/transformed/firebase-installations-interop-17.0.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/bd7980ab072435721ed47c0969187a7c/transformed/firebase-installations-interop-17.0.1/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/modules-2/files-2.1/com.google.firebase/firebase-installations-interop/17.0.1/a75db5c1d9ed5d246082b53d2a327e9758ce72d7/firebase-installations-interop-17.0.1-javadoc.jar!/" />
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-installations-interop/17.0.1/a75db5c1d9ed5d246082b53d2a327e9758ce72d7/firebase-installations-interop-17.0.1-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES />

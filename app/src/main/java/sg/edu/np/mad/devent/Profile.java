@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 public class Profile {
+
     String Username;
     String Title;
     String Email;
@@ -12,7 +13,6 @@ public class Profile {
     int Contactnum;
     int Eventsattended;
     int Saltvalue;
-    String Saltpassword;
     String Hashedpassword;
 
 
@@ -32,7 +32,7 @@ public class Profile {
             randomnum = rand.nextInt(upperbound);
         }
         Saltvalue = randomnum;
-        Saltpassword = Saltvalue + password;
+        String Saltpassword = Saltvalue + password;
         try
         {
             /* MessageDigest instance for MD5. */
@@ -59,10 +59,54 @@ public class Profile {
             e.printStackTrace();
         }
 
-        /* Display the unencrypted and encrypted passwords. */
-        System.out.println("Plain-text password: " + password);
-        System.out.println("Encrypted password using MD5: " + Hashedpassword);
     }
+
+    public String HashPassword(int saltvalue, String pass){
+        try
+        {
+            String Saltpassword = saltvalue + pass;
+            /* MessageDigest instance for MD5. */
+            MessageDigest m = MessageDigest.getInstance("MD5");
+
+            /* Add plain-text password bytes to digest using MD5 update() method. */
+            m.update(Saltpassword.getBytes());
+
+            /* Convert the hash value into bytes */
+            byte[] bytes = m.digest();
+
+            /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */
+            StringBuilder s = new StringBuilder();
+            for (int i=0; i< bytes.length ;i++)
+            {
+                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+
+            /* Complete hashed password in hexadecimal format */
+            Hashedpassword = s.toString();
+            return Hashedpassword;
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean CheckPassword(String hashedpassword, String Userhashedpass){
+        if (hashedpassword == Userhashedpass){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+
+
+
+
+
 
 
     public String getUsername() {
@@ -119,14 +163,6 @@ public class Profile {
 
     public void setSaltvalue(int saltvalue) {
         Saltvalue = saltvalue;
-    }
-
-    public String getSaltpassword() {
-        return Saltpassword;
-    }
-
-    public void setSaltpassword(String saltpassword) {
-        Saltpassword = saltpassword;
     }
 
     public String getHashedpassword() {
