@@ -60,17 +60,31 @@ public class RegistrationActivity extends AppCompatActivity {
                 DatabaseReference reference ;
                 reference = database.getReference();
 
-
+                Integer contact;
                 String profileID = UUID.randomUUID().toString();
                 String name  = userName.getText().toString();
                 String email  = userEmail.getText().toString();
-                Integer contact  = Integer.parseInt(userContact.getText().toString());
+                try {
+                    contact = Integer.parseInt(userContact.getText().toString());
+                }
+                catch (Exception e){
+                    contact = null;
+                }
                 String job  = jobtitle.getText().toString();
                 String password  = userPassword.getText().toString();
                 String cpass  = confirmpassword.getText().toString();
 
 
-                if (password == cpass && checkboxvalue.isChecked()){
+                if (name.isEmpty() || email.isEmpty() || contact == null || job.isEmpty() || password.isEmpty()){
+                    errormessage.setText("Please enter a input for all the fields above");
+                }
+                else if (!password.equals(cpass)){
+                    errormessage.setText("The password fields do not match");
+                }
+                else if (!checkboxvalue.isChecked()){
+                    errormessage.setText("Please agree to our terms and conditions");
+                }
+                else {
                     //Profile(int id, String username, String title, String email,Integer contact, String password)
                     user = new Profile(profileID, name, job, email, contact, password);
 
@@ -83,17 +97,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
                     // Start the intent
                     startActivity(intent);
-                }
-                else {
-                    if (name == "" | email == "" | contact != null | job == ""){
-                        errormessage.setText("Please enter a input for all the fields above");
-                    }
-                    if (password != cpass){
-                        errormessage.setText("The password fields do not match");
-                    }
-                    if (!checkboxvalue.isChecked()){
-                        errormessage.setText("Please agree to our terms and conditions");
-                    }
                 }
             }
         });
