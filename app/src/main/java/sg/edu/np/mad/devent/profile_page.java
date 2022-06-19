@@ -117,6 +117,13 @@ public class profile_page extends AppCompatActivity {
         v.requestFocus();
         gridView.setFocusable(false);
 
+        // Changing Password
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            String value = extras.getString("new_pass");
+            p.setPassword(value);
+        }
+
 
     }
 }

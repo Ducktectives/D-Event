@@ -2,15 +2,16 @@
   <library name="Gradle: androidx.exifinterface:exifinterface:1.2.0@aar">
     <ANNOTATIONS>
       <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/6717471d7a094c17b75bf4b5cc8f73a9/transformed/exifinterface-1.2.0/annotations.zip!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6717471d7a094c17b75bf4b5cc8f73a9/transformed/exifinterface-1.2.0/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/23ebbab4b4f987834dac5025cef8fccc/transformed/exifinterface-1.2.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6717471d7a094c17b75bf4b5cc8f73a9/transformed/exifinterface-1.2.0/res" />
       <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/6717471d7a094c17b75bf4b5cc8f73a9/transformed/exifinterface-1.2.0/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/6717471d7a094c17b75bf4b5cc8f73a9/transformed/exifinterface-1.2.0/res" />
       <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/6717471d7a094c17b75bf4b5cc8f73a9/transformed/exifinterface-1.2.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6717471d7a094c17b75bf4b5cc8f73a9/transformed/exifinterface-1.2.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6717471d7a094c17b75bf4b5cc8f73a9/transformed/exifinterface-1.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/23ebbab4b4f987834dac5025cef8fccc/transformed/exifinterface-1.2.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/23ebbab4b4f987834dac5025cef8fccc/transformed/exifinterface-1.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/23ebbab4b4f987834dac5025cef8fccc/transformed/exifinterface-1.2.0/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

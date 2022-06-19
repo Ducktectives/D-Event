@@ -46,6 +46,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Go to Settings button
+        Button to_settings = findViewById(R.id.to_settings);
+        to_settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent open_settings = new Intent(MainActivity.this, Settings.class);
+                startActivity(open_settings);
+            }
+        });
+
 
 
         /*
