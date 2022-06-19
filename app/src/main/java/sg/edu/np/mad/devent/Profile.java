@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 public class Profile {
+
     String Username;
     String Title;
     String Email;
@@ -12,7 +13,6 @@ public class Profile {
     int Contactnum;
     int Eventsattended;
     int Saltvalue;
-    String Saltpassword;
     String Hashedpassword;
 
 
@@ -32,7 +32,7 @@ public class Profile {
             randomnum = rand.nextInt(upperbound);
         }
         Saltvalue = randomnum;
-        Saltpassword = Saltvalue + password;
+        String Saltpassword = Saltvalue + password;
         try
         {
             /* MessageDigest instance for MD5. */
@@ -64,7 +64,7 @@ public class Profile {
     public String HashPassword(int saltvalue, String pass){
         try
         {
-            Saltpassword = saltvalue + pass;
+            String Saltpassword = saltvalue + pass;
             /* MessageDigest instance for MD5. */
             MessageDigest m = MessageDigest.getInstance("MD5");
 
@@ -163,14 +163,6 @@ public class Profile {
 
     public void setSaltvalue(int saltvalue) {
         Saltvalue = saltvalue;
-    }
-
-    public String getSaltpassword() {
-        return Saltpassword;
-    }
-
-    public void setSaltpassword(String saltpassword) {
-        Saltpassword = saltpassword;
     }
 
     public String getHashedpassword() {
