@@ -23,13 +23,13 @@ public class loginpage extends AppCompatActivity {
         Button login = (Button)findViewById(R.id.Login);
         Button register = (Button)findViewById(R.id.Register);
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent prevuser = new Intent(loginpage.this, LoginActivity.class);
-                startActivity(prevuser);
-            }
-        });
+        //login.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+        //        Intent prevuser = new Intent(loginpage.this, LoginActivity.class);
+        //       startActivity(prevuser);
+        //    }
+        //});
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
