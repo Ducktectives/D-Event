@@ -17,9 +17,9 @@
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
-    <fragment
+    <activity
         android:id="@+id/nav_settings"
-        android:name="sg.edu.np.mad.devent.ui.slideshow.SlideshowFragment"
+        android:name="sg.edu.np.mad.devent.Settings"
         android:label=""
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/settings_activity" />
 </navigation>

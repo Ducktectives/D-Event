@@ -80,8 +80,8 @@ public class EventDetailsPage extends AppCompatActivity {
         bookEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent book = new Intent(EventDetailsPage.this,BookingPage.class);
-                startActivity(book);
+                //Intent book = new Intent(EventDetailsPage.this,BookingPage.class);
+                //startActivity(book);
             }
         });
 
