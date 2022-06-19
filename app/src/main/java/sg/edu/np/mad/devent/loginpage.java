@@ -27,7 +27,7 @@ public class loginpage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent prevuser = new Intent(loginpage.this, LoginActivity.class);
-                startActivity(prevuser);
+               startActivity(prevuser);
             }
         });
 

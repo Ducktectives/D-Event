@@ -71,6 +71,7 @@ public class Profile {
         return Hashedpassword;
     }
 
+
     public String getUsername() {
         return Username;
     }
