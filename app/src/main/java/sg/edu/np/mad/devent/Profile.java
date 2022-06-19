@@ -12,6 +12,7 @@ public class Profile {
     int Contactnum;
     int Eventsattended;
     int Saltvalue;
+    private String Password;
     String Saltpassword;
     String Hashedpassword;
 
@@ -24,6 +25,7 @@ public class Profile {
         Title = title;
         Contactnum = contact;
         Email = email;
+        Password = password;
         Random rand = new Random();
         int lowerbound = 10000;
         int upperbound = 99999;
@@ -32,6 +34,10 @@ public class Profile {
             randomnum = rand.nextInt(upperbound);
         }
         Saltvalue = randomnum;
+
+    }
+
+    private String createHash(String password){
         Saltpassword = Saltvalue + password;
         try
         {
@@ -62,8 +68,8 @@ public class Profile {
         /* Display the unencrypted and encrypted passwords. */
         System.out.println("Plain-text password: " + password);
         System.out.println("Encrypted password using MD5: " + Hashedpassword);
+        return Hashedpassword;
     }
-
 
     public String getUsername() {
         return Username;
@@ -136,4 +142,6 @@ public class Profile {
     public void setHashedpassword(String hashedpassword) {
         Hashedpassword = hashedpassword;
     }
+
+    public void setPassword(String password) {Password = createHash(password);}
 }
