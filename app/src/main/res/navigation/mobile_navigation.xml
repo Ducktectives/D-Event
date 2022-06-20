@@ -22,4 +22,5 @@
         android:name="sg.edu.np.mad.devent.Settings"
         android:label=""
         tools:layout="@layout/settings_activity" />
+
 </navigation>
