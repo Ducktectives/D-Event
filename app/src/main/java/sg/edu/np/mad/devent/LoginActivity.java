@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Getting the text entered by users
-                String email = useremail.getText().toString().toUpperCase();
+                String email = useremail.getText().toString();
                 String password = userpassword.getText().toString();
 
 
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                 DatabaseReference Ref = database.getReference("Users");
 
                 //Using get to get info from database once, rather than setting an event listener
-                Ref.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                Ref.orderByChild("email").equalTo(email.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {

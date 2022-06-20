@@ -83,7 +83,8 @@
             android:text="by Who"
             android:textAlignment="viewStart"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/EventLocation" />
+            app:layout_constraintTop_toBottomOf="@+id/EventLocation"
+            android:clickable="true"/>
 
         <TextView
             android:id="@+id/EventMonth"
@@ -105,8 +106,10 @@
             android:layout_marginTop="16dp"
             android:scrollbars="vertical"
             android:text="Event Description"
+            app:layout_constrainedWidth="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/EventOrganiser" />
+            app:layout_constraintTop_toBottomOf="@+id/EventOrganiser"
+            app:layout_constraintHorizontal_bias="1"/>
 
         <TextView
             android:id="@+id/EventLocation"

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="sg.edu.np.mad.devent">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DEvent"
         tools:targetApi="31">
+        <activity
+            android:name=".SplashScreen"
+            android:exported="false" />
         <activity
             android:name=".UserBooking"
             android:exported="false" />
@@ -40,7 +45,7 @@
         <activity
             android:name=".profile_page"
             android:exported="false"
-            android:parentActivityName=".NavDrawer"/>
+            android:parentActivityName=".NavDrawer" />
         <activity
             android:name=".EditDescription"
             android:exported="false" />
@@ -63,6 +68,5 @@
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
