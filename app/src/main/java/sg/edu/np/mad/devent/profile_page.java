@@ -40,7 +40,7 @@ public class profile_page extends AppCompatActivity {
     DatabaseReference event_path = database.getReference("Event");
     DatabaseReference user_path = database.getReference("Users");
 
-    String user_id_unique = "CLEMENT"; // Change this to get from intent;
+    String user_id_unique = "W222"; // Change this to get from intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
