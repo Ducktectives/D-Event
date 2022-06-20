@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                 // Getting the text entered by users
                 String email = useremail.getText().toString();
                 String password = userpassword.getText().toString();
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
                 //For firebase
@@ -51,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                 DatabaseReference Ref = database.getReference("Users");
 
                 //Using get to get info from database once, rather than setting an event listener
-                Ref.orderByChild("email").equalTo(email.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+                Ref.orderByChild("email").equalTo(email.toLowerCase().replace(".", "")).addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -74,6 +75,9 @@ public class LoginActivity extends AppCompatActivity {
                                             login.putExtra("Email", email);
                                             login.putExtra("Username", username);
                                             startActivity(login);
+                                        }
+                                        else if (!email.trim().matches(emailPattern)){
+                                            errormsg.setText("Kindly enter a valid email");
                                         }
                                         else {
                                             // Giving a common user error when login failure

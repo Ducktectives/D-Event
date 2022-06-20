@@ -42,6 +42,10 @@ public class Change_ProfilePic extends AppCompatActivity {
     Button cancel;
     Uri image;
     DatabaseReference reference;
+    FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+    DatabaseReference event_path = database.getReference("Event");
+    DatabaseReference user_path = database.getReference("Users");
+    String user_id_unique = "W222"; // Change this to get from intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,6 @@ public class Change_ProfilePic extends AppCompatActivity {
         profpic = findViewById(R.id.currentprofpic);
         accept = findViewById(R.id.acceptchangeprofpic);
         cancel = findViewById((R.id.cancelchangeprofpic));
-        database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
         storageReference = FirebaseStorage.getInstance().getReference();
         profpic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +116,6 @@ public class Change_ProfilePic extends AppCompatActivity {
 
     // Firebase for storing Image
     protected StorageReference storageReference;
-    private FirebaseDatabase database;
 
     public static void verifyStoragePermissions(Activity activity) {
         Settings s = new Settings();
@@ -157,6 +159,8 @@ public class Change_ProfilePic extends AppCompatActivity {
                     //
                     // A UUID represents a 128-bit value
                     "images/" + storageReference_ID) ;
+            user_path.child(user_id_unique).child("profpic").setValue(storageReference_ID);
+
 
             // adding listeners on event progression of image upload
             reference.putFile(image).addOnSuccessListener(

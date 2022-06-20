@@ -1,5 +1,10 @@
 package sg.edu.np.mad.devent;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,6 +21,7 @@ public class Profile implements Serializable {
     int Eventsattended;
     int Saltvalue;
     String Hashedpassword;
+    Bitmap profpic;
 
 
     public Profile() {}
@@ -26,6 +32,12 @@ public class Profile implements Serializable {
         Title = title;
         Contactnum = contact;
         Email = email;
+        try {
+            profpic = BitmapFactory.decodeFile(File.createTempFile("image",".jpg").getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         // Creating Salt Values
         Random rand = new Random();

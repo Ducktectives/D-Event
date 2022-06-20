@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -195,10 +196,14 @@ public class RegistrationActivity extends AppCompatActivity {
                 String job  = jobtitle.getText().toString();
                 String password  = userPassword.getText().toString();
                 String cpass  = confirmpassword.getText().toString();
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
                 // Input validation to check if the values are empty
                 if (name.isEmpty() || email.isEmpty() || contact == null || job.isEmpty() || password.isEmpty()){
                     errormessage.setText("Please enter a input for all the fields above");
+                }
+                else if (!email.trim().matches(emailPattern)){
+                    errormessage.setText("Kindly enter a valid email");
                 }
                 else if (!password.equals(cpass)){
                     errormessage.setText("The password fields do not match");
@@ -220,7 +225,10 @@ public class RegistrationActivity extends AppCompatActivity {
                                 user = new Profile(profileID, name, job, email, finalContact, password);
 
                                 // Insert the user-defined object to the database
-                                reference.child("Users").child(email.toLowerCase()).setValue(user);
+                                reference.child("Users").child(email.toLowerCase().replace(".","")).setValue(user);
+
+                                // Let user know that account creation is successful
+                                Toast.makeText(getApplicationContext(), "Account Created Successfully", Toast.LENGTH_LONG).show();
 
                                 // Send the profileID, email and name of user to the profile_page class
                                 Intent intent = new Intent(getApplicationContext(), profile_page.class);
@@ -234,7 +242,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            // Let users know that account creation is unsuccessful
+                            Toast.makeText(getApplicationContext(), "Account Creation Failed", Toast.LENGTH_LONG).show();
                         }
                     });
                 }

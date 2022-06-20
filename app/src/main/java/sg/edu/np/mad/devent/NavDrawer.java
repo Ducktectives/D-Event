@@ -41,6 +41,11 @@ public class NavDrawer extends AppCompatActivity {
         binding = ActivityNavDrawerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Intent i1 = getIntent();
+        String getemailofuser = i1.getStringExtra("Email");
+        String getusernameofuser = i1.getStringExtra("Username");
+        String geruserprofileid = i1.getStringExtra("profile_id");
+
         setSupportActionBar(binding.appBarNavDrawer.toolbar);
         binding.appBarNavDrawer.fab.setOnClickListener(new View.OnClickListener() { // for the bottom right email icon
             @Override
@@ -92,7 +97,11 @@ public class NavDrawer extends AppCompatActivity {
         navHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(NavDrawer.this, profile_page.class));
+                Intent i2 = new Intent(NavDrawer.this, profile_page.class);
+                i2.putExtra("Username", getusernameofuser);
+                i2.putExtra("Email", getemailofuser);
+                i2.putExtra("profile_id", geruserprofileid);
+                startActivity(i2);
             }
         });
 
