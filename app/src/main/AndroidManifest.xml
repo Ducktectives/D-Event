@@ -28,7 +28,7 @@
             android:name=".Settings"
             android:exported="false"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".profile_page" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
