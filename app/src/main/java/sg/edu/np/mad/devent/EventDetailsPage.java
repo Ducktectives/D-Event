@@ -40,11 +40,14 @@ import java.io.File;
 import java.io.IOException;
 
 public class EventDetailsPage extends AppCompatActivity {
-    TextView eventOrg = findViewById(R.id.EventOrganiser);
+    TextView eventOrg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details_page);
+
+        //set the id of the eventOrg
+        eventOrg = findViewById(R.id.EventOrganiser);
 
         //receive Intent information
         Intent receiveEventAct = getIntent();
