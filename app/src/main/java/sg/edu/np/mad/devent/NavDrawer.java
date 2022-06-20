@@ -1,6 +1,7 @@
 package sg.edu.np.mad.devent;
 
 import static sg.edu.np.mad.devent.R.id.nav_host_fragment_content_nav_drawer;
+import static sg.edu.np.mad.devent.RegistrationActivity.user;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -53,7 +54,7 @@ public class NavDrawer extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_followed, R.id.nav_settings)
+                R.id.nav_home, R.id.nav_settings) // R.id.nav_followed
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_nav_drawer);
@@ -61,6 +62,7 @@ public class NavDrawer extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         // Sign out menu item's Alert dialog
+        /* UNCOMMENT THIS WHEN WE ARE IMPLEMENTING SIGNOUT
         navigationView.getMenu().findItem(R.id.nav_signout).setOnMenuItemClickListener(menuItem -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(navigationView.getContext());
             builder.setTitle("Profile");
@@ -81,14 +83,25 @@ public class NavDrawer extends AppCompatActivity {
             builder.show();
             return true;
         });
+         */
 
 
         // Used for displaying profile pic / Username / email in nav header
         View navHeader = navigationView.getHeaderView(0);
         // Pull data of user and display *** ! IMPORTANT COME BACK TO THIS LATER
-        Intent receivingEnd = getIntent();
+        navHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(NavDrawer.this, profile_page.class));
+            }
+        });
+
+        TextView username = (TextView) navHeader.findViewById(R.id.nav_username);
+        username.setText(user.getUsername());
+
         TextView email = (TextView) navHeader.findViewById(R.id.nav_email);
-        email.setText("testing@gmail.com");
+        email.setText(user.Email);
+
     }
 
     @Override

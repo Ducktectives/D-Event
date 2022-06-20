@@ -121,9 +121,16 @@ public class profile_page extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             String value = extras.getString("new_pass");
-            p.setPassword(value);
+            //p.setPassword(value);
         }
 
+        Button btn = findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(profile_page.this, NavDrawer.class));
+            }
+        });
 
     }
 }

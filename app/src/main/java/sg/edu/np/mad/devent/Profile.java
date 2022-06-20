@@ -1,10 +1,11 @@
 package sg.edu.np.mad.devent;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-public class Profile {
+public class Profile implements Serializable {
 
     String Username;
     String Title;
