@@ -51,15 +51,21 @@ public class LoginActivity extends AppCompatActivity {
                         if(snapshot.exists()) {
                             String hashpassword = snapshot.child(email).child("hashpassword").getValue(String.class);
                             Integer saltvalue = Integer.parseInt(snapshot.child(email).child("SaltValue").getValue(String.class));
+                            String username = snapshot.child(email).child("username").getValue(String.class);
                             if (Profile.HashPassword(saltvalue, password).equals(hashpassword)){
                                 Intent login = new Intent(LoginActivity.this, NavDrawer.class);
+                                login.putExtra("Email", email);
+                                login.putExtra("Username", username);
                                 startActivity(login);
                             }
+                        }
+                        else {
+                            errormsg.setText("Username or Password is invalid");
                         }
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        errormsg.setText("Username or Password is invalid");
+
                     }
                 });
             }
