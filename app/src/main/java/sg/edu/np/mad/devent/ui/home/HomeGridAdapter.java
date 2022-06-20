@@ -66,6 +66,7 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
             @Override
             public void onClick(View view) {
                 Intent eventAct = new Intent(context, EventDetailsPage.class);
+                eventAct.putExtra("event_Name",filteredEventsList.get(i).getEvent_Name());
                 context.startActivity(eventAct);
             }
         });

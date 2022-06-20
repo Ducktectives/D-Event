@@ -34,43 +34,37 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/red_circle" />
 
-        <com.denzcoskun.imageslider.ImageSlider
-            android:id="@+id/imageslider"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/eventPicture"
+            android:layout_width="wrap_content"
             android:layout_height="230dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            app:iss_auto_cycle="true"
-            app:iss_corner_radius="@android:integer/config_mediumAnimTime"
-            app:iss_period="3000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.09">
-
-        </com.denzcoskun.imageslider.ImageSlider>
+            app:layout_constraintVertical_bias="0.028"
+            app:srcCompat="@drawable/loading" />
 
         <ImageView
             android:id="@+id/Detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-20dp"
             android:cropToPadding="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageslider"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintTop_toBottomOf="@+id/eventPicture"
             app:srcCompat="@drawable/pink_rounded_square" />
 
         <TextView
             android:id="@+id/EventName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="45dp"
             android:layout_marginEnd="336dp"
             android:scrollbars="vertical"
             android:text="Event Name"
@@ -78,16 +72,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/EventMonth"
-            app:layout_constraintTop_toBottomOf="@+id/imageslider" />
+            app:layout_constraintTop_toBottomOf="@+id/eventPicture" />
 
         <TextView
             android:id="@+id/EventOrganiser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="492dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="484dp"
             android:scrollbars="vertical"
             android:text="by Who"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/EventLocation" />
 
@@ -96,11 +91,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="148dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="50dp"
             android:scrollbars="vertical"
             android:text="OCT"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageslider" />
+            app:layout_constraintTop_toBottomOf="@+id/eventPicture" />
 
         <TextView
             android:id="@+id/EventDescription"
@@ -117,10 +113,11 @@
             android:id="@+id/EventLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="448dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="432dp"
             android:scrollbars="vertical"
             android:text="Event Location"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/EventName" />
 
@@ -132,6 +129,7 @@
             android:layout_marginTop="4dp"
             android:scrollbars="vertical"
             android:text="30"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/EventMonth" />
 

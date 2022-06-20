@@ -3,6 +3,7 @@ package sg.edu.np.mad.devent;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Random;
 
 public class Profile implements Serializable {
@@ -25,6 +26,8 @@ public class Profile implements Serializable {
         Title = title;
         Contactnum = contact;
         Email = email;
+
+        // Creating Salt Values
         Random rand = new Random();
         int lowerbound = 10000;
         int upperbound = 99999;
@@ -33,7 +36,11 @@ public class Profile implements Serializable {
             randomnum = rand.nextInt(upperbound);
         }
         Saltvalue = randomnum;
+
+        // Salting the Password
         String Saltpassword = Saltvalue + password;
+
+        // Hashing the Salted password
         try
         {
             /* MessageDigest instance for MD5. */
@@ -59,9 +66,9 @@ public class Profile implements Serializable {
         {
             e.printStackTrace();
         }
-
     }
 
+    // Hash the Password
     public static String HashPassword(int saltvalue, String pass){
         try
         {
@@ -92,6 +99,7 @@ public class Profile implements Serializable {
         }
     }
 
+    // Check the password if it is equal
     public boolean CheckPassword(String hashedpassword, String Userhashedpass){
         if (hashedpassword == Userhashedpass){
             return true;

@@ -26,7 +26,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -39,6 +41,7 @@ public class Change_ProfilePic extends AppCompatActivity {
     Button accept;
     Button cancel;
     Uri image;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,8 @@ public class Change_ProfilePic extends AppCompatActivity {
         profpic = findViewById(R.id.currentprofpic);
         accept = findViewById(R.id.acceptchangeprofpic);
         cancel = findViewById((R.id.cancelchangeprofpic));
-
+        database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        storageReference = FirebaseStorage.getInstance().getReference();
         profpic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,9 +62,12 @@ public class Change_ProfilePic extends AppCompatActivity {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i = new Intent(Change_ProfilePic.this,profile_page.class);
+                // Send new image to profile page
+                i.putExtra("new_pic",image.toString());
+                Log.d("aa","Image uploaded");
                 uploadImage();
                 // Need to reflect change in profile page activity
-                // Crashes here fix pls
 
             }
         });
@@ -92,8 +99,6 @@ public class Change_ProfilePic extends AppCompatActivity {
                                 Log.d("Failed to upload image", String.valueOf(ex));
                             }
                         }
-
-
                     }
                 }
             }
@@ -107,7 +112,7 @@ public class Change_ProfilePic extends AppCompatActivity {
     };
 
     // Firebase for storing Image
-    private StorageReference storageReference;
+    protected StorageReference storageReference;
     private FirebaseDatabase database;
 
     public static void verifyStoragePermissions(Activity activity) {

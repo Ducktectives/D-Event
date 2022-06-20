@@ -1,5 +1,6 @@
 package sg.edu.np.mad.devent;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -15,8 +16,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
@@ -32,6 +38,7 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText userName, userEmail, userContact,
             userJob, userPassword,registration_userConfirmPassword;
 
+
     // Firebase for storing Image
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
@@ -41,6 +48,8 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+
+        // Dialog upon clicking Terms and Conditions
         TextView tcprompt = (TextView)findViewById(R.id.tcprompt);
 
         tcprompt.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +153,8 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
+
+        // Assigning the fields to a variable
         btn_register = findViewById(R.id.registration_button);
 
         EditText userName = (EditText)findViewById(R.id.registration_userName);
@@ -156,8 +167,12 @@ public class RegistrationActivity extends AppCompatActivity {
 
         TextView errormessage = (TextView)findViewById(R.id.errormessage);
 
+
+        // Getting Database
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
+
+        //Attempting to register for an account
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,10 +181,11 @@ public class RegistrationActivity extends AppCompatActivity {
                 DatabaseReference reference ;
                 reference = database.getReference();
 
+                // Assigning user assigned variables
                 Integer contact;
                 String profileID = UUID.randomUUID().toString();
                 String name  = userName.getText().toString();
-                String email  = userEmail.getText().toString();
+                String email  = userEmail.getText().toString().toLowerCase();
                 try {
                     contact = Integer.parseInt(userContact.getText().toString());
                 }
@@ -180,7 +196,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 String password  = userPassword.getText().toString();
                 String cpass  = confirmpassword.getText().toString();
 
-
+                // Input validation to check if the values are empty
                 if (name.isEmpty() || email.isEmpty() || contact == null || job.isEmpty() || password.isEmpty()){
                     errormessage.setText("Please enter a input for all the fields above");
                 }
@@ -191,19 +207,36 @@ public class RegistrationActivity extends AppCompatActivity {
                     errormessage.setText("Please agree to our terms and conditions");
                 }
                 else {
-                    //Profile(int id, String username, String title, String email,Integer contact, String password)
-                    user = new Profile(profileID, name, job, email, contact, password);
+                    Integer finalContact = contact;
+                    reference.child("Users").orderByChild("email").equalTo(email.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                errormessage.setText("Email already exist, please try again");
+                            }
+                            else {
+                                // Create user account
+                                // Profile(int id, String username, String title, String email,Integer contact, String password)
+                                user = new Profile(profileID, name, job, email, finalContact, password);
 
-                    // Insert the user-defined object to the database
-                    reference.child("Users").push().setValue(user);
+                                // Insert the user-defined object to the database
+                                reference.child("Users").child(email.toLowerCase()).setValue(user);
 
-                    // Afterward, I would like to send ID of user to the EventFormActivity
-                    Intent intent = new Intent(getApplicationContext(), profile_page.class);
-                    intent.putExtra("profile_id", profileID);
+                                // Send the profileID, email and name of user to the profile_page class
+                                Intent intent = new Intent(getApplicationContext(), profile_page.class);
+                                intent.putExtra("profile_id", profileID);
+                                intent.putExtra("Email", email);
+                                intent.putExtra("Username", name);
+                                // Start the intent
+                                startActivity(intent);
+                            }
+                        }
 
-                    // Start the intent
-                    startActivity(intent);
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
+                        }
+                    });
                 }
             }
         });
