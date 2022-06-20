@@ -1,5 +1,6 @@
 package sg.edu.np.mad.devent;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -17,8 +18,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
@@ -181,7 +185,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 Integer contact;
                 String profileID = UUID.randomUUID().toString();
                 String name  = userName.getText().toString();
-                String email  = userEmail.getText().toString().toUpperCase();
+                String email  = userEmail.getText().toString().toLowerCase();
                 try {
                     contact = Integer.parseInt(userContact.getText().toString());
                 }
@@ -196,9 +200,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 if (name.isEmpty() || email.isEmpty() || contact == null || job.isEmpty() || password.isEmpty()){
                     errormessage.setText("Please enter a input for all the fields above");
                 }
-                else if (email.equals(reference.child("Users").equals(email))){
-                    errormessage.setText("Please use another email");
-                }
                 else if (!password.equals(cpass)){
                     errormessage.setText("The password fields do not match");
                 }
@@ -206,22 +207,36 @@ public class RegistrationActivity extends AppCompatActivity {
                     errormessage.setText("Please agree to our terms and conditions");
                 }
                 else {
-                    // Create user account
+                    Integer finalContact = contact;
+                    reference.child("Users").orderByChild("email").equalTo(email.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                errormessage.setText("Email already exist, please try again");
+                            }
+                            else {
+                                // Create user account
+                                // Profile(int id, String username, String title, String email,Integer contact, String password)
+                                user = new Profile(profileID, name, job, email, finalContact, password);
 
-                    // Profile(int id, String username, String title, String email,Integer contact, String password)
-                    user = new Profile(profileID, name, job, email, contact, password);
+                                // Insert the user-defined object to the database
+                                reference.child("Users").child(email.toLowerCase()).setValue(user);
 
-                    // Insert the user-defined object to the database
-                    reference.child("Users").child(email).setValue(user);
+                                // Send the profileID, email and name of user to the profile_page class
+                                Intent intent = new Intent(getApplicationContext(), profile_page.class);
+                                intent.putExtra("profile_id", profileID);
+                                intent.putExtra("Email", email);
+                                intent.putExtra("Username", name);
+                                // Start the intent
+                                startActivity(intent);
+                            }
+                        }
 
-                    // Send the profileID, email and name of user to the profile_page class
-                    Intent intent = new Intent(getApplicationContext(), profile_page.class);
-                    intent.putExtra("profile_id", profileID);
-                    intent.putExtra("Email", email);
-                    intent.putExtra("Username", name);
-                    // Start the intent
-                    startActivity(intent);
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
+                        }
+                    });
                 }
             }
         });
