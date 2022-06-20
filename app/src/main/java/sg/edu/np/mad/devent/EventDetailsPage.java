@@ -41,6 +41,7 @@ import java.io.IOException;
 
 public class EventDetailsPage extends AppCompatActivity {
     TextView eventOrg;
+    String eventOrganizerEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +81,7 @@ public class EventDetailsPage extends AppCompatActivity {
                     String eventLocdb = String.valueOf(task.getResult().child("event_Location").getValue());
 
                     //For event organizer
-                    String eventOrganizer = String.valueOf(task.getResult().child("event_Organizer").getValue());
+                    eventOrganizerEmail = String.valueOf(task.getResult().child("event_Organizer").getValue());
 
                     //For event description
                     String eventDesc = String.valueOf(task.getResult().child("event_Description").getValue());
@@ -136,7 +137,23 @@ public class EventDetailsPage extends AppCompatActivity {
                     eventLocation.setText(eventLocdb);
 
                     //----For the event organizer
-                    eventOrg.setText(eventOrganizer);
+                    //search for the user with the same email
+                    DatabaseReference Ref2 = database.getReference("Users");
+                    Ref2.child(eventOrganizerEmail).get()
+                            .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if (!task.isSuccessful()){
+                                        Log.d("f","failed");
+                                    }
+                                    else{
+                                        String username = String.valueOf(task.getResult().child("username").getValue());
+                                        eventOrg.setText("By " + username);
+                                    }
+                                }
+                            });
+
+
 
                     //----For the event Description
                     TextView eventDescription = findViewById(R.id.EventDescription);
@@ -151,13 +168,16 @@ public class EventDetailsPage extends AppCompatActivity {
         });
 
 
+
+
         //event listener for viewing profile of event organiser
         eventOrg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent profile = new Intent(EventDetailsPage.this,profile_page.class);
-                profile.putExtra("EventOrganizer",eventOrg.getText());
+                Intent profile = new Intent(EventDetailsPage.this, profile_page.class);
+                profile.putExtra("EventOrganizer", eventOrganizerEmail);
                 startActivity(profile);
+                Log.d("naow",eventOrganizerEmail);
             }
         });
 
