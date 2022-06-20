@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Getting the text entered by users
-                String email = useremail.getText().toString();
+                String email = useremail.getText().toString().toUpperCase();
                 String password = userpassword.getText().toString();
 
 
@@ -56,27 +56,32 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()) {
-                            try {
-                                // Getting the values required to authenticate the user
-                                String hashpassword = snapshot.child(email).child("hashpassword").getValue(String.class);
-                                Integer saltvalue = Integer.parseInt(snapshot.child(email).child("saltvalue").getValue(String.class));
-                                String username = snapshot.child(email).child("username").getValue(String.class);
-                                // Checking if the user credentials if it matches the record in the database
-                                if (hashpassword.equals(Profile.HashPassword(saltvalue, password))){
-                                    Intent login = new Intent(LoginActivity.this, NavDrawer.class);
-                                    // Passing the Email and Username to the next activity for user
-                                    login.putExtra("Email", email);
-                                    login.putExtra("Username", username);
-                                    startActivity(login);
+                            // Getting the values required to authenticate the user
+                            Ref.child(email).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.e("firebase", "Error getting data. Please reload.", task.getException());
+                                    }
+                                    else {
+                                        Log.d("firebase", String.valueOf(task.getResult().child("username").getValue()));
+                                        String username = task.getResult().child("username").getValue(String.class);
+                                        String hashpassword = task.getResult().child("hashedpassword").getValue(String.class);
+                                        Integer saltvalue = task.getResult().child("saltvalue").getValue(Integer.class);
+                                        if (hashpassword.equals(Profile.HashPassword(saltvalue, password))){
+                                            Intent login = new Intent(LoginActivity.this, NavDrawer.class);
+                                            // Passing the Email and Username to the next activity for user
+                                            login.putExtra("Email", email);
+                                            login.putExtra("Username", username);
+                                            startActivity(login);
+                                        }
+                                        else {
+                                            // Giving a common user error when login failure
+                                            errormsg.setText("Password is invalid");
+                                        }
+                                    }
                                 }
-                                else {
-                                    // Giving a common user error when login failure
-                                    errormsg.setText("Password is invalid");
-                                }
-                            }
-                            catch (Exception e) {
-                                errormsg.setText(String.valueOf(snapshot.child(email).getKey()));
-                            }
+                            });
                         }
                         else {
                             // Giving a common user error when login failure
