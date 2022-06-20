@@ -40,7 +40,7 @@ public class profile_page extends AppCompatActivity {
     DatabaseReference event_path = database.getReference("Event");
     DatabaseReference user_path = database.getReference("Users");
 
-    String user_id_unique = "CLEMENT"; // Change this to get from intent;
+    //String user_id_unique = "CLEMENT"; // Change this to get from intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +53,12 @@ public class profile_page extends AppCompatActivity {
         TextView UserName = findViewById(R.id.username);
 
         Intent setting = getIntent();
+        String getemailofuser = setting.getStringExtra("Email");
+        String getusernameofuser = setting.getStringExtra("Username");
+        String geruserprofileid = setting.getStringExtra("profile_id");
 
         // !!! Change this to get profile from database
-        user_path.child(user_id_unique).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        user_path.child(getemailofuser.toLowerCase().replace(".","")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
 
@@ -64,7 +67,12 @@ public class profile_page extends AppCompatActivity {
                 username = String.valueOf(task.getResult().child("username").getValue());
                 usertitle = String.valueOf(task.getResult().child("title").getValue());
                 useremail = String.valueOf(task.getResult().child("email").getValue());
-                usercontact = Integer.valueOf(String.valueOf(task.getResult().child("contactnum").getValue()));
+                try {
+                    usercontact = Integer.valueOf(String.valueOf(task.getResult().child("contactnum").getValue()));
+                }
+                catch (Exception e){
+                    usercontact = null;
+                }
                 userpass = String.valueOf(task.getResult().child("hashedpassword").getValue());
                 saltvalue = Integer.parseInt(String.valueOf(task.getResult().child("saltvalue").getValue()));
 
@@ -104,7 +112,7 @@ public class profile_page extends AppCompatActivity {
                 String new_title = setting.getStringExtra("new_title");
                 Log.d("a","sent new_title is "+ new_title);
                 if(new_title != null){
-                    user_path.child(user_id_unique).child("title").setValue(new_title);
+                    user_path.child(getemailofuser.toLowerCase().replace(".","")).child("title").setValue(new_title);
                 }
                 }
         });

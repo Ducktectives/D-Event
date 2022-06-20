@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                 DatabaseReference Ref = database.getReference("Users");
 
                 //Using get to get info from database once, rather than setting an event listener
-                Ref.orderByChild("email").equalTo(email.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+                Ref.orderByChild("email").equalTo(email.toLowerCase().replace(".", "")).addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
