@@ -40,7 +40,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class EventDetailsPage extends AppCompatActivity {
-    ImageSlider imageSlider;
+    TextView eventOrg = findViewById(R.id.EventOrganiser);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,14 +68,33 @@ public class EventDetailsPage extends AppCompatActivity {
                 else {
                     Log.d("firebase", String.valueOf(task.getResult().child("event_Name").getValue()));
 
-                    //Retrieving Data from the
+                    //Retrieving Data from the Firebase Real Time Database
+
+                    //For the Event Name
                     String eventNamedb = String.valueOf(task.getResult().child("event_Name").getValue());
+
+                    //For the Location of the event
                     String eventLocdb = String.valueOf(task.getResult().child("event_Location").getValue());
+
+                    //For event organizer
+                    String eventOrganizer = String.valueOf(task.getResult().child("event_Organizer").getValue());
+
+                    //For event description
+                    String eventDesc = String.valueOf(task.getResult().child("event_Description").getValue());
+
+                    //For event details (lower)
                     String eventDetaildb = String.valueOf(task.getResult().child("event_Details").getValue());
+
+                    //For date of the event
                     String eventDatedb = String.valueOf(task.getResult().child("event_Date").getValue());
+
+                    //For event banner/image
                     String imageLink = String.valueOf(task.getResult().child("event_StorageReferenceID").getValue());
 
 
+                    //set the content in the activity--------------------------------------------------
+
+                    //set image content--------------------------------------
                     //set reference point for Firebase Storage
                     StorageReference firebaseStorage= FirebaseStorage.getInstance().getReference("images/" + imageLink);
 
@@ -105,49 +124,37 @@ public class EventDetailsPage extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-
-
-
-                    //set the content in the activity
                     //----For the Event Name
                     TextView eventName = findViewById(R.id.EventName);
                     eventName.setText(eventNamedb);
+
                     //----For the Event Location
                     TextView eventLocation = findViewById(R.id.EventLocation);
                     eventLocation.setText(eventLocdb);
+
+                    //----For the event organizer
+                    eventOrg.setText(eventOrganizer);
+
+                    //----For the event Description
+                    TextView eventDescription = findViewById(R.id.EventDescription);
+                    eventDescription.setText(eventDesc);
+
                     //----For the details of the App
                     TextView eventDetail = findViewById(R.id.eventDetails);
                     eventDetail.setText(eventDetaildb);
-
-
-
-
-
 
                 }
             }
         });
 
-        //for slideshow of images
-/*
-        imageSlider =findViewById(R.id.imageslider);
-
-        ArrayList<SlideModel> imageList = new ArrayList<>();
-        imageList.add(new SlideModel(R.drawable.a1,null));
-        imageList.add(new SlideModel(R.drawable.a2,null));
-        imageList.add(new SlideModel(R.drawable.a3,null));
-
-        imageSlider.setImageList(imageList);
-*/
 
         //event listener for viewing profile of event organiser
-        TextView eventOrg = findViewById(R.id.EventOrganiser);
         eventOrg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent viewProfile = new Intent(EventDetailsPage.this,profile_page.class);
-                Integer userID =0;
-                viewProfile.putExtra("UserID",userID);
+                Intent profile = new Intent(EventDetailsPage.this,profile_page.class);
+                profile.putExtra("EventOrganizer",eventOrg.getText());
+                startActivity(profile);
             }
         });
 
@@ -157,16 +164,17 @@ public class EventDetailsPage extends AppCompatActivity {
         bookEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent book = new Intent(EventDetailsPage.this,BookingPage.class);
-                //startActivity(book);
+                Intent book = new Intent(EventDetailsPage.this,UserBooking.class);
+                startActivity(book);
             }
         });
 
 
-        //get user's name - foreign key ref not too sure where 
+
 
 
 
 
     }
+
 }
