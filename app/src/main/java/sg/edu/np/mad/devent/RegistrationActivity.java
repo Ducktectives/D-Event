@@ -168,7 +168,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 Integer contact;
                 String profileID = UUID.randomUUID().toString();
                 String name  = userName.getText().toString();
-                String email  = userEmail.getText().toString();
+                String email  = userEmail.getText().toString().toUpperCase();
                 try {
                     contact = Integer.parseInt(userContact.getText().toString());
                 }
@@ -182,6 +182,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 if (name.isEmpty() || email.isEmpty() || contact == null || job.isEmpty() || password.isEmpty()){
                     errormessage.setText("Please enter a input for all the fields above");
+                }
+                else if (email.equals(reference.child("Users").equals(email))){
+                    errormessage.setText("Please use another email");
                 }
                 else if (!password.equals(cpass)){
                     errormessage.setText("The password fields do not match");
@@ -199,7 +202,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     // Afterward, I would like to send ID of user to the EventFormActivity
                     Intent intent = new Intent(getApplicationContext(), profile_page.class);
                     intent.putExtra("profile_id", profileID);
-
+                    intent.putExtra("Email", email);
+                    intent.putExtra("Username", name);
                     // Start the intent
                     startActivity(intent);
                 }

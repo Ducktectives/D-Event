@@ -2,6 +2,7 @@ package sg.edu.np.mad.devent;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Random;
 
 public class Profile {
@@ -58,7 +59,6 @@ public class Profile {
         {
             e.printStackTrace();
         }
-
     }
 
     public static String HashPassword(int saltvalue, String pass){

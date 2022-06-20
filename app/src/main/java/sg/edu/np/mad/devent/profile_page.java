@@ -121,7 +121,7 @@ public class profile_page extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             String value = extras.getString("new_pass");
-            p.setPassword(value);
+            //p.setPassword(value);
         }
 
 
