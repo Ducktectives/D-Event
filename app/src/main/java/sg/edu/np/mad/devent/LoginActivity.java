@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Getting the fields
         EditText useremail = (EditText)findViewById(R.id.loginuseremail);
         EditText userpassword = (EditText)findViewById(R.id.loginuserpassword);
         TextView errormsg = (TextView)findViewById(R.id.loginerror);
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         submittologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Getting the text entered by users
                 String email = useremail.getText().toString();
                 String password = userpassword.getText().toString();
 
@@ -54,17 +56,21 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()) {
+                            // Getting the values required to authenticate the user
                             String hashpassword = snapshot.child(email).child("hashpassword").getValue(String.class);
                             Integer saltvalue = Integer.parseInt(snapshot.child(email).child("SaltValue").getValue(String.class));
                             String username = snapshot.child(email).child("username").getValue(String.class);
+                            // Checking if the user credentials if it matches the record in the database
                             if (Profile.HashPassword(saltvalue, password).equals(hashpassword)){
                                 Intent login = new Intent(LoginActivity.this, NavDrawer.class);
+                                // Passing the Email and Username to the next activity for user
                                 login.putExtra("Email", email);
                                 login.putExtra("Username", username);
                                 startActivity(login);
                             }
                         }
                         else {
+                            // Giving a common user error when login failure
                             errormsg.setText("Username or Password is invalid");
                         }
                     }

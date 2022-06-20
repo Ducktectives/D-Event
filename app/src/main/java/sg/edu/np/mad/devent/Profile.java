@@ -25,6 +25,8 @@ public class Profile {
         Title = title;
         Contactnum = contact;
         Email = email;
+
+        // Creating Salt Values
         Random rand = new Random();
         int lowerbound = 10000;
         int upperbound = 99999;
@@ -33,7 +35,11 @@ public class Profile {
             randomnum = rand.nextInt(upperbound);
         }
         Saltvalue = randomnum;
+
+        // Salting the Password
         String Saltpassword = Saltvalue + password;
+
+        // Hashing the Salted password
         try
         {
             /* MessageDigest instance for MD5. */
@@ -61,6 +67,7 @@ public class Profile {
         }
     }
 
+    // Hash the Password
     public static String HashPassword(int saltvalue, String pass){
         try
         {
@@ -91,6 +98,7 @@ public class Profile {
         }
     }
 
+    // Check the password if it is equal
     public boolean CheckPassword(String hashedpassword, String Userhashedpass){
         if (hashedpassword == Userhashedpass){
             return true;
