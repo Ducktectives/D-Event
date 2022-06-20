@@ -15,6 +15,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
@@ -30,6 +32,7 @@ public class RegistrationActivity extends AppCompatActivity {
     Button btn_register;
     EditText userName, userEmail, userContact,
             userJob, userPassword,registration_userConfirmPassword;
+
 
     // Firebase for storing Image
     private DatabaseReference databaseReference;
