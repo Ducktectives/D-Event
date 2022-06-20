@@ -10,16 +10,17 @@
         android:name="sg.edu.np.mad.devent.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
-
+    <!--
     <fragment
         android:id="@+id/nav_followed"
         android:name="sg.edu.np.mad.devent.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
-
+    -->
     <activity
         android:id="@+id/nav_settings"
         android:name="sg.edu.np.mad.devent.Settings"
         android:label=""
         tools:layout="@layout/settings_activity" />
+
 </navigation>

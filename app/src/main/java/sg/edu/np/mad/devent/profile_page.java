@@ -124,6 +124,13 @@ public class profile_page extends AppCompatActivity {
             //p.setPassword(value);
         }
 
+        Button btn = findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(profile_page.this, NavDrawer.class));
+            }
+        });
 
     }
 }

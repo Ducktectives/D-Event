@@ -21,13 +21,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.UUID;
 
 public class RegistrationActivity extends AppCompatActivity {
     // Create a user-defined object
-    Profile user = new Profile();
+    static Profile user = new Profile();
 
     Button btn_register;
     EditText userName, userEmail, userContact,
@@ -220,6 +221,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     intent.putExtra("Username", name);
                     // Start the intent
                     startActivity(intent);
+
                 }
             }
         });

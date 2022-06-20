@@ -1,13 +1,18 @@
 package sg.edu.np.mad.devent;
 
 import static sg.edu.np.mad.devent.R.id.nav_host_fragment_content_nav_drawer;
+import static sg.edu.np.mad.devent.RegistrationActivity.user;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -49,12 +54,53 @@ public class NavDrawer extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_followed, R.id.nav_settings)
+                R.id.nav_home, R.id.nav_settings) // R.id.nav_followed
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_nav_drawer);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        // Sign out menu item's Alert dialog
+        /* UNCOMMENT THIS WHEN WE ARE IMPLEMENTING SIGNOUT
+        navigationView.getMenu().findItem(R.id.nav_signout).setOnMenuItemClickListener(menuItem -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(navigationView.getContext());
+            builder.setTitle("Profile");
+            builder.setMessage("Are you sure you want to sign out?");
+            builder.setCancelable(false);
+            builder.setPositiveButton("Sign out", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent testAct = new Intent(NavDrawer.this, loginpage.class);
+                    startActivity(testAct);
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+            builder.show();
+            return true;
+        });
+         */
+
+
+        // Used for displaying profile pic / Username / email in nav header
+        View navHeader = navigationView.getHeaderView(0);
+        // Pull data of user and display *** ! IMPORTANT COME BACK TO THIS LATER
+        navHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(NavDrawer.this, profile_page.class));
+            }
+        });
+
+        TextView username = (TextView) navHeader.findViewById(R.id.nav_username);
+        username.setText(user.getUsername());
+
+        TextView email = (TextView) navHeader.findViewById(R.id.nav_email);
+        email.setText(user.Email);
 
     }
 
@@ -70,16 +116,5 @@ public class NavDrawer extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, nav_host_fragment_content_nav_drawer);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.nav_settings) {
-            //startActivity(new Intent (this, MainActivity.class));
-            Log.i("Settings", "Testing pls work");
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
