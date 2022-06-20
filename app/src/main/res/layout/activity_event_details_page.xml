@@ -34,23 +34,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/red_circle" />
 
-        <com.denzcoskun.imageslider.ImageSlider
-            android:id="@+id/imageslider"
+        <ImageView
+            android:id="@+id/eventPicture"
             android:layout_width="match_parent"
             android:layout_height="230dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            app:iss_auto_cycle="true"
-            app:iss_corner_radius="@android:integer/config_mediumAnimTime"
-            app:iss_period="3000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.108">
-
-        </com.denzcoskun.imageslider.ImageSlider>
+            app:layout_constraintVertical_bias="0.06"
+            app:srcCompat="@drawable/error" />
 
         <ImageView
             android:id="@+id/Detail"
@@ -61,7 +56,7 @@
             android:cropToPadding="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageslider"
+            app:layout_constraintTop_toBottomOf="@+id/eventPicture"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/pink_rounded_square" />
 
@@ -70,13 +65,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="88dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="100dp"
             android:scrollbars="vertical"
             android:text="Event Name"
             android:textAlignment="viewStart"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageslider" />
+            app:layout_constraintTop_toTopOf="@+id/Detail" />
 
         <TextView
             android:id="@+id/EventOrganiser"
@@ -95,12 +90,12 @@
             android:layout_width="51dp"
             android:layout_height="27dp"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="83dp"
             android:scrollbars="vertical"
             android:text="OCT"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageslider" />
+            app:layout_constraintTop_toBottomOf="@+id/eventPicture" />
 
         <TextView
             android:id="@+id/EventDescription"

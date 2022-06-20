@@ -71,8 +71,10 @@ dependencies {
     // Google Map
     // Fused Location Provider for Android (includes activity recognition and geofencing)
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
-
     implementation 'com.google.android.libraries.places:places:2.6.0'
+
+    //for picasso
+    implementation 'com.squareup.picasso:picasso:2.8'
 
 
 }
