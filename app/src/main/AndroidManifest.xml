@@ -39,7 +39,8 @@
             android:exported="false" />
         <activity
             android:name=".profile_page"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".NavDrawer"/>
         <activity
             android:name=".EditDescription"
             android:exported="false" />

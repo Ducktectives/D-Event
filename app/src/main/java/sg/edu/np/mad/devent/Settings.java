@@ -36,6 +36,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -49,6 +50,13 @@ public class Settings extends AppCompatActivity {
         ImageView profile_pic;
         Context mContext;
 
+    // Firebase for storing Image
+    private StorageReference storageReference;
+    FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+    DatabaseReference event_path = database.getReference("Event");
+    DatabaseReference user_path = database.getReference("Users");
+
+    String user_id_unique = "CLEMENT"; // Change this to get from intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,112 +86,6 @@ public class Settings extends AppCompatActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
-
-    // Firebase for storing Image
-    private StorageReference storageReference;
-    private FirebaseDatabase database;
-
-
-    public static void verifyStoragePermissions(Activity activity) {
-        Settings s = new Settings();
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    activity,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
-        }
-    }
-
-    private final ActivityResultLauncher<Intent> launchGallery = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == Activity.RESULT_OK){
-                        Intent data = result.getData();
-                        image = data.getData();
-                        if (image != null){
-                            try{
-                                profile_pic = findViewById(R.id.profilepic);
-                                Glide.with(Settings.this).load(image).into(profile_pic);
-                            }
-                            catch (Exception ex){
-                                Log.d("Failed to upload image", String.valueOf(ex));
-                            }
-                        }
-
-
-                    }
-                }
-            }
-    );
-
-    // Method for starting the activity for selecting image from phone storage
-    public void pick(View view) {
-        verifyStoragePermissions(Settings.this);
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        launchGallery.launch(intent);
-    }
-
-
-    // uploadimage method
-    protected void uploadImage(){
-        if(image != null){
-
-            // progressDialogue while uploading
-            ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-
-            String storageReference_ID = UUID.randomUUID().toString();
-
-            // Defining the child of storageReference
-            //
-            // SorageReference represents a reference to Google Cloud Storage Object
-            StorageReference reference = storageReference.child(
-                    // UUID is a class that represents immutable universally unique identifier (UUID)
-                    //
-                    // A UUID represents a 128-bit value
-                    "images/" + storageReference_ID) ;
-
-            // adding listeners on event progression of image upload
-            reference.putFile(image).addOnSuccessListener(
-                    new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // Image uploaded successfully
-                            progressDialog.dismiss();
-                            Toast.makeText(Settings.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-            ).addOnFailureListener(new OnFailureListener(){
-                @Override
-                public void onFailure(@NonNull Exception e){
-                    // Error, Image not uploaded
-                    progressDialog.dismiss();
-                    Toast.makeText(Settings.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                // Progress listneer for loading on the dialog box
-                @Override
-                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                    double progress = (100.0 * snapshot.getBytesTransferred()
-                            / snapshot.getTotalByteCount());
-                    progressDialog.setMessage(
-                            "Uploaded " + (int) progress + "%"
-                    );
-                }
-            });
-
-
-        }
-    }
 
 
 
@@ -233,14 +135,44 @@ public class Settings extends AppCompatActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Log.d("help","i want die");
-//                    Settings s = new Settings();
-//                    s.pick(getView());
-//                    s.uploadImage();
                     Intent i = new Intent(getActivity(),Change_ProfilePic.class);
                     startActivity(i);
                     return false;
                 }
             });
+
+            // Change Title
+            EditTextPreference changetitle = findPreference("title");
+            if(changetitle != null){
+                changetitle.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
+                    @Override
+                    public void onBindEditText(@NonNull EditText editText) {
+                        editText.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable editable) {
+                                String new_title = editText.getText().toString();
+//                                Intent inting = new Intent(getActivity(),profile_page.class);
+//                                Log.d("new_title","new title is" + new_title);
+//                                inting.putExtra("new_title",new_title);
+                                if (new_title != null){
+                                    Settings s = new Settings();
+                                    s.user_path.child(s.user_id_unique).child("title").setValue(new_title);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
 
         }
 

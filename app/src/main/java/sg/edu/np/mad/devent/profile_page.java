@@ -5,48 +5,124 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class profile_page extends AppCompatActivity {
+
+    Profile p = new Profile();
+    Integer saltvalue;
+    String userid;
+    String username;
+    String usertitle;
+    String useremail;
+    Integer usercontact;
+    String userpass;
+    Uri new_img;
+
+    // Firebase stuff
+    FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+    DatabaseReference event_path = database.getReference("Event");
+    DatabaseReference user_path = database.getReference("Users");
+
+    String user_id_unique = "CLEMENT"; // Change this to get from intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
-        // !!! Change this to get profile from database
-        Profile p = new Profile("TestName","TestTitle","TestEmail"
-                ,"arthurchongs@gmail.com",87978979,"sdwefewgew"
-                );
-
-
         // Getting all the views as variables
         TextView EditDesc = findViewById(R.id.EditDesc);
         TextView UserDesc = findViewById(R.id.UserDescription);
         TextView UserName = findViewById(R.id.username);
 
-        // Set default texts
-        UserDesc.setText(p.Title);
-        UserName.setText(p.Username);
+        Intent setting = getIntent();
+
+        // !!! Change this to get profile from database
+        user_path.child(user_id_unique).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+
+                // Getting user data
+                userid = String.valueOf(task.getResult().child("id").getValue());
+                username = String.valueOf(task.getResult().child("username").getValue());
+                usertitle = String.valueOf(task.getResult().child("title").getValue());
+                useremail = String.valueOf(task.getResult().child("email").getValue());
+                usercontact = Integer.valueOf(String.valueOf(task.getResult().child("contactnum").getValue()));
+                userpass = String.valueOf(task.getResult().child("hashedpassword").getValue());
+                saltvalue = Integer.parseInt(String.valueOf(task.getResult().child("saltvalue").getValue()));
+
+
+                p.setId(userid);
+                p.setUsername(username);
+                p.setTitle(usertitle);
+                p.setEmail(useremail);
+                p.setContactnum(usercontact);
+                p.setHashedpassword(userpass);
+
+                // Set default texts
+                UserDesc.setText(p.Title);
+                UserName.setText(p.Username);
+
+                ImageView profile_pic = findViewById(R.id.profilepic);
+
+
+
+                // Changing Password
+                String value = setting.getStringExtra("new_pass");
+                p.setHashedpassword(Profile.HashPassword(saltvalue,value));
+
+                // Change Pic
+                String string_img = (setting.getStringExtra("new_pic"));
+                if(string_img != null){
+                    new_img = Uri.parse(string_img);
+                    try{
+                        Glide.with(profile_page.this).load(new_img).into(profile_pic);
+                    }
+                    catch (Exception ex){
+                        Log.d("New Profile Pic Failure",
+                                "Profile Pic change failed" + String.valueOf(ex));
+                    }
+                }
+                // Change title
+                String new_title = setting.getStringExtra("new_title");
+                Log.d("a","sent new_title is "+ new_title);
+                if(new_title != null){
+                    user_path.child(user_id_unique).child("title").setValue(new_title);
+                }
+                }
+        });
+
+
+
 
         // !!! Make if else statement to only show edit desc if profile owner is viewing own profile
         // !!! Also should not show follow button on own profile
         // !!! Someone teach me how to use database
-        Button followButton = findViewById(R.id.FollowButton);
-        if(p.Id == "1") // Change ID to reflect actual user ID
-        {
-            followButton.setVisibility(View.VISIBLE);
-        }
-        else{
-            followButton.setVisibility(View.INVISIBLE);
-        }
+//        Button followButton = findViewById(R.id.FollowButton);
+//        if(p.Id == "1") // Change ID to reflect actual user ID
+//        {
+//            followButton.setVisibility(View.VISIBLE);
+//        }
+//        else{
+//            followButton.setVisibility(View.INVISIBLE);
+//        }
 
         // !!! Make follow button do something
         // Wait where follow property of profile go
@@ -133,4 +209,7 @@ public class profile_page extends AppCompatActivity {
         });
 
     }
+
+
+
 }
