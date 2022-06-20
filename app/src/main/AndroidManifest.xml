@@ -15,6 +15,11 @@
         android:theme="@style/Theme.DEvent"
         tools:targetApi="31">
         <activity
+            android:name=".change_password"
+            android:exported="false"
+            android:label="@string/title_activity_change_password"
+            android:theme="@style/Theme.DEvent.NoActionBar" />
+        <activity
             android:name=".SplashScreen"
             android:exported="true">
             <!--

@@ -53,7 +53,7 @@ public class EventDetailsPage extends AppCompatActivity {
         //receive Intent information
         Intent receiveEventAct = getIntent();
         String eventName = receiveEventAct.getStringExtra("event_Name");
-        Log.d("maow",eventName);
+//        Log.d("maow",eventName);
 
         String eventID ="-N4yWQOhDz4yQ28BA3qr"; //to be changed when instance is passed
 
