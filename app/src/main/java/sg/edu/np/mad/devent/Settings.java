@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -45,16 +47,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.UUID;
 
 public class Settings extends AppCompatActivity {
 
         Uri image;
-        ImageView profile_pic;
+
         Context mContext;
         static String title;
         static String username;
@@ -70,6 +75,7 @@ public class Settings extends AppCompatActivity {
 
 
     String user_id_unique = "W222"; // Change this to get from intent;
+//    String user_id_unique = getIntent().getStringExtra("EventOrganiser");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +94,9 @@ public class Settings extends AppCompatActivity {
 
         }
         database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        String getuser = getIntent().getStringExtra("EventOrganiser");
+
+
     }
 
 
@@ -230,6 +239,8 @@ public class Settings extends AppCompatActivity {
             }
 
             // Changing username
+
+            final Bitmap[] setprofilepic = new Bitmap[1];
             EditTextPreference changename = findPreference("username");
             s.user_path.addChildEventListener(new ChildEventListener() {
                 @Override
@@ -289,25 +300,28 @@ public class Settings extends AppCompatActivity {
                 });
             }
 
+
+
         }
+
+
 
 
         // This just goes back to main Activity cause idk how to make it
         // go to the previous activity
         // To change which activity to go to change the parentActivityName
         // in the manifest file
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            switch (item.getItemId()) {
-                // Respond to the action bar's Up/Home button
-                case android.R.id.home:
-                    super.getActivity().onBackPressed();
-                    super.getActivity().finish();
-                    return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-
+//        @Override
+//        public boolean onOptionsItemSelected(MenuItem item) {
+//            switch (item.getItemId()) {
+//                // Respond to the action bar's Up/Home button
+//                case android.R.id.home:
+//                    super.getActivity().finish();
+//                    return true;
+//            }
+//            return super.onOptionsItemSelected(item);
+//        }
+//
 
 
     }

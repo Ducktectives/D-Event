@@ -1,13 +1,18 @@
 package sg.edu.np.mad.devent;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,10 +23,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
 
 public class profile_page extends AppCompatActivity {
 
@@ -54,6 +67,46 @@ public class profile_page extends AppCompatActivity {
 
         Intent setting = getIntent();
 
+        // Change Pic
+        user_path.child(user_id_unique).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data. Please reload.", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().child("email").getValue()));
+                    // Get image reference from image folder
+                    String imagelink = String.valueOf(task.getResult().child("profpic").getValue());
+                    Log.d("AAAAAAAAAAAAA",imagelink);
+                    // Set reference point for firebase storage
+                    StorageReference firebaseStorage = FirebaseStorage.getInstance().getReference("images/" + imagelink);
+                    ImageView profile_pic = findViewById(R.id.profilepic);
+                    if(profile_pic == null){
+                        Log.d("imageview missing","help me please");
+                    }
+
+                    try{
+                        File localfile = File.createTempFile("image",".jpg");
+                        firebaseStorage.getFile(localfile).addOnSuccessListener(
+                                new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                        Bitmap bitmapImage = BitmapFactory.decodeFile(localfile.getAbsolutePath());
+                                        profile_pic.setImageBitmap(Bitmap.createScaledBitmap
+                                                (bitmapImage,128,128,false));
+
+                                    }
+                                }
+                        );
+                    }
+                    catch (Exception exception){
+                        exception.printStackTrace();
+                    }
+                }
+            }
+        });
+
         // !!! Change this to get profile from database
         user_path.child(user_id_unique).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -80,7 +133,6 @@ public class profile_page extends AppCompatActivity {
                 UserDesc.setText(p.Title);
                 UserName.setText(p.Username);
 
-                ImageView profile_pic = findViewById(R.id.profilepic);
 
 
 
@@ -88,18 +140,7 @@ public class profile_page extends AppCompatActivity {
                 String value = setting.getStringExtra("new_pass");
                 p.setHashedpassword(Profile.HashPassword(saltvalue,value));
 
-                // Change Pic
-                String string_img = (setting.getStringExtra("new_pic"));
-                if(string_img != null){
-                    new_img = Uri.parse(string_img);
-                    try{
-                        Glide.with(profile_page.this).load(new_img).into(profile_pic);
-                    }
-                    catch (Exception ex){
-                        Log.d("New Profile Pic Failure",
-                                "Profile Pic change failed" + String.valueOf(ex));
-                    }
-                }
+
                 // Change title
                 String new_title = setting.getStringExtra("new_title");
                 Log.d("a","sent new_title is "+ new_title);
@@ -193,12 +234,6 @@ public class profile_page extends AppCompatActivity {
         v.requestFocus();
         gridView.setFocusable(false);
 
-        // Changing Password
-        Bundle extras = getIntent().getExtras();
-        if (extras != null){
-            String value = extras.getString("new_pass");
-            //p.setPassword(value);
-        }
 
         Button btn = findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -207,6 +242,10 @@ public class profile_page extends AppCompatActivity {
                 startActivity(new Intent(profile_page.this, NavDrawer.class));
             }
         });
+
+
+
+
 
     }
 
