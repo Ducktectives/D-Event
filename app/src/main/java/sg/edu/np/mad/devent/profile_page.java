@@ -114,7 +114,7 @@ public class profile_page extends AppCompatActivity {
                 if(new_title != null){
                     user_path.child(getemailofuser.toLowerCase().replace(".","")).child("title").setValue(new_title);
                 }
-                }
+            }
         });
 
 
