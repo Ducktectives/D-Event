@@ -56,22 +56,31 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()) {
-                            // Getting the values required to authenticate the user
-                            String hashpassword = snapshot.child(email).child("hashpassword").getValue(String.class);
-                            Integer saltvalue = Integer.parseInt(snapshot.child(email).child("SaltValue").getValue(String.class));
-                            String username = snapshot.child(email).child("username").getValue(String.class);
-                            // Checking if the user credentials if it matches the record in the database
-                            if (Profile.HashPassword(saltvalue, password).equals(hashpassword)){
-                                Intent login = new Intent(LoginActivity.this, NavDrawer.class);
-                                // Passing the Email and Username to the next activity for user
-                                login.putExtra("Email", email);
-                                login.putExtra("Username", username);
-                                startActivity(login);
+                            try {
+                                // Getting the values required to authenticate the user
+                                String hashpassword = snapshot.child(email).child("hashpassword").getValue(String.class);
+                                Integer saltvalue = Integer.parseInt(snapshot.child(email).child("saltvalue").getValue(String.class));
+                                String username = snapshot.child(email).child("username").getValue(String.class);
+                                // Checking if the user credentials if it matches the record in the database
+                                if (hashpassword.equals(Profile.HashPassword(saltvalue, password))){
+                                    Intent login = new Intent(LoginActivity.this, NavDrawer.class);
+                                    // Passing the Email and Username to the next activity for user
+                                    login.putExtra("Email", email);
+                                    login.putExtra("Username", username);
+                                    startActivity(login);
+                                }
+                                else {
+                                    // Giving a common user error when login failure
+                                    errormsg.setText("Password is invalid");
+                                }
+                            }
+                            catch (Exception e) {
+                                errormsg.setText(String.valueOf(snapshot.child(email).getKey()));
                             }
                         }
                         else {
                             // Giving a common user error when login failure
-                            errormsg.setText("Username or Password is invalid");
+                            errormsg.setText("Email is invalid");
                         }
                     }
                     @Override

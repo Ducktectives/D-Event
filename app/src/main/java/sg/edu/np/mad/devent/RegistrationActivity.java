@@ -212,7 +212,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     user = new Profile(profileID, name, job, email, contact, password);
 
                     // Insert the user-defined object to the database
-                    reference.child("Users").push().setValue(user);
+                    reference.child("Users").child(email).setValue(user);
 
                     // Send the profileID, email and name of user to the profile_page class
                     Intent intent = new Intent(getApplicationContext(), profile_page.class);
