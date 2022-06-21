@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.view.menu.MenuView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -94,6 +93,17 @@ public class NavDrawer extends AppCompatActivity {
             return true;
         });
          */
+
+        //
+        navigationView.getMenu().findItem(R.id.nav_settings).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent settingAct = new Intent(NavDrawer.this, Settings.class);
+                settingAct.putExtra("Email", getemailofuser);
+                startActivity(settingAct);
+                return true;
+            }
+        });
 
 
         // Used for displaying profile pic / Username / email in nav header
