@@ -155,6 +155,7 @@ public class UserBooking extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "Booking Successfully", Toast.LENGTH_LONG).show();
                                     Intent profileData = new Intent(UserBooking.this,profile_page.class);
                                     profileData.putExtra("User_Email",userEmail);
+                                    profileData.putExtra("EventID",eventid);
                                     startActivity(profileData);
                                 }
                                 else {
