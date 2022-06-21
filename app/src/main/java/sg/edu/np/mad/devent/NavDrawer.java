@@ -1,7 +1,7 @@
 package sg.edu.np.mad.devent;
 
 import static sg.edu.np.mad.devent.R.id.nav_host_fragment_content_nav_drawer;
-import static sg.edu.np.mad.devent.RegistrationActivity.user;
+// import static sg.edu.np.mad.devent.RegistrationActivity.user;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -33,6 +33,7 @@ public class NavDrawer extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavDrawerBinding binding;
+    public static String getemailofuser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +43,12 @@ public class NavDrawer extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         Intent i1 = getIntent();
-        String getemailofuser = i1.getStringExtra("Email");
+        getemailofuser = i1.getStringExtra("Email");
         String getusernameofuser = i1.getStringExtra("Username");
         String geruserprofileid = i1.getStringExtra("profile_id");
 
         setSupportActionBar(binding.appBarNavDrawer.toolbar);
+        /*
         binding.appBarNavDrawer.fab.setOnClickListener(new View.OnClickListener() { // for the bottom right email icon
             @Override
             public void onClick(View view) {
@@ -54,6 +56,8 @@ public class NavDrawer extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+         */
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -63,8 +67,9 @@ public class NavDrawer extends AppCompatActivity {
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_nav_drawer);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        // ^ Used for displaying bottom right icon of email
 
         // Sign out menu item's Alert dialog
         /* UNCOMMENT THIS WHEN WE ARE IMPLEMENTING SIGNOUT
@@ -106,10 +111,10 @@ public class NavDrawer extends AppCompatActivity {
         });
 
         TextView username = (TextView) navHeader.findViewById(R.id.nav_username);
-        username.setText(user.getUsername());
+        username.setText(getusernameofuser);
 
         TextView email = (TextView) navHeader.findViewById(R.id.nav_email);
-        email.setText(user.Email);
+        email.setText(getemailofuser);
 
     }
 
