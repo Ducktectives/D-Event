@@ -70,7 +70,7 @@ public class UserBooking extends AppCompatActivity {
                         DatabaseReference Ref = database.getReference("Event");
 
                         // Store the data in the user folders in the Event table
-                        Ref.orderByChild("event_ID").equalTo().addListenerForSingleValueEvent(new ValueEventListener() {
+                        /*Ref.orderByChild("event_ID").equalTo().addListenerForSingleValueEvent(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -81,7 +81,7 @@ public class UserBooking extends AppCompatActivity {
                             public void onCancelled(@NonNull DatabaseError error) {
 
                             }
-                        });
+                        });*/
 
                     }
                 }
