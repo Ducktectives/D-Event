@@ -312,7 +312,7 @@ public class EventFormActivity extends AppCompatActivity{
             event_Detail = eventDetail.getText().toString();
             bookmarked = false;
 
-            event = new Events(event_ID, event_Name, event_Location, event_Date, event_Description, event_Detail, userID, selectedImage.toString(), storageReference_ID, bookmarked);
+            event = new Events(event_ID, event_Name, event_Location, event_Date, event_Description, event_Detail, userID, storageReference_ID, bookmarked);
 
             // Insert the user-defined object to the database
             reference.child("Event").push().setValue(event);

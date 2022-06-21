@@ -70,15 +70,14 @@ public class HomeFragment extends Fragment {
                 String eventDesc = snapshot.child("event_Description").getValue(String.class);
                 String eventDetail = snapshot.child("event_Detail").getValue(String.class);
                 String eventUserID = snapshot.child("event_UserID").getValue(String.class);
-                String eventPic = snapshot.child("event_Picture").getValue(String.class);
                 Boolean eventBooked = snapshot.child("bookmarked").getValue(Boolean.class);
-                String eventStorageID = "435435";
+                String eventStorageID = snapshot.child("event_StorageReferenceID").getValue(String.class);
 
                 // Meant to prevent duplication of data display in gridAdapter
                 if (eventsIDList.contains(eventID)) return;
 
-                Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc, eventDetail, eventUserID,
-                        imageList[0] + "", eventStorageID, eventBooked);
+                Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
+                        eventDetail, eventUserID, eventStorageID, eventBooked);
 
                 eventsIDList.add(eventID);
                 eventsList.add(event);
@@ -94,12 +93,12 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                gridAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                gridAdapter.notifyDataSetChanged();
             }
 
             @Override

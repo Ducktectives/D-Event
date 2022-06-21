@@ -3,6 +3,7 @@ package sg.edu.np.mad.devent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,12 +11,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Locale;
 
 public class UserBooking extends AppCompatActivity {
     String imageLinkfromEventDetails;
@@ -24,6 +29,8 @@ public class UserBooking extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_booking);
+
+        Booking userbooking = new Booking();
 
         //receive intent
         Intent fromEventDetailsPage = getIntent();
@@ -70,18 +77,30 @@ public class UserBooking extends AppCompatActivity {
                         DatabaseReference Ref = database.getReference("Event");
 
                         // Store the data in the user folders in the Event table
-                        /*Ref.orderByChild("event_ID").equalTo().addListenerForSingleValueEvent(new ValueEventListener() {
+                        Ref.orderByChild("event_ID").equalTo(eventid).addListenerForSingleValueEvent(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                                // Check for event ID
+                                if (snapshot.exists()){
+                                    userbooking.Name = bookingname;
+                                    userbooking.Email = bookingemail;
+                                    userbooking.Contact = bookingnumber;
+                                    userbooking.Pax = bookingpax;
+                                    // Create subfolder in the event and name the subfolder booking and create another subfolder within with the booking email as the key to store the record
+                                    Ref.child(eventid).child("Booking").child(bookingemail.toLowerCase().replace(".", "")).setValue(userbooking);
+                                    // Let user know that Booking is successful
+                                    Toast.makeText(getApplicationContext(), "Booking Successfully", Toast.LENGTH_LONG).show();
+                                    UserBooking.this.finish();
+                                }
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-
+                                // Let user know that Booking is Unsuccessful
+                                Toast.makeText(getApplicationContext(), "Booking Unsuccessfully, Please try again", Toast.LENGTH_LONG).show();
                             }
-                        });*/
+                        });
 
                     }
                 }
