@@ -95,6 +95,17 @@ public class NavDrawer extends AppCompatActivity {
         });
          */
 
+        //
+        navigationView.getMenu().findItem(R.id.nav_settings).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent settingAct = new Intent(NavDrawer.this, Settings.class);
+                settingAct.putExtra("Email", getemailofuser);
+                startActivity(settingAct);
+                return true;
+            }
+        });
+
 
         // Used for displaying profile pic / Username / email in nav header
         View navHeader = navigationView.getHeaderView(0);
