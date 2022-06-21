@@ -34,7 +34,7 @@ public class UserBooking extends AppCompatActivity {
 
         //receive intent
         Intent fromEventDetailsPage = getIntent();
-        //imageLinkfromEventDetails = fromEventDetailsPage.getStringExtra("EventPicture");
+        imageLinkfromEventDetails = fromEventDetailsPage.getStringExtra("EventPicture");
         eventid = fromEventDetailsPage.getStringExtra("EventID");
 
         // Assign the texts, buttons and images to a variable to be called
