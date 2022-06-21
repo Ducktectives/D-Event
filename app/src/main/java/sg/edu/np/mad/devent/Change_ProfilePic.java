@@ -45,7 +45,7 @@ public class Change_ProfilePic extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
     DatabaseReference event_path = database.getReference("Event");
     DatabaseReference user_path = database.getReference("Users");
-    String user_id_unique = "W222"; // Change this to get from intent;
+    String user_id_unique;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,15 @@ public class Change_ProfilePic extends AppCompatActivity {
         accept = findViewById(R.id.acceptchangeprofpic);
         cancel = findViewById((R.id.cancelchangeprofpic));
         storageReference = FirebaseStorage.getInstance().getReference();
+
+
+        user_id_unique = getIntent().getStringExtra("Email");
+        String a = user_id_unique;
+
+
+        user_id_unique = user_id_unique.toLowerCase().replace(".","");
+
+
         profpic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,8 +77,10 @@ public class Change_ProfilePic extends AppCompatActivity {
                 Intent i = new Intent(Change_ProfilePic.this,profile_page.class);
                 // Send new image to profile page
                 i.putExtra("new_pic",image.toString());
+                i.putExtra("Email",a);
                 Log.d("aa","Image uploaded");
                 uploadImage();
+                startActivity(i);
                 // Need to reflect change in profile page activity
 
             }
@@ -77,7 +88,9 @@ public class Change_ProfilePic extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent i = new Intent(Change_ProfilePic.this,profile_page.class);
+                i.putExtra("Email",a);
+                startActivity(i);
             }
         });
 

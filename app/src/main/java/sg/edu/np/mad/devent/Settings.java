@@ -17,12 +17,16 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -35,6 +39,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -63,6 +68,8 @@ public class Settings extends AppCompatActivity {
         Context mContext;
         static String title;
         static String username;
+        static String user_id_unique;
+        static String new_user_id_unique;
 
 
 
@@ -73,13 +80,31 @@ public class Settings extends AppCompatActivity {
     DatabaseReference user_path = database.getReference("Users");
 
 
-
-    String user_id_unique = "W222"; // Change this to get from intent;
-//    String user_id_unique = getIntent().getStringExtra("EventOrganiser");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+        Intent setting = getIntent();
+
+        user_id_unique = setting.getStringExtra("Email");
+        Intent toprof = new Intent(Settings.this,profile_page.class);
+        toprof.putExtra("Email",user_id_unique);
+
+        new_user_id_unique = user_id_unique.toLowerCase().replace(".","");
+
+        // Get username to send in activity
+        user_path.child(new_user_id_unique).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(!task.isSuccessful()){
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else{
+                    username = String.valueOf(task.getResult().child("username").getValue());
+                }
+            }
+        });
+
 
 
         if (savedInstanceState == null) {
@@ -91,13 +116,35 @@ public class Settings extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-
         }
+        // Set this to true if you want back button on the actionbar
+        // Intents dont send over when you press back on the action bar for some raeason
+        // so im stuck
+        actionBar.setDisplayHomeAsUpEnabled(false);
+
+
+
+
         database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
         String getuser = getIntent().getStringExtra("EventOrganiser");
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent i = new Intent(Settings.this,NavDrawer.class);
+                i.putExtra("Email",user_id_unique);
+                i.putExtra("Username",username);
+                Intent i2 = new Intent(Settings.this,profile_page.class);
+                i2.putExtra("Email",user_id_unique);
+                Log.d("backbutton","hey the back button is being pressed");
+                startActivity(i);
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this,callback);
+
 
     }
+
 
 
     // Permissions for accessing the storage
@@ -172,6 +219,7 @@ public class Settings extends AppCompatActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent i = new Intent(getActivity(),change_password.class);
+                    i.putExtra("Email",user_id_unique);
                     startActivity(i);
                     return false;
                 }
@@ -185,6 +233,8 @@ public class Settings extends AppCompatActivity {
                 public boolean onPreferenceClick(Preference preference) {
                     Log.d("help","i want die");
                     Intent i = new Intent(getActivity(),Change_ProfilePic.class);
+                    i.putExtra("Email",user_id_unique);
+                    Log.d("help",user_id_unique);
                     startActivity(i);
                     return false;
                 }
@@ -242,7 +292,7 @@ public class Settings extends AppCompatActivity {
                             public void afterTextChanged(Editable editable) {
                                 new_title[0] = editText.getText().toString();
                             if (new_title[0] != null){
-                                s.user_path.child(s.user_id_unique).child("title").setValue(new_title[0]);
+                                s.user_path.child(new_user_id_unique).child("title").setValue(new_title[0]);
                             }
                             }
                         });
@@ -304,7 +354,7 @@ public class Settings extends AppCompatActivity {
                             public void afterTextChanged(Editable editable) {
                                 new_name[0] = editText.getText().toString();
                                 if (new_name[0] != null){
-                                    s.user_path.child(s.user_id_unique).child("username").setValue(new_name[0]);
+                                    s.user_path.child(new_user_id_unique).child("username").setValue(new_name[0]);
                                 }
                             }
                         });
@@ -314,29 +364,32 @@ public class Settings extends AppCompatActivity {
 
 
 
+
         }
 
-
-
-
-        // This just goes back to main Activity cause idk how to make it
+        // This just goes back to NavDrawer cause idk how to make it
         // go to the previous activity
         // To change which activity to go to change the parentActivityName
         // in the manifest file
-//        @Override
-//        public boolean onOptionsItemSelected(MenuItem item) {
-//            switch (item.getItemId()) {
-//                // Respond to the action bar's Up/Home button
-//                case android.R.id.home:
-//                    super.getActivity().finish();
-//                    return true;
-//            }
-//            return super.onOptionsItemSelected(item);
-//        }
-//
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            switch (item.getItemId()){
+                case android.R.id.home:
+                    Intent i = new Intent(getActivity(),NavDrawer.class);
+                    i.putExtra("Email",user_id_unique);
+                    i.putExtra("Username",username);
+                    Intent i2 = new Intent(getActivity(), profile_page.class);
+                    i2.putExtra("Email",user_id_unique);
+                    startActivity(i);
+                    return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
 
 
+        public boolean onCreateOptionsMenu(Menu menu) {
+            return true;
+        }
+        }
     }
 
-
-}

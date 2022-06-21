@@ -1,10 +1,12 @@
 package sg.edu.np.mad.devent;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,12 +18,17 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
 
 public class profile_page extends AppCompatActivity {
 
@@ -34,6 +41,8 @@ public class profile_page extends AppCompatActivity {
     Integer usercontact;
     String userpass;
     Uri new_img;
+    String user_id_unique;
+
 
     // Firebase stuff
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -47,18 +56,59 @@ public class profile_page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
+        Button toNavDrawer = findViewById(R.id.backToNavDrawer);
+
+        user_id_unique = getIntent().getStringExtra("Email");
+
+        Log.d("email",user_id_unique);
+        String a = user_id_unique.toLowerCase().replace(".","");
+        Log.d("email a", "a is "+ a);
+
+        // Get username to send to NavDrawer
+//        user_path.child(a).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if(!task.isSuccessful()){
+//                    Log.e("firebase", "Error getting data", task.getException());
+//                }
+//                else{
+//                    username = String.valueOf(task.getResult().child("username").getValue());
+//                    Log.d("DBusername","username is " + username);
+//                }
+//            }
+//        });
+//        Log.d("Username is",username);
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                Intent i = new Intent(profile_page.this,NavDrawer.class);
+//                i.putExtra("Email",user_id_unique);
+//                i.putExtra("Username",username);
+//                startActivity(i);
+//            }
+//        };
+//
+//        super.getOnBackPressedDispatcher().addCallback(this,callback);
+
+
+
+
+
+
+        user_id_unique = user_id_unique.toLowerCase().replace(".","");
+
+
         // Getting all the views as variables
         TextView EditDesc = findViewById(R.id.EditDesc);
         TextView UserDesc = findViewById(R.id.UserDescription);
         TextView UserName = findViewById(R.id.username);
 
         Intent setting = getIntent();
-        String getemailofuser = setting.getStringExtra("Email");
-        String getusernameofuser = setting.getStringExtra("Username");
-        String getuserprofileid = setting.getStringExtra("profile_id");
+//        String getemailofuser = setting.getStringExtra("email");
+//        String getusernameofuser = setting.getStringExtra("username");
+//        String geruserprofileid = setting.getStringExtra("profile_id");
 
-        // !!! Change this to get profile from database
-        user_path.child(getemailofuser.toLowerCase().replace(".","")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        user_path.child(user_id_unique).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
 
@@ -93,27 +143,58 @@ public class profile_page extends AppCompatActivity {
 
 
                 // Changing Password
-                String value = setting.getStringExtra("new_pass");
-                p.setHashedpassword(Profile.HashPassword(saltvalue,value));
+//                String value = setting.getStringExtra("new_pass");
+//                p.setHashedpassword(Profile.HashPassword(saltvalue,value));
+                // ^ Moved to change_password class
 
                 // Change Pic
-                String string_img = (setting.getStringExtra("new_pic"));
-                if(string_img != null){
-                    new_img = Uri.parse(string_img);
-                    try{
-                        Glide.with(profile_page.this).load(new_img).into(profile_pic);
+                user_path.child(user_id_unique).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Error getting data. Please reload.", task.getException());
+                        }
+                        else {
+                            Log.d("firebase", String.valueOf(task.getResult().child("email").getValue()));
+                            // Get image reference from image folder
+                            String imagelink = String.valueOf(task.getResult().child("profpic").getValue());
+                            Log.d("AAAAAAAAAAAAA",imagelink);
+                            // Set reference point for firebase storage
+                            StorageReference firebaseStorage = FirebaseStorage.getInstance().getReference("images/" + imagelink);
+                            ImageView profile_pic = findViewById(R.id.profilepic);
+                            if(profile_pic == null){
+                                Log.d("imageview missing","help me please");
+                            }
+
+                            try{
+                                File localfile = File.createTempFile("image",".jpg");
+                                firebaseStorage.getFile(localfile).addOnSuccessListener(
+                                        new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                                Bitmap bitmapImage = BitmapFactory.decodeFile(localfile.getAbsolutePath());
+                                                profile_pic.setImageBitmap(Bitmap.createScaledBitmap
+                                                        (bitmapImage,128,128,false));
+
+                                            }
+                                        }
+                                );
+                            }
+                            catch (Exception exception){
+                                exception.printStackTrace();
+                            }
+                        }
                     }
-                    catch (Exception ex){
-                        Log.d("New Profile Pic Failure",
-                                "Profile Pic change failed" + String.valueOf(ex));
-                    }
-                }
-                // Change title
-                String new_title = setting.getStringExtra("new_title");
-                Log.d("a","sent new_title is "+ new_title);
-                if(new_title != null){
-                    user_path.child(getemailofuser.toLowerCase().replace(".","")).child("title").setValue(new_title);
-                }
+                });
+
+//                // Change title
+//                String new_title = setting.getStringExtra("new_title");
+//                Log.d("a","sent new_title is "+ new_title);
+//                if(new_title != null){
+//                    user_path.child(user_id_unique.toLowerCase().replace(".","")).child("title").setValue(new_title);
+//                }
+
+                // ^ Moved to settings activity
             }
         });
 
@@ -143,6 +224,17 @@ public class profile_page extends AppCompatActivity {
             public void onClick(View v) {
                 Intent edit = new Intent(profile_page.this,EditDescription.class);
                 startActivity(edit);
+            }
+        });
+        toNavDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("i2","aa");
+                Intent i2 = new Intent(profile_page.this,NavDrawer.class);
+                i2.putExtra("Email",user_id_unique);
+                i2.putExtra("Username",username);
+                Log.d("Intent i2","" + user_id_unique +" "+ username);
+                startActivity(i2);
             }
         });
 
@@ -208,17 +300,6 @@ public class profile_page extends AppCompatActivity {
             //p.setPassword(value);
         }
 
-        Button btn = findViewById(R.id.button);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent navDrawAct = new Intent(profile_page.this, NavDrawer.class);
-                navDrawAct.putExtra("Email", getemailofuser);
-                navDrawAct.putExtra("Username", getusernameofuser);
-                navDrawAct.putExtra("profile_id", getuserprofileid);
-                startActivity(navDrawAct);
-            }
-        });
 
     }
 

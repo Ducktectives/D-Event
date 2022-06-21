@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.Locale;
 
 public class EditDescription extends AppCompatActivity {
+    // Not used anymore
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
