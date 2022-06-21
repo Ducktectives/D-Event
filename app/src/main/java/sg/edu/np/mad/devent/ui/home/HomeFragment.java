@@ -82,6 +82,8 @@ public class HomeFragment extends Fragment {
 
                 eventsIDList.add(eventID);
                 eventsList.add(event);
+
+
                 gridAdapter.notifyDataSetChanged();
             }
 

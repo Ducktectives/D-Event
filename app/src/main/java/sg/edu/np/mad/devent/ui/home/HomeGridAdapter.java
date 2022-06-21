@@ -12,6 +12,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -67,7 +68,8 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
             @Override
             public void onClick(View view) {
                 Intent eventAct = new Intent(context, EventDetailsPage.class);
-                eventAct.putExtra("event_Name",filteredEventsList.get(i).getEvent_Name());
+                eventAct.putExtra("event_List", (Serializable) eventsList);
+                eventAct.putExtra("event_Name",filteredEventsList.get(i).getEvent_ID());
                 eventAct.putExtra("Email", NavDrawer.getemailofuser);
                 context.startActivity(eventAct);
             }
