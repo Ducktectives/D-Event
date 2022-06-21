@@ -267,7 +267,7 @@ public class EventFormActivity extends AppCompatActivity{
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             // Image uploaded successfully
                             progressDialog.dismiss();
-                            Toast.makeText(EventFormActivity.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EventFormActivity.this, "Form Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     }
             ).addOnFailureListener(new OnFailureListener(){
