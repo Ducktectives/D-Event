@@ -12,7 +12,6 @@ public class Events implements Serializable {
     String Event_Description;
     String Event_Detail;
     String Event_UserID;
-    // String Event_Picture;
     String Event_StorageReferenceID;
     boolean Bookmarked;
 
@@ -86,10 +85,6 @@ public class Events implements Serializable {
     public void setEvent_UserID(String event_UserID) {
         Event_UserID = event_UserID;
     }
-
-    // public String getEvent_Picture() { return Event_Picture; }
-
-    // public void setEvent_Picture(String event_Picture) { Event_Picture = event_Picture; }
 
     public String getEvent_StorageReferenceID() {
         return Event_StorageReferenceID;

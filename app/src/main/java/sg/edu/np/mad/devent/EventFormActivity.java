@@ -31,6 +31,9 @@ import com.bumptech.glide.Glide;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -84,6 +87,7 @@ public class EventFormActivity extends AppCompatActivity{
     // boolean variable to check whether date field is accurate
     boolean isDateFieldChecked = false;
 
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +114,9 @@ public class EventFormActivity extends AppCompatActivity{
 
         database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
+
+        // Authenticate
+        mAuth = FirebaseAuth.getInstance();
 
 
         Geocoder geocoder = new Geocoder(EventFormActivity.this, Locale.getDefault());
@@ -188,8 +195,24 @@ public class EventFormActivity extends AppCompatActivity{
 
     public void submit_form(View view){
 
-        uploadForm();
+            uploadForm();
 
+    }
+
+    private void signInAnonymously() {
+        mAuth.signInAnonymously().addOnSuccessListener(this, new  OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        // do your stuff
+                        uploadForm();
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Log.e("TAG", "signInAnonymously:FAILURE", exception);
+                    }
+                });
     }
 
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
@@ -241,7 +264,7 @@ public class EventFormActivity extends AppCompatActivity{
     }
 
     // uploadimage method
-    private void uploadImage(){
+    public void uploadImage(){
         if(selectedImage != null){
 
             // progressDialogue while uploading
@@ -294,12 +317,14 @@ public class EventFormActivity extends AppCompatActivity{
     }
 
     private void uploadForm(){
+
+
         // store the returned value of the dedicated function which checks
         // whether the entered data is valid or if any fields are left blank.
         isAllFieldsChecked = checkEmptyFields();
         isDateFieldChecked = checkDate();
 
-        if(isAllFieldsChecked && isDateFieldChecked){
+        if(isAllFieldsChecked){
             // Create an object of Firebase Database Reference
             DatabaseReference reference ;
             reference = database.getReference();
@@ -312,13 +337,40 @@ public class EventFormActivity extends AppCompatActivity{
             event_Detail = eventDetail.getText().toString();
             bookmarked = false;
 
-            event = new Events(event_ID, event_Name, event_Location, event_Date, event_Description, event_Detail, userID, storageReference_ID, bookmarked);
 
+            event = new Events( event_ID,  event_Name,  event_Location,  event_Date,  event_Description,  event_Detail,  userID, storageReference_ID,  bookmarked);
             // Insert the user-defined object to the database
             reference.child("Event").push().setValue(event);
 
-            // Upload image to storage
+            // progressDialogue while uploading
+//            ProgressDialog progressDialog = new ProgressDialog(this);
+//            progressDialog.setTitle("Uploading...");
+//            progressDialog.show();
+
+
+// Upload image to storage
             uploadImage();
+
+
+//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                // Add a completion callback
+//                // to know when our data has been committed, you can add a completion listener.
+//                @Override
+//                public void onSuccess(Void aVoid) {
+//                    // Form uploaded successfully
+//                    progressDialog.dismiss();
+//                    Toast.makeText(EventFormActivity.this, "Form Uploaded", Toast.LENGTH_SHORT).show();
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    // Form uploaded unsuccessfully
+//                    progressDialog.dismiss();
+//                    Toast.makeText(EventFormActivity.this, "Form Uploaded", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+
+
         }
     }
 
@@ -326,19 +378,26 @@ public class EventFormActivity extends AppCompatActivity{
     // are filled or not by the user.
     //  EditText date, location, eventDescription, eventName, eventDetail;
     private boolean checkEmptyFields(){
+        event_ID = UUID.randomUUID().toString();
+        event_Name  = eventName.getText().toString();
+        event_Location  = location.getText().toString();
+        event_Date  = date.getText().toString();
+        event_Description  = eventDescription.getText().toString();
+        event_Detail = eventDetail.getText().toString();
+
           if (event_Name.length() == 0){
               eventName.setError("This field is required");
               return false;
           }
-          if (date.length() == 0){
+          if (event_Date.length() == 0){
               date.setError("This field is required");
               return false;
           }
-        if (date.length() == 0){
+        if (event_Location.length() == 0){
             location.setError("This field is required");
             return false;
         }
-        if (date.length() == 0){
+        if (event_Description.length() == 0){
             eventDescription.setError("This field is required");
             return false;
         }
@@ -356,7 +415,7 @@ public class EventFormActivity extends AppCompatActivity{
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            Toast.makeText(EventFormActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(EventFormActivity.this, "Date is invalid", Toast.LENGTH_SHORT).show();
 
         }
         // if validation for date is true

@@ -64,17 +64,17 @@
 
         <TextView
             android:id="@+id/EventName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_width="349dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="88dp"
             android:layout_marginTop="52dp"
-            android:layout_marginEnd="336dp"
+            android:layout_marginEnd="30dp"
             android:scrollbars="vertical"
             android:text="Event Name"
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/Detail"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/EventMonth"
+            app:layout_constraintStart_toStartOf="@+id/Detail"
             app:layout_constraintTop_toBottomOf="@+id/eventPicture" />
 
         <TextView
