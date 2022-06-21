@@ -44,7 +44,7 @@ public class NavDrawer extends AppCompatActivity {
         Intent i1 = getIntent();
         getemailofuser = i1.getStringExtra("Email");
         String getusernameofuser = i1.getStringExtra("Username");
-        String geruserprofileid = i1.getStringExtra("profile_id");
+        String getuserprofileId = i1.getStringExtra("profile_id");
 
         setSupportActionBar(binding.appBarNavDrawer.toolbar);
         /*
@@ -62,7 +62,7 @@ public class NavDrawer extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_settings) // R.id.nav_followed
+                R.id.nav_home, R.id.nav_settings, R.id.nav_AddEvent) // R.id.nav_followed
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_nav_drawer);
@@ -94,19 +94,29 @@ public class NavDrawer extends AppCompatActivity {
         });
          */
 
-        //
+        // Setting an OnClick listener for Menu item "Settings"
         navigationView.getMenu().findItem(R.id.nav_settings).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Intent settingAct = new Intent(NavDrawer.this, Settings.class);
                 settingAct.putExtra("Email", getemailofuser);
-                Log.d("Navdrawer email",getemailofuser);
                 startActivity(settingAct);
                 return true;
             }
         });
 
+        // Setting an OnClick listener for Menu item "AddEvent"
+        navigationView.getMenu().findItem(R.id.nav_AddEvent).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent eventFormAct = new Intent(NavDrawer.this, EventFormActivity.class);
+                eventFormAct.putExtra("profile_id", getuserprofileId);
+                startActivity(eventFormAct);
+                return true;
+            }
+        });
 
+        // NAV HEADER
         // Used for displaying profile pic / Username / email in nav header
         View navHeader = navigationView.getHeaderView(0);
         // Pull data of user and display *** ! IMPORTANT COME BACK TO THIS LATER
@@ -116,8 +126,7 @@ public class NavDrawer extends AppCompatActivity {
                 Intent i2 = new Intent(NavDrawer.this, profile_page.class);
                 i2.putExtra("Username_forprofile", getusernameofuser);
                 i2.putExtra("Email", getemailofuser);
-                Log.d("email","email is " + getemailofuser);
-                i2.putExtra("profile_id_forprofile", geruserprofileid);
+                i2.putExtra("profile_id_forprofile", getuserprofileId);
                 startActivity(i2);
             }
         });

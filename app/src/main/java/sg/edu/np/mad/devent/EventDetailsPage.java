@@ -146,8 +146,8 @@ public class EventDetailsPage extends AppCompatActivity {
                 }
 
                 //for date of event
-                //For date of the event
-                //String eventDatedb = String.valueOf(task.getResult().child("event_Date").getValue());
+                String eventDate = ev.getEvent_Date();
+
 
 
             }
@@ -165,8 +165,6 @@ public class EventDetailsPage extends AppCompatActivity {
 
            }
         });
-
-        Log.d("AAAAA",eventID);
 
 
         //event listener for booking
