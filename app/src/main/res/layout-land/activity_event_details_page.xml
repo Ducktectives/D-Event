@@ -55,8 +55,10 @@
             android:cropToPadding="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eventPicture"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/pink_rounded_square" />
 
         <TextView
@@ -64,11 +66,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="52dp"
             android:layout_marginEnd="336dp"
             android:scrollbars="vertical"
             android:text="Event Name"
-            android:textSize="34sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/EventMonth"
@@ -78,12 +80,12 @@
             android:id="@+id/EventOrganiser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="88dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="484dp"
             android:scrollbars="vertical"
             android:text="by Who"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/Detail"
             app:layout_constraintTop_toBottomOf="@+id/EventLocation" />
 
         <TextView
@@ -91,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="148dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="55dp"
             android:scrollbars="vertical"
             android:text="OCT"
             android:textSize="20sp"
@@ -100,25 +102,27 @@
 
         <TextView
             android:id="@+id/EventDescription"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="88dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="428dp"
+            android:layout_marginEnd="5dp"
             android:scrollbars="vertical"
             android:text="Event Description"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/Detail"
+            app:layout_constraintStart_toStartOf="@+id/Detail"
             app:layout_constraintTop_toBottomOf="@+id/EventOrganiser" />
 
         <TextView
             android:id="@+id/EventLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="432dp"
+            android:layout_marginStart="87dp"
+            android:layout_marginTop="8dp"
             android:scrollbars="vertical"
             android:text="Event Location"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/Detail"
             app:layout_constraintTop_toBottomOf="@+id/EventName" />
 
         <TextView
@@ -137,22 +141,24 @@
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="88dp"
             android:layout_marginTop="36dp"
-            android:layout_marginEnd="476dp"
             android:text="Details"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/Detail"
             app:layout_constraintTop_toBottomOf="@+id/EventDescription" />
 
         <TextView
             android:id="@+id/eventDetails"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="88dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="428dp"
+            android:layout_marginEnd="5dp"
             android:scrollbars="vertical"
             android:text="Event Description"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/Detail"
+            app:layout_constraintStart_toStartOf="@+id/Detail"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
         <Button
