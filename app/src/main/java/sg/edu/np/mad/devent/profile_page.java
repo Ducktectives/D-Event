@@ -55,7 +55,7 @@ public class profile_page extends AppCompatActivity {
         Intent setting = getIntent();
         String getemailofuser = setting.getStringExtra("Email");
         String getusernameofuser = setting.getStringExtra("Username");
-        String geruserprofileid = setting.getStringExtra("profile_id");
+        String getuserprofileid = setting.getStringExtra("profile_id");
 
         // !!! Change this to get profile from database
         user_path.child(getemailofuser.toLowerCase().replace(".","")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -212,7 +212,11 @@ public class profile_page extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(profile_page.this, NavDrawer.class));
+                Intent navDrawAct = new Intent(profile_page.this, NavDrawer.class);
+                navDrawAct.putExtra("Email", getemailofuser);
+                navDrawAct.putExtra("Username", getusernameofuser);
+                navDrawAct.putExtra("profile_id", getuserprofileid);
+                startActivity(navDrawAct);
             }
         });
 

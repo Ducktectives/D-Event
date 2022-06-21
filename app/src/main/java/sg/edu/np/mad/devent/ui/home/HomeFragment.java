@@ -12,8 +12,15 @@ import android.widget.GridView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +32,8 @@ import sg.edu.np.mad.devent.databinding.FragmentHomeBinding;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    List<Events>  eventsList = new ArrayList<>();
+    static List<Events> eventsList = new ArrayList<>();
+    static List<String> eventsIDList = new ArrayList<>();
     HomeGridAdapter gridAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -37,24 +45,62 @@ public class HomeFragment extends Fragment {
 
         final GridView gridView = binding.gridView;
 
+        //For firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        DatabaseReference Ref = database.getReference("Event");
+
         // List of events (Replaced with actual data retrieved from firebase)
         int[] imageList = {R.drawable.a1,R.drawable.a2,R.drawable.a3, R.drawable.a4, R.drawable.me,
                 R.drawable.kirby_drawing};
-        String[] titleList = {"Duck picnic", "Duck picnic 2", "Return of the Duckening", "Amazing health app",
-                "My mental health", "Amazing Kirby Exhibit"};
 
-        //    Events(String event_ID, String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked)
-        for (int i = 0; i < titleList.length; i++){
-            Events event = new Events("5",titleList[i], "Location", "17 June", "randDescription", "1",
-                    imageList[i] + "", "435435", true);
-            eventsList.add(event);
-        }
+        Ref.orderByChild("event_ID").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                String eventID = snapshot.child("event_ID").getValue(String.class);
+                String eventTitle = snapshot.child("event_Name").getValue(String.class);
+                String eventLoc = snapshot.child("event_Location").getValue(String.class);
+                String eventDate = snapshot.child("event_Date").getValue(String.class);
+                String eventDesc = snapshot.child("event_Description").getValue(String.class);
+                String eventUserID = snapshot.child("event_UserID").getValue(String.class);
+                String eventPic = snapshot.child("event_Picture").getValue(String.class);
+                Boolean eventBooked = snapshot.child("bookmarked").getValue(Boolean.class);
+                String eventStorageID = "435435";
+
+                // Meant to prevent duplication of data display in gridAdapter
+                if (eventsIDList.contains(eventID)) return;
+
+                Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc, eventUserID,
+                        imageList[0] + "", eventStorageID, eventBooked);
+
+                eventsIDList.add(eventID);
+                eventsList.add(event);
+                gridAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                gridAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("ERROR!", "Some error occurred regarding HomeFragement firebase data retrieval\n" +
+                        error);
+            }
+        });
 
         gridAdapter = new HomeGridAdapter(container.getContext(),eventsList);
-        binding.gridView.setAdapter(gridAdapter);
-
-        // final TextView textView = binding.textHome;
-        // homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        gridView.setAdapter(gridAdapter);
         setHasOptionsMenu(true);
         return root;
     }
