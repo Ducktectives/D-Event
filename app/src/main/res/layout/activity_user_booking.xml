@@ -32,7 +32,7 @@
                 android:inputType="textPersonName"
                 android:paddingLeft="16px"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/eventimage"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -44,7 +44,7 @@
                 android:text="Name"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                app:layout_constraintTop_toBottomOf="@+id/eventimage" />
 
             <TextView
                 android:id="@+id/bookingEmail"
@@ -129,16 +129,26 @@
                 android:text="Book"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/UserBookingPax" />
+                app:layout_constraintTop_toBottomOf="@+id/Errormessage" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/eventimage"
                 android:layout_width="408dp"
                 android:layout_height="173dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/a1" />
+
+            <TextView
+                android:id="@+id/Errormessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/UserBookingPax" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

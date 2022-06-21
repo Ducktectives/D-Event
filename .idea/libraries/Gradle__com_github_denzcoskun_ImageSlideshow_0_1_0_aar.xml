@@ -1,17 +1,16 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.denzcoskun:ImageSlideshow:0.1.0@aar">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/6904ae65ee37538f5f80100fbc6e57b0/transformed/jetified-ImageSlideshow-0.1.0/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/6904ae65ee37538f5f80100fbc6e57b0/transformed/jetified-ImageSlideshow-0.1.0/res" />
-      <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/6904ae65ee37538f5f80100fbc6e57b0/transformed/jetified-ImageSlideshow-0.1.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d07fa64236757cb11d0eb662cc4b1100/transformed/ImageSlideshow-0.1.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d07fa64236757cb11d0eb662cc4b1100/transformed/ImageSlideshow-0.1.0/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/d07fa64236757cb11d0eb662cc4b1100/transformed/ImageSlideshow-0.1.0/jars/classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/6b636e5581c905af2ffc1fa36ce8255f/transformed/jetified-ImageSlideshow-0.1.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/6b636e5581c905af2ffc1fa36ce8255f/transformed/jetified-ImageSlideshow-0.1.0/res" />
+      <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/6b636e5581c905af2ffc1fa36ce8255f/transformed/jetified-ImageSlideshow-0.1.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/modules-2/files-2.1/com.github.denzcoskun/ImageSlideshow/0.1.0/b3843ed206863a279b1a15748695a7c4e5cf3ceb/ImageSlideshow-0.1.0-sources.jar!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.denzcoskun/ImageSlideshow/0.1.0/b3843ed206863a279b1a15748695a7c4e5cf3ceb/ImageSlideshow-0.1.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

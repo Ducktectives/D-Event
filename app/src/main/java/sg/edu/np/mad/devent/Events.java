@@ -6,6 +6,7 @@ public class Events{
     String Event_Location;
     String Event_Date;
     String Event_Description;
+    String Event_Detail;
     String Event_UserID;
     String Event_Picture;
     String Event_StorageReferenceID;
@@ -14,12 +15,13 @@ public class Events{
     public Events() {}
 
 
-    public Events(String event_ID, String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, String event_StorageReferenceID, boolean bookmarked) {
+    public Events(String event_ID, String event_Name, String event_Location, String event_Date, String event_Description, String event_Detail, String event_UserID, String event_Picture, String event_StorageReferenceID, boolean bookmarked) {
         Event_ID = event_ID;
         Event_Name = event_Name;
         Event_Location = event_Location;
         Event_Date = event_Date;
         Event_Description = event_Description;
+        Event_Detail = event_Detail;
         Event_UserID = event_UserID;
         Event_Picture = event_Picture;
         Event_StorageReferenceID = event_StorageReferenceID;
@@ -64,6 +66,14 @@ public class Events{
 
     public void setEvent_Description(String event_Description) {
         Event_Description = event_Description;
+    }
+
+    public String getEvent_Detail() {
+        return Event_Detail;
+    }
+
+    public void setEvent_Detail(String event_Detail) {
+        Event_Detail = event_Detail;
     }
 
     public String getEvent_UserID() {

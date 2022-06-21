@@ -45,17 +45,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.06"
-            app:srcCompat="@drawable/error" />
+            app:srcCompat="@drawable/loading" />
 
         <ImageView
             android:id="@+id/Detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-20dp"
-            android:layout_marginBottom="-50dp"
+            android:layout_marginBottom="-90dp"
             android:cropToPadding="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eventPicture"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/pink_rounded_square" />
@@ -75,8 +77,8 @@
 
         <TextView
             android:id="@+id/EventOrganiser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="56dp"
+            android:layout_height="19dp"
             android:layout_marginStart="88dp"
             android:layout_marginTop="4dp"
             android:clickable="true"
@@ -144,7 +146,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="88dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="24dp"
             android:text="Details"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -155,7 +157,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="88dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:scrollbars="vertical"
             android:text="Event Details"
             app:layout_constraintStart_toStartOf="parent"
@@ -165,14 +167,15 @@
             android:id="@+id/bookbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:text="Book Now"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eventDetails"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.405" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,6 +42,10 @@ import java.io.IOException;
 public class EventDetailsPage extends AppCompatActivity {
     TextView eventOrg;
     String eventOrganizerEmail;
+    String imageLink;
+    String userEmail;
+    String eventName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +56,9 @@ public class EventDetailsPage extends AppCompatActivity {
 
         //receive Intent information
         Intent receiveEventAct = getIntent();
-        String eventName = receiveEventAct.getStringExtra("event_Name");
-//        Log.d("maow",eventName);
+        eventName = receiveEventAct.getStringExtra("event_Name");
+        userEmail = receiveEventAct.getStringExtra("Email");
+
 
         String eventID ="-N4yWQOhDz4yQ28BA3qr"; //to be changed when instance is passed
 
@@ -93,7 +98,7 @@ public class EventDetailsPage extends AppCompatActivity {
                     String eventDatedb = String.valueOf(task.getResult().child("event_Date").getValue());
 
                     //For event banner/image
-                    String imageLink = String.valueOf(task.getResult().child("event_StorageReferenceID").getValue());
+                    imageLink = String.valueOf(task.getResult().child("event_StorageReferenceID").getValue());
 
 
                     //set the content in the activity--------------------------------------------------
@@ -134,7 +139,7 @@ public class EventDetailsPage extends AppCompatActivity {
 
                     //----For the Event Location
                     TextView eventLocation = findViewById(R.id.EventLocation);
-                    eventLocation.setText(eventLocdb);
+                    eventLocation.setText("Postalcode: " + eventLocdb);
 
                     //----For the event organizer
                     //search for the user with the same email
@@ -188,6 +193,10 @@ public class EventDetailsPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent book = new Intent(EventDetailsPage.this,UserBooking.class);
+                Bundle bookingInfo = new Bundle();
+                bookingInfo.putString("EventPicture",imageLink);
+                bookingInfo.putString("User_Email",userEmail);
+                book.putExtras(bookingInfo);
                 startActivity(book);
             }
         });
