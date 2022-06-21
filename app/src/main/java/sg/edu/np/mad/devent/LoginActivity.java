@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -84,6 +85,8 @@ public class LoginActivity extends AppCompatActivity {
                                             editor.putString("Hahedpass", hashpassword);
                                             editor.apply();
 
+                                            // Let user know that login is successful
+                                            Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
 
                                             Intent login = new Intent(LoginActivity.this, NavDrawer.class);
                                             // Passing the Email and Username to the next activity for user
