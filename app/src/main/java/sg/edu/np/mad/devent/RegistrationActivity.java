@@ -35,7 +35,7 @@ import java.util.UUID;
 
 public class RegistrationActivity extends AppCompatActivity {
     // Create a user-defined object
-    static Profile user = new Profile();
+    Profile user = new Profile();
 
     Button btn_register;
     EditText userName, userEmail, userContact,

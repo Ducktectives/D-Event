@@ -67,12 +67,14 @@ public class SplashScreen extends AppCompatActivity {
                                     String username = task.getResult().child("username").getValue(String.class);
                                     String hashedpassword = task.getResult().child("hashedpassword").getValue(String.class);
                                     String email = task.getResult().child("email").getValue(String.class);
+                                    String profileid = task.getResult().child("id").getValue(String.class);
                                     if (hashedpassword.equals(savedhashpassword) && email.equals(savedemail)){
 
                                         Intent login = new Intent(SplashScreen.this, NavDrawer.class);
                                         // Passing the Email and Username to the next activity for user
                                         login.putExtra("Email", email);
                                         login.putExtra("Username", username);
+                                        login.putExtra("profile_id", profileid);
                                         startActivity(login);
                                     }
                                 }

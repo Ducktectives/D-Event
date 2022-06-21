@@ -1,9 +1,11 @@
 package sg.edu.np.mad.devent;
 
 import static sg.edu.np.mad.devent.R.id.nav_host_fragment_content_nav_drawer;
-import static sg.edu.np.mad.devent.RegistrationActivity.user;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.view.menu.MenuView;
+import androidx.core.app.NotificationCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -33,6 +36,7 @@ public class NavDrawer extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavDrawerBinding binding;
+    private String getemailofuser = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,7 @@ public class NavDrawer extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         Intent i1 = getIntent();
-        String getemailofuser = i1.getStringExtra("Email");
+        getemailofuser = i1.hasExtra("Email") ? i1.getStringExtra("Email") : getemailofuser;
         String getusernameofuser = i1.getStringExtra("Username");
         String geruserprofileid = i1.getStringExtra("profile_id");
 
@@ -65,6 +69,8 @@ public class NavDrawer extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_nav_drawer);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        //navController.navigate();
 
         // Sign out menu item's Alert dialog
         /* UNCOMMENT THIS WHEN WE ARE IMPLEMENTING SIGNOUT
@@ -106,10 +112,10 @@ public class NavDrawer extends AppCompatActivity {
         });
 
         TextView username = (TextView) navHeader.findViewById(R.id.nav_username);
-        username.setText(user.getUsername());
+        username.setText(getusernameofuser);
 
         TextView email = (TextView) navHeader.findViewById(R.id.nav_email);
-        email.setText(user.Email);
+        email.setText(getemailofuser + " 123456");
 
     }
 
