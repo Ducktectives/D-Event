@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -152,9 +153,9 @@ public class UserBooking extends AppCompatActivity {
                                     book.child(eventid).child(bookingemail.toLowerCase().replace(".", "")).setValue(userbooking);
                                     // Let user know that Booking is successful
                                     Toast.makeText(getApplicationContext(), "Booking Successfully", Toast.LENGTH_LONG).show();
-                                    Intent profileData = new Intent();
+                                    Intent profileData = new Intent(UserBooking.this,profile_page.class);
                                     profileData.putExtra("User_Email",userEmail);
-                                    UserBooking.this.finish();
+                                    startActivity(profileData);
                                 }
                                 else {
                                     // Let user know that Booking is Unsuccessful
