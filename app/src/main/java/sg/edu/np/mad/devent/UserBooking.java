@@ -54,10 +54,23 @@ public class UserBooking extends AppCompatActivity {
         confirmbooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Integer bookingnumber;
+                Integer bookingpax;
                 String bookingname = userinputname.getText().toString();
                 String bookingemail = userinputemail.getText().toString();
-                Integer bookingnumber = Integer.parseInt(userinputcontact.getText().toString());
-                Integer bookingpax = Integer.parseInt(userinputpax.getText().toString());
+                try {
+                    bookingnumber = Integer.parseInt(userinputcontact.getText().toString());
+                }
+                catch (Exception e){
+                    bookingnumber = null;
+                }
+                try {
+                    bookingpax = Integer.parseInt(userinputpax.getText().toString());
+                }
+                catch (Exception e){
+                    bookingpax = null;
+                }
+
 
                 if (bookingname.isEmpty() || bookingemail.isEmpty() || bookingnumber == null || bookingpax == null){
                     errormessage.setText("Kindly fill up the fields above");
@@ -75,6 +88,10 @@ public class UserBooking extends AppCompatActivity {
                         // Connect Database
                         FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
                         DatabaseReference Ref = database.getReference("Event");
+                        DatabaseReference book = database.getReference("Booking");
+
+                        int finalbookingnumber = bookingnumber;
+                        int finalbookingpax = bookingpax;
 
                         // Store the data in the user folders in the Event table
                         Ref.orderByChild("event_ID").equalTo(eventid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,15 +100,20 @@ public class UserBooking extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 // Check for event ID
                                 if (snapshot.exists()){
+
                                     userbooking.Name = bookingname;
                                     userbooking.Email = bookingemail;
-                                    userbooking.Contact = bookingnumber;
-                                    userbooking.Pax = bookingpax;
+                                    userbooking.Contact = finalbookingnumber;
+                                    userbooking.Pax = finalbookingpax;
                                     // Create subfolder in the event and name the subfolder booking and create another subfolder within with the booking email as the key to store the record
-                                    Ref.child(eventid).child("Booking").child(bookingemail.toLowerCase().replace(".", "")).setValue(userbooking);
+                                    book.child(eventid).child(bookingemail.toLowerCase().replace(".", "")).setValue(userbooking);
                                     // Let user know that Booking is successful
                                     Toast.makeText(getApplicationContext(), "Booking Successfully", Toast.LENGTH_LONG).show();
                                     UserBooking.this.finish();
+                                }
+                                else {
+                                    // Let user know that Booking is Unsuccessful
+                                    Toast.makeText(getApplicationContext(), "Booking Unsuccessfully, Please try again", Toast.LENGTH_LONG).show();
                                 }
                             }
 
