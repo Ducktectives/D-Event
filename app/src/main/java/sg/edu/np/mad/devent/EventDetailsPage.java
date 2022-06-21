@@ -149,25 +149,17 @@ public class EventDetailsPage extends AppCompatActivity {
         }
 
 
-/*
 
-                }
-            }
+        //event listener for viewing profile of event organiser
+        eventOrg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent profile = new Intent(EventDetailsPage.this, profile_page.class);
+               profile.putExtra("EventOrganizer", eventOrganizerEmail);
+              startActivity(profile);
+
+           }
         });
-
-
-
-
-//        //event listener for viewing profile of event organiser
-//        eventOrg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent profile = new Intent(EventDetailsPage.this, profile_page.class);
-//                profile.putExtra("EventOrganizer", eventOrganizerEmail);
-//                startActivity(profile);
-//
-//            }
-//        });
 
 
         //event listener for booking
@@ -179,12 +171,11 @@ public class EventDetailsPage extends AppCompatActivity {
                 Bundle bookingInfo = new Bundle();
                 bookingInfo.putString("EventPicture",imageLink);
                 bookingInfo.putString("User_Email",userEmail);
-                bookingInfo.putString("Event",eventName);
+/*                bookingInfo.putString("Event",eventName);*/
                 book.putExtras(bookingInfo);
                 startActivity(book);
             }
         });
-*/
 
 
 
