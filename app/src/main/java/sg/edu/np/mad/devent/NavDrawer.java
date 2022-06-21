@@ -32,9 +32,9 @@ import sg.edu.np.mad.devent.databinding.ActivityNavDrawerBinding;
 import sg.edu.np.mad.devent.databinding.FragmentGalleryBinding;
 
 public class NavDrawer extends AppCompatActivity {
-
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavDrawerBinding binding;
+    public static String getemailofuser; // Used for sending data over through gridAdapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class NavDrawer extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         Intent i1 = getIntent();
-        String getemailofuser = i1.getStringExtra("Email");
+        getemailofuser = i1.getStringExtra("Email");
         String getusernameofuser = i1.getStringExtra("Username");
         String geruserprofileid = i1.getStringExtra("profile_id");
 

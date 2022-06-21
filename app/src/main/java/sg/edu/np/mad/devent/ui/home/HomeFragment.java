@@ -113,7 +113,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
+        menu.clear(); // Not sure why but putting this prevents double icons
         inflater.inflate(R.menu.nav_drawer, menu);
         MenuItem menuItem = menu.findItem(R.id.search_view);
         SearchView searchView = (SearchView) menuItem.getActionView();

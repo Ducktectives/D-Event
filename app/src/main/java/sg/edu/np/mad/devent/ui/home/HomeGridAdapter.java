@@ -18,6 +18,7 @@ import java.util.Locale;
 
 import sg.edu.np.mad.devent.EventDetailsPage;
 import sg.edu.np.mad.devent.Events;
+import sg.edu.np.mad.devent.NavDrawer;
 import sg.edu.np.mad.devent.R;
 
 public class HomeGridAdapter extends BaseAdapter implements Filterable {
@@ -67,6 +68,7 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
             public void onClick(View view) {
                 Intent eventAct = new Intent(context, EventDetailsPage.class);
                 eventAct.putExtra("event_Name",filteredEventsList.get(i).getEvent_Name());
+                eventAct.putExtra("Email", NavDrawer.getemailofuser);
                 context.startActivity(eventAct);
             }
         });
