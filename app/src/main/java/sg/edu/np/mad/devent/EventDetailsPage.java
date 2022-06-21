@@ -93,23 +93,28 @@ public class EventDetailsPage extends AppCompatActivity {
 
                 //Set the information - Event Organizer
                 eventOrganizerEmail = ev.getEvent_UserID(); //get
+                if (eventOrganizerEmail == null){
+                    eventOrg.setText("No user.");
+                }
+                else {
+                    //search for the user with the same email
+                    FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                    DatabaseReference Ref2 = database.getReference("Users");
+                    Ref2.child(eventOrganizerEmail).get()
+                            .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if (!task.isSuccessful()){
+                                        Toast.makeText(EventDetailsPage.this,"No such user exists.", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        String username = String.valueOf(task.getResult().child("username").getValue());
+                                        eventOrg.setText("By " + username); //set
+                                    }
+                                }
+                            });
+                }
 
-                //search for the user with the same email
-                FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
-                DatabaseReference Ref2 = database.getReference("Users");
-                Ref2.child(eventOrganizerEmail).get()
-                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                if (!task.isSuccessful()){
-                                    Toast.makeText(EventDetailsPage.this,"No such user exists.", Toast.LENGTH_SHORT).show();
-                                }
-                                else{
-                                    String username = String.valueOf(task.getResult().child("username").getValue());
-                                    eventOrg.setText("By " + username); //set
-                                }
-                            }
-                        });
 
                 //for image
                 //For event banner/image
@@ -161,6 +166,8 @@ public class EventDetailsPage extends AppCompatActivity {
            }
         });
 
+        Log.d("AAAAA",eventID);
+
 
         //event listener for booking
         Button bookEvent = findViewById(R.id.bookbutton);
@@ -171,7 +178,8 @@ public class EventDetailsPage extends AppCompatActivity {
                 Bundle bookingInfo = new Bundle();
                 bookingInfo.putString("EventPicture",imageLink);
                 bookingInfo.putString("User_Email",userEmail);
-/*                bookingInfo.putString("Event",eventName);*/
+                bookingInfo.putSerializable("EventList",(Serializable) eventList);
+                bookingInfo.putString("Event", eventID);
                 book.putExtras(bookingInfo);
                 startActivity(book);
             }
