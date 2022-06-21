@@ -3,15 +3,15 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d9e79beb189b170275b1c778db607a77/transformed/transport-api-2.2.0/res" />
       <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/520d8e20ae10080a6b2342679f2f7596/transformed/jetified-transport-api-2.2.0/res" />
-      <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/520d8e20ae10080a6b2342679f2f7596/transformed/jetified-transport-api-2.2.0/AndroidManifest.xml" />
-      <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/520d8e20ae10080a6b2342679f2f7596/transformed/jetified-transport-api-2.2.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a8832bc7a2515e2e895b4f8e4ef1f15f/transformed/transport-api-2.2.0/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/a8832bc7a2515e2e895b4f8e4ef1f15f/transformed/transport-api-2.2.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a8832bc7a2515e2e895b4f8e4ef1f15f/transformed/transport-api-2.2.0/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/48219745a1541c9ae7d6e43b5c9727c3/transformed/jetified-transport-api-2.2.0/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/48219745a1541c9ae7d6e43b5c9727c3/transformed/jetified-transport-api-2.2.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/48219745a1541c9ae7d6e43b5c9727c3/transformed/jetified-transport-api-2.2.0/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/modules-2/files-2.1/com.google.android.datatransport/transport-api/2.2.0/f3ef3a5b401818d979e05ca4fa1f0eb06e69eeb0/transport-api-2.2.0-javadoc.jar!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.android.datatransport/transport-api/2.2.0/f3ef3a5b401818d979e05ca4fa1f0eb06e69eeb0/transport-api-2.2.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES />
   </library>

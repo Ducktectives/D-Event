@@ -68,6 +68,7 @@ public class HomeFragment extends Fragment {
                 String eventLoc = snapshot.child("event_Location").getValue(String.class);
                 String eventDate = snapshot.child("event_Date").getValue(String.class);
                 String eventDesc = snapshot.child("event_Description").getValue(String.class);
+                String eventDetail = snapshot.child("event_Detail").getValue(String.class);
                 String eventUserID = snapshot.child("event_UserID").getValue(String.class);
                 String eventPic = snapshot.child("event_Picture").getValue(String.class);
                 Boolean eventBooked = snapshot.child("bookmarked").getValue(Boolean.class);
@@ -76,7 +77,7 @@ public class HomeFragment extends Fragment {
                 // Meant to prevent duplication of data display in gridAdapter
                 if (eventsIDList.contains(eventID)) return;
 
-                Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc, eventUserID,
+                Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc, eventDetail, eventUserID,
                         imageList[0] + "", eventStorageID, eventBooked);
 
                 eventsIDList.add(eventID);

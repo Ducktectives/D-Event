@@ -1,20 +1,19 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.recyclerview:recyclerview:1.2.1@aar">
     <ANNOTATIONS>
-      <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/317cab756e388cf7c6f07e6a5d05ed24/transformed/recyclerview-1.2.1/annotations.zip!/" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/cf5ed03b56300c44b84f322782da6d6a/transformed/recyclerview-1.2.1/annotations.zip!/" />
+      <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/cf5ed03b56300c44b84f322782da6d6a/transformed/recyclerview-1.2.1/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/317cab756e388cf7c6f07e6a5d05ed24/transformed/recyclerview-1.2.1/AndroidManifest.xml" />
-      <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/317cab756e388cf7c6f07e6a5d05ed24/transformed/recyclerview-1.2.1/res" />
-      <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/317cab756e388cf7c6f07e6a5d05ed24/transformed/recyclerview-1.2.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/cf5ed03b56300c44b84f322782da6d6a/transformed/recyclerview-1.2.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/cf5ed03b56300c44b84f322782da6d6a/transformed/recyclerview-1.2.1/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/cf5ed03b56300c44b84f322782da6d6a/transformed/recyclerview-1.2.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/cf5ed03b56300c44b84f322782da6d6a/transformed/recyclerview-1.2.1/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/cf5ed03b56300c44b84f322782da6d6a/transformed/recyclerview-1.2.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/cf5ed03b56300c44b84f322782da6d6a/transformed/recyclerview-1.2.1/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.2.1/f0f93e67af3f7417bdd560d5142f6dec4fe629c3/recyclerview-1.2.1-sources.jar!/" />
       <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.2.1/f0f93e67af3f7417bdd560d5142f6dec4fe629c3/recyclerview-1.2.1-sources.jar!/" />
     </SOURCES>
   </library>
