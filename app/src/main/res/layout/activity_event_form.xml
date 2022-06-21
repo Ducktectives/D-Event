@@ -60,16 +60,16 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="100dp"
-        android:text="Add Details"
-        android:textSize="21dp"
         android:fontFamily="@font/zcool"
-
         android:padding="5dp"
         android:shadowColor="@color/white"
+
         android:shadowDx="0.0"
         android:shadowDy="0.0"
         android:shadowRadius="8"
-        android:textColor="@color/white"
+        android:text="Add Details"
+        android:textColor="@color/black"
+        android:textSize="21dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,16 +80,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Photo"
-        android:textSize="18dp"
         android:fontFamily="@font/zcool"
-
         android:padding="2dp"
         android:shadowColor="@color/white"
+
         android:shadowDx="0.0"
         android:shadowDy="0.0"
         android:shadowRadius="8"
-        android:textColor="@color/white"
+        android:text="Photo"
+        android:textColor="@color/black"
+        android:textSize="18dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -183,15 +183,15 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:text="About the event"
-        android:textSize="21dp"
-
         android:padding="5dp"
-        android:shadowColor="@color/black"
+        android:shadowColor="@color/white"
+
         android:shadowDx="0.0"
         android:shadowDy="0.0"
         android:shadowRadius="8"
-        android:textColor="@color/quantum_white_100"
+        android:text="About the event"
+        android:textColor="@color/black"
+        android:textSize="21dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
