@@ -194,13 +194,9 @@ public class EventFormActivity extends AppCompatActivity{
     }
 
     public void submit_form(View view){
-//        FirebaseUser user = mAuth.getCurrentUser();
-//        if (user != null) {
-//            // do your stuff
+
             uploadForm();
-//        } else {
-//            signInAnonymously();
-//        }
+
     }
 
     private void signInAnonymously() {
@@ -268,7 +264,7 @@ public class EventFormActivity extends AppCompatActivity{
     }
 
     // uploadimage method
-    private void uploadImage(){
+    public void uploadImage(){
         if(selectedImage != null){
 
             // progressDialogue while uploading
@@ -341,8 +337,8 @@ public class EventFormActivity extends AppCompatActivity{
             event_Detail = eventDetail.getText().toString();
             bookmarked = false;
 
-            event = new Events(event_ID, event_Name, event_Location, event_Date, event_Description, event_Detail, userID, storageReference_ID, bookmarked);
 
+            event = new Events( event_ID,  event_Name,  event_Location,  event_Date,  event_Description,  event_Detail,  userID, storageReference_ID,  bookmarked);
             // Insert the user-defined object to the database
             reference.child("Event").push().setValue(event);
 
@@ -351,11 +347,10 @@ public class EventFormActivity extends AppCompatActivity{
 //            progressDialog.setTitle("Uploading...");
 //            progressDialog.show();
 
-            Log.d("UPLOAD FORM", "FORM UPLOADEDDDD");
 
-
-            // Upload image to storage
+// Upload image to storage
             uploadImage();
+
 
 //                    .addOnSuccessListener(new OnSuccessListener<Void>() {
 //                // Add a completion callback
