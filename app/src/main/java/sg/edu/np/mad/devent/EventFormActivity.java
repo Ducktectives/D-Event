@@ -194,13 +194,13 @@ public class EventFormActivity extends AppCompatActivity{
     }
 
     public void submit_form(View view){
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            // do your stuff
+//        FirebaseUser user = mAuth.getCurrentUser();
+//        if (user != null) {
+//            // do your stuff
             uploadForm();
-        } else {
-            signInAnonymously();
-        }
+//        } else {
+//            signInAnonymously();
+//        }
     }
 
     private void signInAnonymously() {
@@ -208,6 +208,7 @@ public class EventFormActivity extends AppCompatActivity{
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         // do your stuff
+                        uploadForm();
                     }
                 })
                 .addOnFailureListener(this, new OnFailureListener() {
