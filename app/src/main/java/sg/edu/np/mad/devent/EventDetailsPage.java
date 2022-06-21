@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,135 +39,117 @@ import com.bumptech.glide.module.AppGlideModule;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
 
 public class EventDetailsPage extends AppCompatActivity {
     TextView eventOrg;
     String eventOrganizerEmail;
     String imageLink;
     String userEmail;
-    String eventName;
+    String eventID;
+
+    List<Events> eventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details_page);
 
-        //set the id of the eventOrg
-        eventOrg = findViewById(R.id.EventOrganiser);
-
         //receive Intent information
         Intent receiveEventAct = getIntent();
-        eventName = receiveEventAct.getStringExtra("event_Name");
+        eventList = (List<Events>) receiveEventAct.getExtras().getSerializable("event_List");
+        eventID = receiveEventAct.getStringExtra("event_Name");
         userEmail = receiveEventAct.getStringExtra("Email");
 
 
-        String eventID ="-N4yWQOhDz4yQ28BA3qr"; //to be changed when instance is passed
+        //---- Retrieving All callable ids on the EventDetailsPage
+        TextView eventName = findViewById(R.id.EventName);
+        TextView eventLocation = findViewById(R.id.EventLocation);
+        TextView eventDescription = findViewById(R.id.EventDescription);
+        TextView eventDetail = findViewById(R.id.eventDetails);
+        eventOrg = findViewById(R.id.EventOrganiser);
+        ImageView eventPicture = findViewById(R.id.eventPicture);
 
-        //For firebase
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        DatabaseReference Ref = database.getReference("Event");
+        //Goes through the eventList to find the correct event
+        for (Events ev : eventList){
+            if (String.valueOf(ev.getEvent_ID()).equals(eventID)) {
+                //Set the information - Event Name
+                String eventNameFromList = ev.getEvent_Name(); //get
+                eventName.setText(eventNameFromList); //set
 
-        //Using get to get info from database once, rather than setting an event listener
-        Ref.child(eventID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data. Please reload.", task.getException());
+                //Set the information - Event Description
+                String eventDesc = ev.getEvent_Description(); //get
+                eventDescription.setText(eventDesc); //set
 
-                }
-                else {
-                    Log.d("firebase", String.valueOf(task.getResult().child("event_Name").getValue()));
+                //Set the information - Event Location
+                String eventLoc = ev.getEvent_Location(); //get
+                eventLocation.setText("Postal Code: " + eventLoc); //set
 
-                    //Retrieving Data from the Firebase Real Time Database
-
-                    //For the Event Name
-                    String eventNamedb = String.valueOf(task.getResult().child("event_Name").getValue());
-
-                    //For the Location of the event
-                    String eventLocdb = String.valueOf(task.getResult().child("event_Location").getValue());
-
-                    //For event organizer
-                    eventOrganizerEmail = String.valueOf(task.getResult().child("event_Organizer").getValue());
-
-                    //For event description
-                    String eventDesc = String.valueOf(task.getResult().child("event_Description").getValue());
-
-                    //For event details (lower)
-                    String eventDetaildb = String.valueOf(task.getResult().child("event_Details").getValue());
-
-                    //For date of the event
-                    String eventDatedb = String.valueOf(task.getResult().child("event_Date").getValue());
-
-                    //For event banner/image
-                    imageLink = String.valueOf(task.getResult().child("event_StorageReferenceID").getValue());
+                //Set the information - Event Details
+                String eventDet= ev.getEvent_Detail(); //get
+                eventDetail.setText(eventDet); //set
 
 
-                    //set the content in the activity--------------------------------------------------
+                //Set the information - Event Organizer
+                eventOrganizerEmail = ev.getEvent_UserID(); //get
 
-                    //set image content--------------------------------------
-                    //set reference point for Firebase Storage
-                    StorageReference firebaseStorage= FirebaseStorage.getInstance().getReference("images/" + imageLink);
+                //search for the user with the same email
+                FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                DatabaseReference Ref2 = database.getReference("Users");
+                Ref2.child(eventOrganizerEmail).get()
+                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (!task.isSuccessful()){
+                                    Toast.makeText(EventDetailsPage.this,"No such user exists.", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    String username = String.valueOf(task.getResult().child("username").getValue());
+                                    eventOrg.setText("By " + username); //set
+                                }
+                            }
+                        });
 
-                    //set the final load point for the image
-                    ImageView eventPicture = findViewById(R.id.eventPicture);
+                //for image
+                //For event banner/image
+                imageLink = ev.getEvent_StorageReferenceID();
 
+                //set reference point for Firebase Storage
+                StorageReference firebaseStorage= FirebaseStorage.getInstance().getReference("images/" + imageLink);
 
-                    try {
-                        File localfile = File.createTempFile("image",".jpg");
-                        firebaseStorage.getFile(localfile)
-                                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                        Bitmap bitmapImage = BitmapFactory.decodeFile(localfile.getAbsolutePath());
-                                        eventPicture.setImageBitmap(bitmapImage);
-
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-
-                                    }
-                                });
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    //----For the Event Name
-                    TextView eventName = findViewById(R.id.EventName);
-                    eventName.setText(eventNamedb);
-
-                    //----For the Event Location
-                    TextView eventLocation = findViewById(R.id.EventLocation);
-                    eventLocation.setText("Postalcode: " + eventLocdb);
-
-                    //----For the event organizer
-                    //search for the user with the same email
-                    DatabaseReference Ref2 = database.getReference("Users");
-                    Ref2.child(eventOrganizerEmail).get()
-                            .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                try {
+                    File localfile = File.createTempFile("image",".jpg");
+                    firebaseStorage.getFile(localfile)
+                            .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                                 @Override
-                                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    if (!task.isSuccessful()){
-                                        Log.d("f","failed");
-                                    }
-                                    else{
-                                        String username = String.valueOf(task.getResult().child("username").getValue());
-                                        eventOrg.setText("By " + username);
-                                    }
+                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                    Bitmap bitmapImage = BitmapFactory.decodeFile(localfile.getAbsolutePath());
+                                    eventPicture.setImageBitmap(bitmapImage);
+
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(EventDetailsPage.this,"Image Failed to load.", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                //for date of event
+                //For date of the event
+                //String eventDatedb = String.valueOf(task.getResult().child("event_Date").getValue());
 
 
-                    //----For the event Description
-                    TextView eventDescription = findViewById(R.id.EventDescription);
-                    eventDescription.setText(eventDesc);
+            }
+        }
 
-                    //----For the details of the App
-                    TextView eventDetail = findViewById(R.id.eventDetails);
-                    eventDetail.setText(eventDetaildb);
+
+/*
 
                 }
             }
@@ -175,16 +158,16 @@ public class EventDetailsPage extends AppCompatActivity {
 
 
 
-        //event listener for viewing profile of event organiser
-        eventOrg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent profile = new Intent(EventDetailsPage.this, profile_page.class);
-                profile.putExtra("Email", eventOrganizerEmail);
-                Log.d("naow",eventOrganizerEmail);
-                startActivity(profile);
-            }
-        });
+//        //event listener for viewing profile of event organiser
+//        eventOrg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent profile = new Intent(EventDetailsPage.this, profile_page.class);
+//                profile.putExtra("EventOrganizer", eventOrganizerEmail);
+//                startActivity(profile);
+//
+//            }
+//        });
 
 
         //event listener for booking
@@ -196,10 +179,12 @@ public class EventDetailsPage extends AppCompatActivity {
                 Bundle bookingInfo = new Bundle();
                 bookingInfo.putString("EventPicture",imageLink);
                 bookingInfo.putString("User_Email",userEmail);
+                bookingInfo.putString("Event",eventName);
                 book.putExtras(bookingInfo);
                 startActivity(book);
             }
         });
+*/
 
 
 
