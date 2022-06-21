@@ -39,6 +39,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -53,14 +54,14 @@ public class EventFormActivity extends AppCompatActivity{
 
     //  Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked)
     Uri selectedImage; // event_Picture
-    EditText date, location, eventDetail, eventName; // event_Date, event_Location, event_Description
+    EditText date, location, eventDescription, eventName, eventDetail; // event_Date, event_Location, event_Description
     Button retrieveAddress;
 
     private int _day, _month, _birthYear;
 
     // Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, boolean bookmarked)
     // Declaring the variables to upload the values to firebase
-    private String event_ID, event_Name, event_Location, event_Date, event_Description, userID, storageReference_ID;
+    private String event_ID, event_Name, event_Location, event_Date, event_Description, userID, storageReference_ID, event_Detail;
     private Boolean bookmarked;
 
 
@@ -78,6 +79,10 @@ public class EventFormActivity extends AppCompatActivity{
     private StorageReference storageReference;
     private FirebaseDatabase database;
 
+    // boolean variable to check whether all the text fields are empty
+    boolean isAllFieldsChecked = false;
+    // boolean variable to check whether date field is accurate
+    boolean isDateFieldChecked = false;
 
 
     @Override
@@ -92,6 +97,7 @@ public class EventFormActivity extends AppCompatActivity{
         eventName = (EditText) findViewById(R.id.txt_event_form_name);
         location = (EditText) findViewById(R.id.txt_event_form_location);
         date = (EditText) findViewById(R.id.txt_Date);
+        eventDescription = (EditText) findViewById(R.id.txt_Event_Description);
         eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
 
 
@@ -181,7 +187,7 @@ public class EventFormActivity extends AppCompatActivity{
     }
 
     public void submit_form(View view){
-        uploadImage();
+
         uploadForm();
 
     }
@@ -288,44 +294,73 @@ public class EventFormActivity extends AppCompatActivity{
     }
 
     private void uploadForm(){
-        // Create an object of Firebase Database Reference
-        DatabaseReference reference ;
-        reference = database.getReference();
+        // store the returned value of the dedicated function which checks
+        // whether the entered data is valid or if any fields are left blank.
+        isAllFieldsChecked = checkEmptyFields();
+        isDateFieldChecked = checkDate();
 
-//        eventName = (EditText) findViewById(R.id.txt_event_form_name);
-//        location = (EditText) findViewById(R.id.txt_event_form_location);
-//        date = (EditText) findViewById(R.id.txt_Date);
-//        eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
-        event_ID = UUID.randomUUID().toString();
-        event_Name  = eventName.getText().toString();
-        event_Location  = location.getText().toString();
-        event_Date  = date.getText().toString();
-        event_Description  = eventDetail.getText().toString();
-        bookmarked = false;
+        if(isAllFieldsChecked && isDateFieldChecked){
+            // Create an object of Firebase Database Reference
+            DatabaseReference reference ;
+            reference = database.getReference();
 
-//        private String event_Name, event_Location, event_Date, event_Description, userID;
-//        private Boolean bookmarked;
-//            public Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked) {
+            event_ID = UUID.randomUUID().toString();
+            event_Name  = eventName.getText().toString();
+            event_Location  = location.getText().toString();
+            event_Date  = date.getText().toString();
+            event_Description  = eventDescription.getText().toString();
+            event_Detail = eventDetail.getText().toString();
+            bookmarked = false;
 
-        event = new Events(event_ID, event_Name, event_Location, event_Date, event_Description, userID, selectedImage.toString(), storageReference_ID, bookmarked);
+            event = new Events(event_ID, event_Name, event_Location, event_Date, event_Description, event_Detail, userID, selectedImage.toString(), storageReference_ID, bookmarked);
 
+            // Insert the user-defined object to the database
+            reference.child("Event").push().setValue(event);
 
-        // Insert the user-defined object to the database
-        reference.child("Event").push().setValue(event);
+            // Upload image to storage
+            uploadImage();
+        }
     }
 
-    public static String getCurrentTimeStamp(){
-        try {
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String currentDateTime = dateFormat.format(new Date()); // Find todays date
-
-            return currentDateTime;
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            return null;
+    // function which checks all the text fields
+    // are filled or not by the user.
+    //  EditText date, location, eventDescription, eventName, eventDetail;
+    private boolean checkEmptyFields(){
+          if (event_Name.length() == 0){
+              eventName.setError("This field is required");
+              return false;
+          }
+          if (date.length() == 0){
+              date.setError("This field is required");
+              return false;
+          }
+        if (date.length() == 0){
+            location.setError("This field is required");
+            return false;
         }
+        if (date.length() == 0){
+            eventDescription.setError("This field is required");
+            return false;
+        }
+        // if all validations return True
+        return true;
+    };
+
+    private boolean checkDate(){
+        event_Date  = date.getText().toString();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+        try {
+            Date dateStr = dateFormat.parse(event_Date);
+            if (new Date().after(dateStr)) {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Toast.makeText(EventFormActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+        // if validation for date is true
+        return true;
     }
 
 }
