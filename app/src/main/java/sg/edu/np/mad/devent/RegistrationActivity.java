@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
@@ -33,7 +35,7 @@ import java.util.UUID;
 
 public class RegistrationActivity extends AppCompatActivity {
     // Create a user-defined object
-    static Profile user = new Profile();
+    Profile user = new Profile();
 
     Button btn_register;
     EditText userName, userEmail, userContact,
@@ -226,6 +228,14 @@ public class RegistrationActivity extends AppCompatActivity {
 
                                 // Insert the user-defined object to the database
                                 reference.child("Users").child(email.toLowerCase().replace(".","")).setValue(user);
+
+                                // Saving account details to users device
+                                SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+                                //save data of User Name and hashed password
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("Email", email);
+                                editor.putString("Hahedpass", user.getHashedpassword());
+                                editor.apply();
 
                                 // Let user know that account creation is successful
                                 Toast.makeText(getApplicationContext(), "Account Created Successfully", Toast.LENGTH_LONG).show();

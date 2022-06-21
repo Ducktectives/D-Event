@@ -117,54 +117,66 @@ public class Settings extends AppCompatActivity {
             final Integer[] saltvalue = new Integer[1];
 
 
+//            // Changing password
+//            EditTextPreference password = findPreference("password");
+//            if (password != null)
+//            {
+//                password.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
+//                    @Override
+//                    public void onBindEditText(@NonNull EditText editText) {
+//                        // Get Salt value
+//                        s.user_path.addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                Profile p = snapshot.getValue(Profile.class);
+//                                saltvalue[0] = p.Saltvalue;
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError error) {
+//
+//                            }
+//                        });
+//                        // Make editText box empty upon opening
+//                        editText.getText().clear();
+//                        // Mask entering of password
+//                        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+//                        editText.addTextChangedListener(new TextWatcher() {
+//                            @Override
+//                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                            }
+//
+//                            @Override
+//                            public void afterTextChanged(Editable editable) {
+//                                String new_password = editText.getText().toString();
+//                                if(new_password != null){
+//                                    s.user_path.child(s.user_id_unique).child("hashedpassword")
+//                                            .setValue(Profile.HashPassword(saltvalue[0],new_password));
+//                                }
+//
+//                            }
+//                        });
+//                    }
+//                });
+//            }
+
             // Changing password
-            EditTextPreference password = findPreference("password");
-            if (password != null)
-            {
-                password.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
-                    @Override
-                    public void onBindEditText(@NonNull EditText editText) {
-                        // Get Salt value
-                        s.user_path.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                Profile p = snapshot.getValue(Profile.class);
-                                saltvalue[0] = p.Saltvalue;
-                            }
+            Preference newpass = findPreference("password");
+            newpass.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent i = new Intent(getActivity(),change_password.class);
+                    startActivity(i);
+                    return false;
+                }
+            });
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                        // Make editText box empty upon opening
-                        editText.getText().clear();
-                        // Mask entering of password
-                        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                        editText.addTextChangedListener(new TextWatcher() {
-                            @Override
-                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                            }
-
-                            @Override
-                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                            }
-
-                            @Override
-                            public void afterTextChanged(Editable editable) {
-                                String new_password = editText.getText().toString();
-                                if(new_password != null){
-                                    s.user_path.child(s.user_id_unique).child("hashedpassword")
-                                            .setValue(Profile.HashPassword(saltvalue[0],new_password));
-                                }
-
-                            }
-                        });
-                    }
-                });
-            }
 
             // Change profile picture
             Preference changepic = findPreference("profile_pic");

@@ -16,8 +16,6 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.view.menu.MenuView;
@@ -32,9 +30,9 @@ import sg.edu.np.mad.devent.databinding.ActivityNavDrawerBinding;
 import sg.edu.np.mad.devent.databinding.FragmentGalleryBinding;
 
 public class NavDrawer extends AppCompatActivity {
+
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavDrawerBinding binding;
-    public static String getemailofuser; // Used for sending data over through gridAdapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +42,7 @@ public class NavDrawer extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         Intent i1 = getIntent();
-        getemailofuser = i1.getStringExtra("Email");
+        String getemailofuser = i1.getStringExtra("Email");
         String getusernameofuser = i1.getStringExtra("Username");
         String geruserprofileid = i1.getStringExtra("profile_id");
 
@@ -92,8 +90,10 @@ public class NavDrawer extends AppCompatActivity {
         });
          */
 
+
         // Used for displaying profile pic / Username / email in nav header
         View navHeader = navigationView.getHeaderView(0);
+        // Pull data of user and display *** ! IMPORTANT COME BACK TO THIS LATER
         navHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,10 +106,10 @@ public class NavDrawer extends AppCompatActivity {
         });
 
         TextView username = (TextView) navHeader.findViewById(R.id.nav_username);
-        username.setText(getusernameofuser);
+        username.setText(user.getUsername());
 
         TextView email = (TextView) navHeader.findViewById(R.id.nav_email);
-        email.setText(getemailofuser);
+        email.setText(user.Email);
 
     }
 
