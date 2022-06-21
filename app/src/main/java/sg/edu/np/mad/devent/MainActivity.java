@@ -78,9 +78,6 @@ public class MainActivity extends AppCompatActivity {
         to_eventForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
                 Intent eventFormActivity = new Intent(MainActivity.this, EventFormActivity.class);
                 eventFormActivity.putExtra("user_id", userID);
                 startActivity(eventFormActivity);
