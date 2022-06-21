@@ -4,7 +4,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +23,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -52,13 +58,13 @@ public class LoginActivity extends AppCompatActivity {
                 DatabaseReference Ref = database.getReference("Users");
 
                 //Using get to get info from database once, rather than setting an event listener
-                Ref.orderByChild("email").equalTo(email.toLowerCase().replace(".", "")).addListenerForSingleValueEvent(new ValueEventListener() {
+                Ref.orderByChild("email").equalTo(email.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()) {
                             // Getting the values required to authenticate the user
-                            Ref.child(email).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            Ref.child(email.toLowerCase().replace(".", "")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if (!task.isSuccessful()) {
@@ -70,6 +76,15 @@ public class LoginActivity extends AppCompatActivity {
                                         String hashpassword = task.getResult().child("hashedpassword").getValue(String.class);
                                         Integer saltvalue = task.getResult().child("saltvalue").getValue(Integer.class);
                                         if (hashpassword.equals(Profile.HashPassword(saltvalue, password))){
+                                            // Saving account details to users device
+                                            SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+                                            //save data of User Name and hashed password
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.putString("Email", email);
+                                            editor.putString("Hahedpass", hashpassword);
+                                            editor.apply();
+
+
                                             Intent login = new Intent(LoginActivity.this, NavDrawer.class);
                                             // Passing the Email and Username to the next activity for user
                                             login.putExtra("Email", email);
@@ -77,11 +92,11 @@ public class LoginActivity extends AppCompatActivity {
                                             startActivity(login);
                                         }
                                         else if (!email.trim().matches(emailPattern)){
-                                            errormsg.setText("Kindly enter a valid email");
+                                            errormsg.setText("Kindly enter a valid email1");
                                         }
                                         else {
                                             // Giving a common user error when login failure
-                                            errormsg.setText("Password is invalid");
+                                            errormsg.setText("Email or Password is invalid2");
                                         }
                                     }
                                 }
@@ -89,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else {
                             // Giving a common user error when login failure
-                            errormsg.setText("Email is invalid");
+                            errormsg.setText("Email or Password is invalid3");
                         }
                     }
                     @Override
