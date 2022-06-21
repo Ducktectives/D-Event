@@ -2,6 +2,8 @@ package sg.edu.np.mad.devent.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,16 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +38,7 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
     private Context context;
     private List<Events> eventsList;
     private List<Events> filteredEventsList;
+    String imgLink;
 
     LayoutInflater inflater;
 
@@ -59,12 +72,37 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
             view = inflater.inflate(R.layout.home_grid_item,null);
         }
 
-        ImageView imageView = view.findViewById(R.id.gridImage);
-        TextView textView = view.findViewById(R.id.eventTitle);
+        ImageView gridImage = view.findViewById(R.id.gridImage);
+        TextView gridTitle = view.findViewById(R.id.eventTitle);
 
-        imageView.setImageResource(Integer.parseInt(filteredEventsList.get(i).getEvent_Picture()));
-        textView.setText(filteredEventsList.get(i).getEvent_Name());
-        imageView.setOnClickListener(new View.OnClickListener() {
+        imgLink = filteredEventsList.get(i).getEvent_StorageReferenceID();
+
+        StorageReference firebaseStorage= FirebaseStorage.getInstance().getReference("images/" + imgLink);
+
+        try {
+            File localfile = File.createTempFile("image",".jpg");
+            firebaseStorage.getFile(localfile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            Bitmap bitmapImage = BitmapFactory.decodeFile(localfile.getAbsolutePath());
+                            gridImage.setImageBitmap(bitmapImage);
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                        }
+                    });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // imageView.setImageResource(Integer.parseInt(filteredEventsList.get(i)));
+        gridTitle.setText(filteredEventsList.get(i).getEvent_Name());
+        gridImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent eventAct = new Intent(context, EventDetailsPage.class);
