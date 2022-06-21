@@ -32,11 +32,8 @@ public class change_password extends AppCompatActivity {
         EditText second = (EditText) findViewById(R.id.confirmnewpass);
         final Integer[] saltvalue = {0};
 
-        user_id_unique = getIntent().getStringExtra("EventOrganiser");
+        user_id_unique = getIntent().getStringExtra("Email");
 
-        if(user_id_unique == null) {
-            user_id_unique = getIntent().getStringExtra("Email_forprofile");
-        }
 
         user_id_unique = user_id_unique.toLowerCase().replace(".","");
 

@@ -180,9 +180,9 @@ public class EventDetailsPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent profile = new Intent(EventDetailsPage.this, profile_page.class);
-                profile.putExtra("EventOrganizer", eventOrganizerEmail);
-                startActivity(profile);
+                profile.putExtra("Email", eventOrganizerEmail);
                 Log.d("naow",eventOrganizerEmail);
+                startActivity(profile);
             }
         });
 

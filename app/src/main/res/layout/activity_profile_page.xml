@@ -96,12 +96,12 @@
                 tools:visibility="invisible" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/backToNavDrawer"
                 android:layout_width="204dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="34dp"
-                android:text="Btn to go to navDrawer" />
+                android:text="Go to homepage" />
 
         </RelativeLayout>
 

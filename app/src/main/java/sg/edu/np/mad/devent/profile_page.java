@@ -1,9 +1,9 @@
 package sg.edu.np.mad.devent;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -30,7 +29,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
-import java.util.Locale;
 
 public class profile_page extends AppCompatActivity {
 
@@ -45,6 +43,7 @@ public class profile_page extends AppCompatActivity {
     Uri new_img;
     String user_id_unique;
 
+
     // Firebase stuff
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
     DatabaseReference event_path = database.getReference("Event");
@@ -57,12 +56,44 @@ public class profile_page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
+        Button toNavDrawer = findViewById(R.id.backToNavDrawer);
 
-        user_id_unique = getIntent().getStringExtra("EventOrganiser");
+        user_id_unique = getIntent().getStringExtra("Email");
 
-        if(user_id_unique == null){
-            user_id_unique = getIntent().getStringExtra("Email_forprofile"); // !!!  get intent from alfreds navdrawer
-        }
+        Log.d("email",user_id_unique);
+        String a = user_id_unique.toLowerCase().replace(".","");
+        Log.d("email a", "a is "+ a);
+
+        // Get username to send to NavDrawer
+//        user_path.child(a).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if(!task.isSuccessful()){
+//                    Log.e("firebase", "Error getting data", task.getException());
+//                }
+//                else{
+//                    username = String.valueOf(task.getResult().child("username").getValue());
+//                    Log.d("DBusername","username is " + username);
+//                }
+//            }
+//        });
+//        Log.d("Username is",username);
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                Intent i = new Intent(profile_page.this,NavDrawer.class);
+//                i.putExtra("Email",user_id_unique);
+//                i.putExtra("Username",username);
+//                startActivity(i);
+//            }
+//        };
+//
+//        super.getOnBackPressedDispatcher().addCallback(this,callback);
+
+
+
+
+
 
         user_id_unique = user_id_unique.toLowerCase().replace(".","");
 
@@ -195,6 +226,17 @@ public class profile_page extends AppCompatActivity {
                 startActivity(edit);
             }
         });
+        toNavDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("i2","aa");
+                Intent i2 = new Intent(profile_page.this,NavDrawer.class);
+                i2.putExtra("Email",user_id_unique);
+                i2.putExtra("Username",username);
+                Log.d("Intent i2","" + user_id_unique +" "+ username);
+                startActivity(i2);
+            }
+        });
 
         // Get new Description
         // Don't change if there is none set.
@@ -258,13 +300,6 @@ public class profile_page extends AppCompatActivity {
             //p.setPassword(value);
         }
 
-        Button btn = findViewById(R.id.button);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(profile_page.this, NavDrawer.class));
-            }
-        });
 
     }
 

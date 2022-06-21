@@ -29,13 +29,11 @@
             android:exported="false" />
         <activity
             android:name=".Change_ProfilePic"
-            android:exported="false"
-            android:parentActivityName=".Settings" />
+            android:exported="false" />
         <activity
             android:name=".Settings"
             android:exported="false"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".profile_page" />
+            android:label="@string/title_activity_settings" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
@@ -51,8 +49,8 @@
             android:exported="false" />
         <activity
             android:name=".profile_page"
-            android:exported="false"
-            android:parentActivityName=".NavDrawer" />
+            android:exported="false" />
+
         <activity
             android:name=".EditDescription"
             android:exported="false" />
