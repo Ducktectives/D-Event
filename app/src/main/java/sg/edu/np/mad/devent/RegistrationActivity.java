@@ -241,7 +241,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Account Created Successfully", Toast.LENGTH_LONG).show();
 
                                 // Send the profileID, email and name of user to the profile_page class
-                                Intent intent = new Intent(getApplicationContext(), profile_page.class);
+                                Intent intent = new Intent(getApplicationContext(), NavDrawer.class);
                                 intent.putExtra("profile_id", profileID);
                                 intent.putExtra("Email", email);
                                 intent.putExtra("Username", name);

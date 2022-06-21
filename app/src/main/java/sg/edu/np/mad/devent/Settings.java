@@ -63,6 +63,7 @@ public class Settings extends AppCompatActivity {
         Context mContext;
         static String title;
         static String username;
+        String user_id_unique;
 
 
 
@@ -73,13 +74,18 @@ public class Settings extends AppCompatActivity {
     DatabaseReference user_path = database.getReference("Users");
 
 
-
-    String user_id_unique = "W222"; // Change this to get from intent;
-//    String user_id_unique = getIntent().getStringExtra("EventOrganiser");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+
+        user_id_unique = getIntent().getStringExtra("EventOrganiser");
+
+        if(user_id_unique == null){
+            user_id_unique = getIntent().getStringExtra("Email_forprofile");
+            Log.d("NavDrawer Intent",user_id_unique.toString());
+        }
+        user_id_unique = user_id_unique.toLowerCase().replace(".","");
 
 
         if (savedInstanceState == null) {

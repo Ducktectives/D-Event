@@ -30,6 +30,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.util.Locale;
 
 public class profile_page extends AppCompatActivity {
 
@@ -60,8 +61,11 @@ public class profile_page extends AppCompatActivity {
         user_id_unique = getIntent().getStringExtra("EventOrganiser");
 
         if(user_id_unique == null){
-            user_id_unique = getIntent().getStringExtra("alfred pls"); // !!!  get intent from alfreds navdrawer
+            user_id_unique = getIntent().getStringExtra("Email_forprofile"); // !!!  get intent from alfreds navdrawer
         }
+
+        user_id_unique = user_id_unique.toLowerCase().replace(".","");
+
 
         // Getting all the views as variables
         TextView EditDesc = findViewById(R.id.EditDesc);
@@ -69,11 +73,11 @@ public class profile_page extends AppCompatActivity {
         TextView UserName = findViewById(R.id.username);
 
         Intent setting = getIntent();
-        String getemailofuser = setting.getStringExtra("email");
-        String getusernameofuser = setting.getStringExtra("username");
-        String geruserprofileid = setting.getStringExtra("profile_id");
+//        String getemailofuser = setting.getStringExtra("email");
+//        String getusernameofuser = setting.getStringExtra("username");
+//        String geruserprofileid = setting.getStringExtra("profile_id");
 
-        user_path.child(getemailofuser.toLowerCase().replace(".","")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        user_path.child(user_id_unique).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
 
@@ -108,8 +112,9 @@ public class profile_page extends AppCompatActivity {
 
 
                 // Changing Password
-                String value = setting.getStringExtra("new_pass");
-                p.setHashedpassword(Profile.HashPassword(saltvalue,value));
+//                String value = setting.getStringExtra("new_pass");
+//                p.setHashedpassword(Profile.HashPassword(saltvalue,value));
+                // ^ Moved to change_password class
 
                 // Change Pic
                 user_path.child(user_id_unique).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -150,12 +155,15 @@ public class profile_page extends AppCompatActivity {
                         }
                     }
                 });
-                // Change title
-                String new_title = setting.getStringExtra("new_title");
-                Log.d("a","sent new_title is "+ new_title);
-                if(new_title != null){
-                    user_path.child(getemailofuser.toLowerCase().replace(".","")).child("title").setValue(new_title);
-                }
+
+//                // Change title
+//                String new_title = setting.getStringExtra("new_title");
+//                Log.d("a","sent new_title is "+ new_title);
+//                if(new_title != null){
+//                    user_path.child(user_id_unique.toLowerCase().replace(".","")).child("title").setValue(new_title);
+//                }
+
+                // ^ Moved to settings activity
             }
         });
 

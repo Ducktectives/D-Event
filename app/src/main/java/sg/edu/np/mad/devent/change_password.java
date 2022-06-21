@@ -19,6 +19,8 @@ import com.google.firebase.storage.StorageReference;
 
 public class change_password extends AppCompatActivity {
 
+    String user_id_unique;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +32,13 @@ public class change_password extends AppCompatActivity {
         EditText second = (EditText) findViewById(R.id.confirmnewpass);
         final Integer[] saltvalue = {0};
 
-        String user_id_unique = "W222"; // Change this to get from intent;
+        user_id_unique = getIntent().getStringExtra("EventOrganiser");
+
+        if(user_id_unique == null) {
+            user_id_unique = getIntent().getStringExtra("Email_forprofile");
+        }
+
+        user_id_unique = user_id_unique.toLowerCase().replace(".","");
 
         // Firebase for storing Image
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -83,4 +91,5 @@ public class change_password extends AppCompatActivity {
 
 
     }
+
 }

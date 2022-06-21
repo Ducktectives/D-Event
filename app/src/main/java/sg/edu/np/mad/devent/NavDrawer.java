@@ -103,9 +103,9 @@ public class NavDrawer extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i2 = new Intent(NavDrawer.this, profile_page.class);
-                i2.putExtra("Username", getusernameofuser);
-                i2.putExtra("Email", getemailofuser);
-                i2.putExtra("profile_id", geruserprofileid);
+                i2.putExtra("Username_forprofile", getusernameofuser);
+                i2.putExtra("Email_forprofile", getemailofuser);
+                i2.putExtra("profile_id_forprofile", geruserprofileid);
                 startActivity(i2);
             }
         });
