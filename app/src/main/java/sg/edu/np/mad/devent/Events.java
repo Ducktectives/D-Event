@@ -1,6 +1,10 @@
 package sg.edu.np.mad.devent;
 
-public class Events{
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class Events implements Serializable {
     String Event_ID;
     String Event_Name;
     String Event_Location;
