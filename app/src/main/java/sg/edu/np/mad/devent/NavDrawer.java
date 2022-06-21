@@ -126,7 +126,6 @@ public class NavDrawer extends AppCompatActivity {
                 Intent i2 = new Intent(NavDrawer.this, profile_page.class);
                 i2.putExtra("Username_forprofile", getusernameofuser);
                 i2.putExtra("Email", getemailofuser);
-                Log.d("email","email is " + getemailofuser);
                 i2.putExtra("profile_id_forprofile", getuserprofileId);
                 startActivity(i2);
             }
