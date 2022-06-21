@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.view.menu.MenuView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;

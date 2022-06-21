@@ -11,6 +11,7 @@
     <JAVADOC />
     <SOURCES>
       <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/modules-2/files-2.1/androidx.navigation/navigation-ui/2.4.2/89d1adbee4f51f0894d7bbd09355ea2dadd307c1/navigation-ui-2.4.2-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.navigation/navigation-ui/2.4.2/89d1adbee4f51f0894d7bbd09355ea2dadd307c1/navigation-ui-2.4.2-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
