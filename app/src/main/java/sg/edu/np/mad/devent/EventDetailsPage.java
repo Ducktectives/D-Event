@@ -188,6 +188,7 @@ public class EventDetailsPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent book = new Intent(EventDetailsPage.this,UserBooking.class);
+                book.putExtra("EventID", eventID);
                 startActivity(book);
             }
         });
