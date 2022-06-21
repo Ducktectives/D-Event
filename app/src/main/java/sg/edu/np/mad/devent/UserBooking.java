@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,25 +16,33 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.annotation.NonNullApi;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
 import java.util.Locale;
 
 public class UserBooking extends AppCompatActivity {
     String imageLinkfromEventDetails;
+    String userEmail;
     String eventid;
+    List<Events> eventList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +53,9 @@ public class UserBooking extends AppCompatActivity {
         //receive intent
         Intent fromEventDetailsPage = getIntent();
         imageLinkfromEventDetails = fromEventDetailsPage.getStringExtra("EventPicture");
-        eventid = fromEventDetailsPage.getStringExtra("EventID");
+        userEmail = fromEventDetailsPage.getStringExtra("User_Email");
+        eventid = fromEventDetailsPage.getStringExtra("Event");
+        eventList = (List<Events>) fromEventDetailsPage.getSerializableExtra("EventList");
 
         // Assign the texts, buttons and images to a variable to be called
         ImageView eventimage = (ImageView)findViewById(R.id.eventimage);
@@ -142,7 +153,9 @@ public class UserBooking extends AppCompatActivity {
                                     book.child(eventid).child(bookingemail.toLowerCase().replace(".", "")).setValue(userbooking);
                                     // Let user know that Booking is successful
                                     Toast.makeText(getApplicationContext(), "Booking Successfully", Toast.LENGTH_LONG).show();
-                                    UserBooking.this.finish();
+                                    Intent profileData = new Intent(UserBooking.this,profile_page.class);
+                                    profileData.putExtra("User_Email",userEmail);
+                                    startActivity(profileData);
                                 }
                                 else {
                                     // Let user know that Booking is Unsuccessful
