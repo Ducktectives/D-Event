@@ -89,6 +89,8 @@ public class EventFormActivity extends AppCompatActivity{
 
     FirebaseAuth mAuth;
 
+    List<Profile> profileList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,13 +118,18 @@ public class EventFormActivity extends AppCompatActivity{
 
 
         // Authenticate
-        mAuth = FirebaseAuth.getInstance();
+//        mAuth = FirebaseAuth.getInstance();
 
+        // get userID
+        //receive Intent information
+        Intent receiveEventAct = getIntent();
+//        profileList = (List<Profile>) receiveEventAct.getExtras().getSerializable("event_List");
 
         Geocoder geocoder = new Geocoder(EventFormActivity.this, Locale.getDefault());
 
         // create the GET intent object
         Intent intent = getIntent();
+
 
         // receive the value by getStringExtra() method
         // and key must be same which is send by first activity
