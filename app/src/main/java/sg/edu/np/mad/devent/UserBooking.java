@@ -133,6 +133,8 @@ public class UserBooking extends AppCompatActivity {
                         FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
                         DatabaseReference Ref = database.getReference("Event");
                         DatabaseReference book = database.getReference("Booking");
+                        DatabaseReference user = database.getReference("Users");
+
 
                         int finalbookingnumber = bookingnumber;
                         int finalbookingpax = bookingpax;
@@ -153,10 +155,28 @@ public class UserBooking extends AppCompatActivity {
                                     book.child(eventid).child(bookingemail.toLowerCase().replace(".", "")).setValue(userbooking);
                                     // Let user know that Booking is successful
                                     Toast.makeText(getApplicationContext(), "Booking Successfully", Toast.LENGTH_LONG).show();
-                                    Intent profileData = new Intent(UserBooking.this,profile_page.class);
-                                    profileData.putExtra("User_Email",userEmail);
-                                    profileData.putExtra("EventID",eventid);
-                                    startActivity(profileData);
+
+
+                                    //Add event to the list of booked events
+                                    user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            Integer numberChild = Math.toIntExact(snapshot.getChildrenCount());
+                                            Integer storeID = numberChild +1 ;
+                                            user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
+
+                                            //Pass intent into the Profile Page
+                                            Intent profileData = new Intent(UserBooking.this,profile_page.class);
+                                            profileData.putExtra("User_Email",userEmail);
+                                            startActivity(profileData);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
                                 }
                                 else {
                                     // Let user know that Booking is Unsuccessful
