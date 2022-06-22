@@ -158,10 +158,10 @@ public class UserBooking extends AppCompatActivity {
 
 
                                     //Add event to the list of booked events
-                                    user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").addValueEventListener(new ValueEventListener() {
+                                    user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                         @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            Integer numberChild = Math.toIntExact(snapshot.getChildrenCount());
+                                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                            Integer numberChild = Math.toIntExact(task.getResult().getChildrenCount());
                                             Integer storeID = numberChild +1 ;
                                             user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
 
@@ -169,11 +169,6 @@ public class UserBooking extends AppCompatActivity {
                                             Intent profileData = new Intent(UserBooking.this,profile_page.class);
                                             profileData.putExtra("User_Email",userEmail);
                                             startActivity(profileData);
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
                                         }
                                     });
 
@@ -190,6 +185,7 @@ public class UserBooking extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Booking Unsuccessfully, Please try again", Toast.LENGTH_LONG).show();
                             }
                         });
+
 
                     }
                 }
