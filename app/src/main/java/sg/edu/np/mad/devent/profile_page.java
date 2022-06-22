@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +30,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class profile_page extends AppCompatActivity {
 
@@ -42,6 +47,11 @@ public class profile_page extends AppCompatActivity {
     String userpass;
     Uri new_img;
     String user_id_unique;
+    int[] imageId;
+    String[] web;
+    String events_booked;
+    GridView grid;
+    static List<String> eventList;
 
 
     // Firebase stuff
@@ -57,6 +67,12 @@ public class profile_page extends AppCompatActivity {
         setContentView(R.layout.activity_profile_page);
 
         Button toNavDrawer = findViewById(R.id.backToNavDrawer);
+
+        // Setting scrollview to start from the top
+        GridView gridView = (GridView) findViewById(R.id.gallery);
+        ScrollView v =  findViewById(R.id.ProfileScroll);
+        v.requestFocus();
+        gridView.setFocusable(false);
 
         user_id_unique = getIntent().getStringExtra("Email");
 
@@ -117,6 +133,64 @@ public class profile_page extends AppCompatActivity {
                 username = String.valueOf(task.getResult().child("username").getValue());
                 usertitle = String.valueOf(task.getResult().child("title").getValue());
                 useremail = String.valueOf(task.getResult().child("email").getValue());
+                events_booked = String.valueOf(task.getResult().child("event_booked").getValue());
+                Log.d("events", "events are "+ events_booked);
+
+
+                // First element of events gotten is always null for some reason
+                // so just remove that to be safe
+                // events_booked is also received as string so turn into list
+                String[] eventArray = events_booked.replace("[","")
+                        .replace("]","").split(",");
+                Log.d("AAAAAAAAAAAAAAAAAA","shit 2 "+ eventArray[1]);
+                eventList = new LinkedList<String>(Arrays.asList(eventArray));
+                eventList.remove(0);
+                Log.d("AAAAAAAAAAAAAAAAAA","shit 3 "+ eventList.get(0));
+
+                // Setting past and upcoming events
+                // Idk if to change this to Fragment or not
+                // May be laggy when changing or my emulator is garbage
+                Log.d("AAAAAAAAAAAAAAAAAAAA","shit " + eventList);
+                GridView gridView = (GridView) findViewById(R.id.gallery);
+                gridView.setAdapter(new ProfileAdapter(profile_page.this,eventList));
+                Log.d("set","AdapterSet");
+
+
+                // Upcoming events
+                Button upcoming = findViewById(R.id.UpcomingEvents);
+                upcoming.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        gridView.setAdapter(new ProfileAdapter(profile_page.this,eventList));
+                        Log.d("Clicked","click");
+                    }
+                });
+
+                // Past events
+                Button past = findViewById(R.id.PastEvents);
+                past.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        gridView.setAdapter(new ProfileAdapter_Past(profile_page.this));
+                    }
+                });
+
+                // Make tapping on each image show their respective EventDetailsPage
+                // Need database again
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent showDetails = new Intent
+                                (profile_page.this,EventDetailsPage.class);
+                        startActivity(showDetails);
+                        Log.d("a","position is" + position);
+
+                        // Need to figure out what to do with the position.
+                        // Like how to link it with showing the actual event
+                    }
+                });
+
+
                 try {
                     usercontact = Integer.valueOf(String.valueOf(task.getResult().child("contactnum").getValue()));
                 }
@@ -248,50 +322,7 @@ public class profile_page extends AppCompatActivity {
             p.Title = setNewDesc;
         }
 
-        // Setting past and upcoming events
-        // Idk if to change this to Fragment or not
-        // May be laggy when changing or my emulator is garbage
-        GridView gridView = (GridView) findViewById(R.id.gallery);
-        gridView.setAdapter(new ProfileAdapter(this));
 
-
-            // Upcoming events
-        Button upcoming = findViewById(R.id.UpcomingEvents);
-        upcoming.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            gridView.setAdapter(new ProfileAdapter(profile_page.this));
-            }
-        });
-
-            // Past events
-        Button past = findViewById(R.id.PastEvents);
-        past.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            gridView.setAdapter(new ProfileAdapter_Past(profile_page.this));
-            }
-        });
-
-        // Make tapping on each image show their respective EventDetailsPage
-        // Need database again
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent showDetails = new Intent
-                        (profile_page.this,EventDetailsPage.class);
-                startActivity(showDetails);
-                Log.d("a","position is" + position);
-
-                // Need to figure out what to do with the position.
-                // Like how to link it with showing the actual event
-            }
-        });
-
-        // Setting scrollview to start from the top
-        ScrollView v =  findViewById(R.id.ProfileScroll);
-        v.requestFocus();
-        gridView.setFocusable(false);
 
         // Changing Password
         Bundle extras = getIntent().getExtras();

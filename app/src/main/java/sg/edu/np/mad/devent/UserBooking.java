@@ -167,7 +167,7 @@ public class UserBooking extends AppCompatActivity {
 
                                             //Pass intent into the Profile Page
                                             Intent profileData = new Intent(UserBooking.this,profile_page.class);
-                                            profileData.putExtra("User_Email",userEmail);
+                                            profileData.putExtra("Email",userEmail);
                                             startActivity(profileData);
                                         }
 
