@@ -105,12 +105,15 @@ public class NavDrawer extends AppCompatActivity {
             }
         });
 
+        Log.d("Profile ID at EventForm", String.valueOf(getemailofuser));
+        Log.d("Profile ID at EventForm", "Do NOTE");
+
         // Setting an OnClick listener for Menu item "AddEvent"
         navigationView.getMenu().findItem(R.id.nav_AddEvent).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Intent eventFormAct = new Intent(NavDrawer.this, EventFormActivity.class);
-                eventFormAct.putExtra("profile_id", getuserprofileId);
+                eventFormAct.putExtra("Email", getemailofuser);
                 startActivity(eventFormAct);
                 return true;
             }

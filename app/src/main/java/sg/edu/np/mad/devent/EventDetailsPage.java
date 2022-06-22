@@ -4,7 +4,7 @@ package sg.edu.np.mad.devent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,16 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
-import com.denzcoskun.imageslider.ImageSlider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,12 +28,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
+
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 public class EventDetailsPage extends AppCompatActivity {
@@ -51,6 +51,7 @@ public class EventDetailsPage extends AppCompatActivity {
 
     List<Events> eventList;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +71,9 @@ public class EventDetailsPage extends AppCompatActivity {
         TextView eventDetail = findViewById(R.id.eventDetails);
         eventOrg = findViewById(R.id.EventOrganiser);
         ImageView eventPicture = findViewById(R.id.eventPicture);
+        TextView eventDateMonth = findViewById(R.id.EventMonth);
+        TextView eventDateDay = findViewById(R.id.EventDate);
+
 
         //Goes through the eventList to find the correct event
         for (Events ev : eventList){
@@ -147,8 +151,40 @@ public class EventDetailsPage extends AppCompatActivity {
 
                 //for date of event
                 String eventDate = ev.getEvent_Date();
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    //set date as a date rather than a string
+                    Date evDate = formatter.parse(eventDate);
+
+                    //get month
+                    String eventMonth = new SimpleDateFormat("MMMM").format(evDate);
+                    //prepare month to be properly displayed (first three letters)
+                    eventMonth = eventMonth.substring(0,3);
+                    eventMonth = eventMonth.toUpperCase();
+
+                    //get date
+                    String eventDayNumber = new SimpleDateFormat("dd").format(evDate);
+
+                    //Change the month and date of event
+                    if (eventMonth != null && eventDayNumber != null){
+                        eventDateMonth.setText(eventMonth);
+                        eventDateDay.setText(eventDayNumber);
+                    }
+                    else{
+                        if(eventMonth == null && eventDayNumber == null){
+                            eventDateMonth.setText("No");
+                            eventDateDay.setText("Date");
+                        }
+                        else{
+                            Toast.makeText(EventDetailsPage.this,"Contact event organizer for date.", Toast.LENGTH_LONG).show();
+                        }
+                    }
 
 
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
             }
         }

@@ -89,6 +89,7 @@ public class EventFormActivity extends AppCompatActivity{
 
     FirebaseAuth mAuth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,19 +117,23 @@ public class EventFormActivity extends AppCompatActivity{
 
 
         // Authenticate
-        mAuth = FirebaseAuth.getInstance();
+//        mAuth = FirebaseAuth.getInstance();
 
+        // get userID
+        //receive Intent information
 
         Geocoder geocoder = new Geocoder(EventFormActivity.this, Locale.getDefault());
 
         // create the GET intent object
         Intent intent = getIntent();
 
+
         // receive the value by getStringExtra() method
         // and key must be same which is send by first activity
-        userID = intent.getStringExtra("user_id");
+        userID = intent.getStringExtra("Email");
 
         Log.d("Profile ID at EventForm", String.valueOf(userID));
+        Log.d("Profile ID at EventForm", "Do NOTE");
 
 
         date.setOnClickListener(new View.OnClickListener() {
@@ -199,21 +204,6 @@ public class EventFormActivity extends AppCompatActivity{
 
     }
 
-    private void signInAnonymously() {
-        mAuth.signInAnonymously().addOnSuccessListener(this, new  OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        // do your stuff
-                        uploadForm();
-                    }
-                })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Log.e("TAG", "signInAnonymously:FAILURE", exception);
-                    }
-                });
-    }
 
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
