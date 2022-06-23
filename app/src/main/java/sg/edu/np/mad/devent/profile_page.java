@@ -51,7 +51,7 @@ public class profile_page extends AppCompatActivity {
     String[] web;
     String events_booked;
     GridView grid;
-    static List<String> eventList;
+    List<String> eventsBookedList;
 
 
     // Firebase stuff
@@ -133,26 +133,25 @@ public class profile_page extends AppCompatActivity {
                 username = String.valueOf(task.getResult().child("username").getValue());
                 usertitle = String.valueOf(task.getResult().child("title").getValue());
                 useremail = String.valueOf(task.getResult().child("email").getValue());
-                events_booked = String.valueOf(task.getResult().child("event_booked").getValue());
-                Log.d("events", "events are "+ events_booked);
 
+                // Adding all event ids into an array
+                eventsBookedList = new ArrayList<String>();
 
-                // First element of events gotten is always null for some reason
-                // so just remove that to be safe
-                // events_booked is also received as string so turn into list
-                String[] eventArray = events_booked.replace("[","")
-                        .replace("]","").split(",");
-                Log.d("AAAAAAAAAAAAAAAAAA","shit 2 "+ eventArray[1]);
-                eventList = new LinkedList<String>(Arrays.asList(eventArray));
-                eventList.remove(0);
-                Log.d("AAAAAAAAAAAAAAAAAA","shit 3 "+ eventList.get(0));
+                if (task.getResult().child("event_booked").getChildrenCount() > 0){
+                    //there are events booked by the user, hooray!
+                    for(DataSnapshot snapshot : task.getResult().child("event_booked").getChildren()){
+                        String eventID = String.valueOf(snapshot.getValue());
+                        eventsBookedList.add(eventID);
+                    }
+                }
+
 
                 // Setting past and upcoming events
                 // Idk if to change this to Fragment or not
                 // May be laggy when changing or my emulator is garbage
-                Log.d("AAAAAAAAAAAAAAAAAAAA","shit " + eventList);
+               // Log.d("AAAAAAAAAAAAAAAAAAAA","shit " + eventList);
                 GridView gridView = (GridView) findViewById(R.id.gallery);
-                gridView.setAdapter(new ProfileAdapter(profile_page.this,eventList));
+                gridView.setAdapter(new ProfileAdapter(profile_page.this,eventsBookedList));
                 Log.d("set","AdapterSet");
 
 
@@ -161,7 +160,7 @@ public class profile_page extends AppCompatActivity {
                 upcoming.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        gridView.setAdapter(new ProfileAdapter(profile_page.this,eventList));
+                        gridView.setAdapter(new ProfileAdapter(profile_page.this,eventsBookedList));
                         Log.d("Clicked","click");
                     }
                 });
