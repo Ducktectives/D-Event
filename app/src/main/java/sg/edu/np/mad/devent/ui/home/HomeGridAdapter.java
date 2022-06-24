@@ -33,6 +33,7 @@ import sg.edu.np.mad.devent.EventDetailsPage;
 import sg.edu.np.mad.devent.Events;
 import sg.edu.np.mad.devent.NavDrawer;
 import sg.edu.np.mad.devent.R;
+import sg.edu.np.mad.devent.profile_page;
 
 public class HomeGridAdapter extends BaseAdapter implements Filterable {
     private Context context;
@@ -65,6 +66,7 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
 
         if (inflater == null)
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -109,6 +111,7 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
                 eventAct.putExtra("event_List", (Serializable) eventsList);
                 eventAct.putExtra("event_Name",filteredEventsList.get(i).getEvent_ID());
                 eventAct.putExtra("Email", NavDrawer.getemailofuser);
+
                 context.startActivity(eventAct);
             }
         });

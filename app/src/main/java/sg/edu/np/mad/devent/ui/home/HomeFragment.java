@@ -1,5 +1,6 @@
 package sg.edu.np.mad.devent.ui.home;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -29,12 +30,14 @@ import com.google.firebase.storage.FileDownloadTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import sg.edu.np.mad.devent.Events;
 import sg.edu.np.mad.devent.R;
 import sg.edu.np.mad.devent.databinding.FragmentHomeBinding;
+import sg.edu.np.mad.devent.profile_page;
 
 public class HomeFragment extends Fragment {
 
@@ -106,6 +109,9 @@ public class HomeFragment extends Fragment {
                 Log.e("ERROR!", "Some error occurred regarding HomeFragement firebase data retrieval\n" +
                         error);
             }
+
+
+
         });
 
         gridAdapter = new HomeGridAdapter(container.getContext(),eventsList);

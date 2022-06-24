@@ -2,6 +2,7 @@ package sg.edu.np.mad.devent;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -22,7 +23,9 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
@@ -30,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -52,6 +56,8 @@ public class profile_page extends AppCompatActivity {
     String events_booked;
     GridView grid;
     List<String> eventsBookedList;
+    List<Events> DBevents = new ArrayList<>();
+    List<String> eventsIDList = new ArrayList<>();
 
 
     // Firebase stuff
@@ -75,6 +81,50 @@ public class profile_page extends AppCompatActivity {
         gridView.setFocusable(false);
 
         user_id_unique = getIntent().getStringExtra("Email");
+
+        event_path.orderByChild("event_ID").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                String eventID = snapshot.child("event_ID").getValue(String.class);
+                String eventTitle = snapshot.child("event_Name").getValue(String.class);
+                String eventLoc = snapshot.child("event_Location").getValue(String.class);
+                String eventDate = snapshot.child("event_Date").getValue(String.class);
+                String eventDesc = snapshot.child("event_Description").getValue(String.class);
+                String eventDetail = snapshot.child("event_Detail").getValue(String.class);
+                String eventUserID = snapshot.child("event_UserID").getValue(String.class);
+                Boolean eventBooked = snapshot.child("bookmarked").getValue(Boolean.class);
+                String eventStorageID = snapshot.child("event_StorageReferenceID").getValue(String.class);
+
+                // Meant to prevent duplication of data display in gridAdapter
+                if (eventsIDList.contains(eventID)) return;
+
+                Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
+                        eventDetail, eventUserID, eventStorageID, eventBooked);
+
+                eventsIDList.add(eventID);
+                DBevents.add(event);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         Log.d("email",user_id_unique);
         String a = user_id_unique.toLowerCase().replace(".","");
@@ -149,9 +199,8 @@ public class profile_page extends AppCompatActivity {
                 // Setting past and upcoming events
                 // Idk if to change this to Fragment or not
                 // May be laggy when changing or my emulator is garbage
-               // Log.d("AAAAAAAAAAAAAAAAAAAA","shit " + eventList);
                 GridView gridView = (GridView) findViewById(R.id.gallery);
-                gridView.setAdapter(new ProfileAdapter(profile_page.this,eventsBookedList));
+                gridView.setAdapter(new ProfileAdapter(profile_page.this,DBevents, eventsBookedList.size()));
                 Log.d("set","AdapterSet");
 
 
@@ -160,7 +209,7 @@ public class profile_page extends AppCompatActivity {
                 upcoming.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        gridView.setAdapter(new ProfileAdapter(profile_page.this,eventsBookedList));
+                        gridView.setAdapter(new ProfileAdapter(profile_page.this,DBevents, eventsBookedList.size()));
                         Log.d("Clicked","click");
                     }
                 });
@@ -175,14 +224,24 @@ public class profile_page extends AppCompatActivity {
                 });
 
                 // Make tapping on each image show their respective EventDetailsPage
-                // Need database again
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent showDetails = new Intent
                                 (profile_page.this,EventDetailsPage.class);
+                        Events e = new Events();
+                        for (Events ev : DBevents){
+                            if (String.valueOf(ev.getEvent_ID()).equals(eventsBookedList.get(position))) {
+                                e = ev;
+                                break;
+                            }
+
+                        }
+                        List<Events> eList = new ArrayList<>();
+                        eList.add(e);
+                        showDetails.putExtra("event_List",(Serializable) eList);
+                        Log.d("eListCreated","Event list is created " + String.valueOf(e.getEvent_ID()));
                         startActivity(showDetails);
-                        Log.d("a","position is" + position);
 
                         // Need to figure out what to do with the position.
                         // Like how to link it with showing the actual event
@@ -231,12 +290,11 @@ public class profile_page extends AppCompatActivity {
                             Log.d("firebase", String.valueOf(task.getResult().child("email").getValue()));
                             // Get image reference from image folder
                             String imagelink = String.valueOf(task.getResult().child("profpic").getValue());
-                            Log.d("AAAAAAAAAAAAA",imagelink);
                             // Set reference point for firebase storage
                             StorageReference firebaseStorage = FirebaseStorage.getInstance().getReference("images/" + imagelink);
                             ImageView profile_pic = findViewById(R.id.profilepic);
                             if(profile_pic == null){
-                                Log.d("imageview missing","help me please");
+                                Log.d("ImageView", "ImageView missing");
                             }
 
                             try{

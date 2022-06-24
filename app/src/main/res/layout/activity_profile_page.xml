@@ -128,7 +128,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
 
-                android:text="Past Events" />
+                android:text="Past Events"
+                android:visibility="invisible"
+                tools:visibility="invisible" />
 
         </LinearLayout>
 

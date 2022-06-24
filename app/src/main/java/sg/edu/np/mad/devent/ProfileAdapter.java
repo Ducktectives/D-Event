@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -39,8 +40,9 @@ public class ProfileAdapter extends BaseAdapter {
     private  Context mContext;
     String[] web;
     int[] Imageid;
-    List<String> EventList;
+    List<Events> EventsList;
     static List<Drawable> DrawableList = new ArrayList<Drawable>();
+    Integer size;
 
 
     public ProfileAdapter(Context c) {
@@ -55,12 +57,14 @@ public class ProfileAdapter extends BaseAdapter {
         mContext = c;
         this.Imageid = Imageid;
     }
-    public ProfileAdapter(Context c, List<String> eventList){
+
+    public ProfileAdapter(Context c, List<Events> eventsList, Integer size){
         mContext = c;
-        EventList = eventList;
+        EventsList = eventsList;
+        this.size = size;
     }
     public int getCount(){
-        return mThumbIds.length;
+        return size;
     }
 
     public Object getItem(int position){
@@ -78,23 +82,26 @@ public class ProfileAdapter extends BaseAdapter {
         ImageView imageView;
         View view;
         StorageReference firebaseStorage;
+        String refID;
 
-        try{
 
-            for(String event: EventList){
-                // Set reference point for firebase storage
-                Log.d("AdapterEvent", event);
-                firebaseStorage = FirebaseStorage.getInstance().getReference("images/" + event.trim());
-                Log.d("EventLink","images/"+event.trim());
 
-                try{
-                    File localfile = File.createTempFile("image",".jpg");
-                    Log.d("TempFile","event: " + event);
+        for(Events event: EventsList) {
+            refID = event.getEvent_StorageReferenceID();
+            // Set reference point for firebase storage
+            try {
+                firebaseStorage = FirebaseStorage.getInstance().getReference("images/" + refID.trim());
+                Log.d("EventLink", "images/" + refID.trim());
+                // Need to trim because for some reason a space is added when inputted the events
+                // I took 2 hours to find that out.
+
+                try {
+                    File localfile = File.createTempFile("image", ".jpg");
+                    Log.d("TempFile", "event: " + event);
                     firebaseStorage.getFile(localfile).addOnSuccessListener(
                             new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                                 @Override
                                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                    Log.d("Success shit","what");
                                     Bitmap bitmapImage = BitmapFactory.decodeFile(localfile.getAbsolutePath());
                                     Drawable d = new BitmapDrawable(mContext.getResources(), bitmapImage);
                                     Log.d("DrawableList", "event added: " + event + d);
@@ -105,12 +112,12 @@ public class ProfileAdapter extends BaseAdapter {
                     ).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("yousuck", "Failure: " + e);
+                            Log.d("OnFailure", "Failure: " + e);
                         }
                     }).addOnCanceledListener(new OnCanceledListener() {
                         @Override
                         public void onCanceled() {
-                            Log.d("why?", "got cancelled L + ratio bro");
+                            Log.d("why?", "got cancelled");
                         }
                     }).addOnPausedListener(new OnPausedListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
@@ -118,17 +125,18 @@ public class ProfileAdapter extends BaseAdapter {
                             Log.d("Paused", "why is it paused");
                         }
                     });
-                }
-                catch (Exception exception){
+                } catch (Exception exception) {
                     exception.printStackTrace();
-                    Log.d("Exception","help");
+                    Log.d("Exception", "help");
                 }
             }
+            catch(NullPointerException ex){
+                Toast.makeText(mContext,"Some images failed to load",Toast.LENGTH_SHORT);
+            }
         }
-        catch (NullPointerException ex){
-            Log.d("welp","lmao");
-            EventList = Arrays.asList("One","Two");
-        }
+
+
+
 
 
         if(convertView == null){

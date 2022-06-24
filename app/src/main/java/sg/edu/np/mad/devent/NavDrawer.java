@@ -25,6 +25,8 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.Serializable;
+
 import sg.edu.np.mad.devent.databinding.ActivityNavDrawerBinding;
 import sg.edu.np.mad.devent.databinding.FragmentGalleryBinding;
 
