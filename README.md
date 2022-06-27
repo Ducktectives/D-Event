@@ -23,6 +23,7 @@ D'Vent Features
 - Event Creation; Create events to Publicise
 - Searching up Events; Look for events you are interested in
 
+
 Team members’ names, student IDs
 
   ALFRED LEANDRO LIANG, S10223157D
