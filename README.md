@@ -25,16 +25,24 @@ D'Vent Features
 
 Team members’ names, student IDs
   ALFRED LEANDRO LIANG, S10223157D
+  
   CHONG WEI QIN, S10178253F
+  
   CHUA HAO ZHONG, S10222140J
+  
   NGUI JIA LE SHERLENA, S10227488A
+  
   TAN YEE MING, S10221930E
 
   
 Roles and contributions of each member
   ALFRED LEANDRO LIANG - Home Page
+  
   CHONG WEI QIN - Addition of Events, Database
+  
   CHUA HAO ZHONG - Profile Page
-  NGUI JIA LE SHERLENA - Login Page, Registration Page, Booking Page, Integration of Code, Database
-  TAN YEE MING - Event Page (Listing of event information), Booking Page, Integration of Code, Database
+  
+  NGUI JIA LE SHERLENA - Login Page, Registration Page, Booking Page, Integration of Code, Database, App Writeup and Design
+  
+  TAN YEE MING - Event Page (Listing of event information), Booking Page, Integration of Code, Database, Design
 
