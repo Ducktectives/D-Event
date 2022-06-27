@@ -24,6 +24,7 @@ D'Vent Features
 - Searching up Events; Look for events you are interested in
 
 Team members’ names, student IDs
+
   ALFRED LEANDRO LIANG, S10223157D
   
   CHONG WEI QIN, S10178253F
@@ -36,6 +37,7 @@ Team members’ names, student IDs
 
   
 Roles and contributions of each member
+
   ALFRED LEANDRO LIANG - Home Page
   
   CHONG WEI QIN - Addition of Events, Database
