@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView errormsg = (TextView)findViewById(R.id.loginerror);
 
         Button submittologin = (Button)findViewById(R.id.loginsubmit);
+        TextView createuseraccount = (TextView)findViewById(R.id.registernewaccount);
 
 
 
@@ -114,6 +115,14 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
+            }
+        });
+
+        createuseraccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent registeractivitystart = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(registeractivitystart);
             }
         });
     }

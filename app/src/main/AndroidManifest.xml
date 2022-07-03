@@ -45,9 +45,6 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".loginpage"
-            android:exported="false" />
-        <activity
             android:name=".RegistrationActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" >
