@@ -51,8 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                 // Getting the text entered by users
                 String email = useremail.getText().toString();
                 String password = userpassword.getText().toString();
-                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
+                String emailPattern = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]";
 
                 //For firebase
                 FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -95,11 +94,11 @@ public class LoginActivity extends AppCompatActivity {
                                             startActivity(login);
                                         }
                                         else if (!email.trim().matches(emailPattern)){
-                                            errormsg.setText("Kindly enter a valid email1");
+                                            errormsg.setText("Kindly enter a valid email");
                                         }
                                         else {
                                             // Giving a common user error when login failure
-                                            errormsg.setText("Email or Password is invalid2");
+                                            errormsg.setText("Email or Password is invalid");
                                         }
                                     }
                                 }
@@ -107,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else {
                             // Giving a common user error when login failure
-                            errormsg.setText("Email or Password is invalid3");
+                            errormsg.setText("Email or Password is invalid");
                         }
                     }
                     @Override

@@ -198,14 +198,29 @@ public class RegistrationActivity extends AppCompatActivity {
                 String job  = jobtitle.getText().toString();
                 String password  = userPassword.getText().toString();
                 String cpass  = confirmpassword.getText().toString();
-                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                String emailPattern = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]";
+                String namePattern = "^[a-zA-Z- ]{3,30}";
+                String passwordPattern = "^[a-zA-Z0-9+_.-@!#$%^&* ]{8,20}";
+                String jobTitlePattern = "^[a-zA-Z0-9 -]{3,30}";
 
                 // Input validation to check if the values are empty
                 if (name.isEmpty() || email.isEmpty() || contact == null || job.isEmpty() || password.isEmpty()){
                     errormessage.setText("Please enter a input for all the fields above");
                 }
+                else if (!name.matches(namePattern)){
+                    errormessage.setText("Invalid name");
+                }
                 else if (!email.trim().matches(emailPattern)){
                     errormessage.setText("Kindly enter a valid email");
+                }
+                else if (!((contact < 100000000 && contact >= 80000000) || (contact >= 60000000 && contact < 70000000))) {
+                    errormessage.setText("Kindly enter a valid contact");
+                }
+                else if (!job.matches(jobTitlePattern)) {
+                    errormessage.setText("Invalid Job Title");
+                }
+                else if (password.matches(passwordPattern)){
+                    errormessage.setText("Kindly enter a password between 8 and 20 characters");
                 }
                 else if (!password.equals(cpass)){
                     errormessage.setText("The password fields do not match");
