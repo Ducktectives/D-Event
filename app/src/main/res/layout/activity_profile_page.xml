@@ -100,7 +100,9 @@
                 android:layout_width="204dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_marginStart="29dp"
                 android:layout_marginEnd="34dp"
+                android:layout_toEndOf="@+id/profilepic"
                 android:text="Go to homepage" />
 
         </RelativeLayout>

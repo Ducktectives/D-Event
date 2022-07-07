@@ -73,7 +73,6 @@ public class NavDrawer extends AppCompatActivity {
         // ^ Used for displaying bottom right icon of email
 
         // Sign out menu item's Alert dialog
-        /* UNCOMMENT THIS WHEN WE ARE IMPLEMENTING SIGNOUT
         navigationView.getMenu().findItem(R.id.nav_signout).setOnMenuItemClickListener(menuItem -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(navigationView.getContext());
             builder.setTitle("Profile");
@@ -82,8 +81,9 @@ public class NavDrawer extends AppCompatActivity {
             builder.setPositiveButton("Sign out", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent testAct = new Intent(NavDrawer.this, loginpage.class);
-                    startActivity(testAct);
+                    // Just change code below to whatever you gotta do
+                    // Intent testAct = new Intent(NavDrawer.this, loginpage.class);
+                    //startActivity(testAct);
                 }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -94,7 +94,6 @@ public class NavDrawer extends AppCompatActivity {
             builder.show();
             return true;
         });
-         */
 
         // Setting an OnClick listener for Menu item "Settings"
         navigationView.getMenu().findItem(R.id.nav_settings).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {

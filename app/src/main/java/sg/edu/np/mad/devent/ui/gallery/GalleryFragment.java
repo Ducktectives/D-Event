@@ -36,6 +36,7 @@ public class GalleryFragment extends Fragment {
         View root = binding.getRoot();
 
         // List of followed users (replace with data from firebase)
+        /*
         List<Profile> followedList = new ArrayList<>();
         for (int index = 1; index < 21; index++){
             Random randObj = new Random();      //reduce the number of times new Random has to be typed
@@ -44,18 +45,22 @@ public class GalleryFragment extends Fragment {
             followedList.add(randUser);
         }
 
+
+
         // final TextView textView = binding.textGallery;
         // final ImageView imageView = binding.imageView3;
         // galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         // textView.setText("test");
         RecyclerView recyclerView = binding.rvFollowed;
-        rvAdapter mAdapter = new rvAdapter(followedList);
+        //rvAdapter mAdapter = new rvAdapter(followedList);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(root.getContext());
 
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+
+         */
 
 
         return root;

@@ -64,6 +64,17 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
         return i;
     }
 
+    public void clear() {
+        eventsList.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<Events> list){
+        eventsList.addAll(list);
+        notifyDataSetChanged();
+    }
+
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 

@@ -23,11 +23,10 @@
             android:id="@+id/nav_AddEvent"
             android:icon="@android:drawable/ic_menu_add"
             android:title="Add Event" />
-        <!--
+
         <item
             android:id="@+id/nav_signout"
             android:icon="?attr/actionModeCloseDrawable"
             android:title="Sign out" />
-        -->
     </group>
 </menu>

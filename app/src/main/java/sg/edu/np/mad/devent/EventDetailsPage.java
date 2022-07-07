@@ -41,6 +41,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class EventDetailsPage extends AppCompatActivity {
     TextView eventOrg;
@@ -104,7 +105,7 @@ public class EventDetailsPage extends AppCompatActivity {
                     //search for the user with the same email
                     FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
                     DatabaseReference Ref2 = database.getReference("Users");
-                    Ref2.child(eventOrganizerEmail).get()
+                    Ref2.child(eventOrganizerEmail.replace(".","").toLowerCase()).get()
                             .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
