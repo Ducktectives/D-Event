@@ -25,13 +25,17 @@
                 android:id="@+id/UserBookingName"
                 android:layout_width="260dp"
                 android:layout_height="55dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/txt_rounded_background"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:paddingLeft="20px"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/bookingName"
                 app:layout_constraintTop_toBottomOf="@+id/eventimage"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -42,7 +46,11 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="30dp"
                 android:text="Name"
+                android:textColor="@color/black"
                 android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/UserBookingName"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/eventimage" />
 
@@ -53,7 +61,11 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="48dp"
                 android:text="Email"
+                android:textColor="@color/black"
                 android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/UserBookingEmail"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bookingName" />
 
@@ -61,13 +73,17 @@
                 android:id="@+id/UserBookingPhone"
                 android:layout_width="260dp"
                 android:layout_height="55dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/txt_rounded_background"
                 android:ems="10"
                 android:inputType="phone"
                 android:paddingLeft="20px"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/bookingContact"
                 app:layout_constraintTop_toBottomOf="@+id/UserBookingEmail"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -75,13 +91,17 @@
                 android:id="@+id/UserBookingEmail"
                 android:layout_width="260dp"
                 android:layout_height="55dp"
+                android:layout_marginStart="62dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/txt_rounded_background"
                 android:ems="10"
                 android:inputType="textEmailAddress"
                 android:paddingLeft="20px"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/bookingEmail"
                 app:layout_constraintTop_toBottomOf="@+id/UserBookingName"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -92,7 +112,11 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="48dp"
                 android:text="Contact Number"
+                android:textColor="@color/black"
                 android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/UserBookingPhone"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bookingEmail" />
 
@@ -100,13 +124,17 @@
                 android:id="@+id/UserBookingPax"
                 android:layout_width="260dp"
                 android:layout_height="55dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/txt_rounded_background"
                 android:ems="10"
                 android:inputType="number"
                 android:paddingLeft="20px"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/bookingNumberoftix"
                 app:layout_constraintTop_toBottomOf="@+id/UserBookingPhone"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -117,7 +145,11 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
                 android:text="Number of Tickets"
+                android:textColor="@color/black"
                 android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/UserBookingPax"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bookingContact" />
 
