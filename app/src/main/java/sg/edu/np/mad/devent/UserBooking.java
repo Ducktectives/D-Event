@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -66,7 +68,44 @@ public class UserBooking extends AppCompatActivity {
         EditText userinputpax = (EditText)findViewById(R.id.UserBookingPax);
         TextView errormessage = (TextView)findViewById(R.id.Errormessage);
 
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        String emailPattern = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]";
+        String namePattern = "^[a-zA-Z- ]{3,30}";
+
+        //For firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        DatabaseReference Ref = database.getReference("Users");
+
+        //Using get to get info from database once, rather than setting an event listener
+        Ref.orderByChild("email").equalTo(userEmail.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // Getting the values required to authenticate the user
+                    Ref.child(userEmail.toLowerCase().replace(".", "")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            if (!task.isSuccessful()) {
+                                Log.e("firebase", "Error getting data. Please reload.", task.getException());
+                            }
+                            else {
+                                Log.d("firebase", String.valueOf(task.getResult().child("username").getValue()));
+                                Integer contactnum = task.getResult().child("contactnum").getValue(Integer.class);
+                                String username = task.getResult().child("username").getValue(String.class);
+
+                                userinputname.setText(username);
+                                userinputemail.setText(userEmail);
+                                userinputcontact.setText(contactnum.toString());
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
         // Get the event image
         //set reference point for Firebase Storage
@@ -119,78 +158,96 @@ public class UserBooking extends AppCompatActivity {
                 if (bookingname.isEmpty() || bookingemail.isEmpty() || bookingnumber == null || bookingpax == null){
                     errormessage.setText("Kindly fill up the fields above");
                 }
+                // Check for a filled name field which does not consist of invalid characters
+                if (bookingname.isEmpty()){
+                    errormessage.setText("Name is required");
+                }
+                else if (!bookingname.matches(namePattern)){
+                    errormessage.setText("Kindly enter a valid name");
+                }
+                // Check for valid email
+                else if (bookingemail.isEmpty()){
+                    errormessage.setText("Email is required");
+                }
+                else if (!bookingemail.matches(emailPattern)){
+                    errormessage.setText("Kindly enter a valid email address");
+                }
+                // Check for valid booking contact
+                else if (bookingnumber == null){
+                    errormessage.setText("Contact Number is required");
+                }
+                else if (!((bookingnumber < 100000000 && bookingnumber >= 80000000) || (bookingnumber >= 60000000 && bookingnumber < 70000000))) {
+                    errormessage.setText("Kindly enter a valid contact");
+                }
+                // Check for negative booking pax or booking for more that 4 pax
+                else if (bookingpax == null ){
+                    errormessage.setText("Number of Tickets is required");
+                }
+                else if (bookingpax <= 0){
+                    errormessage.setText("Kindly enter a valid number of tickets to be booked");
+                }
+                else if (bookingpax > 4){
+                    errormessage.setText("Sorry you have hit the maximum number of tickets you cam booked");
+                }
                 else {
-                    // Check for valid email
-                    if (!bookingemail.matches(emailPattern)){
-                        errormessage.setText("Kindly enter a valid email address");
-                    }
-                    // Check for negative booking pax
-                    else if (bookingpax <= 0){
-                        errormessage.setText("Kindly enter a valid number fo tickets to be booked");
-                    }
-                    else {
-                        // Connect Database
-                        FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
-                        DatabaseReference Ref = database.getReference("Event");
-                        DatabaseReference book = database.getReference("Booking");
-                        DatabaseReference user = database.getReference("Users");
+                    // Connect Database
+                    FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                    DatabaseReference Ref = database.getReference("Event");
+                    DatabaseReference book = database.getReference("Booking");
+                    DatabaseReference user = database.getReference("Users");
 
 
-                        int finalbookingnumber = bookingnumber;
-                        int finalbookingpax = bookingpax;
+                    int finalbookingnumber = bookingnumber;
+                    int finalbookingpax = bookingpax;
 
-                        // Store the data in the user folders in the Event table
-                        Ref.orderByChild("event_ID").equalTo(eventid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    // Store the data in the user folders in the Event table
+                    Ref.orderByChild("event_ID").equalTo(eventid).addListenerForSingleValueEvent(new ValueEventListener() {
 
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                // Check for event ID
-                                if (snapshot.exists()){
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            // Check for event ID
+                            if (snapshot.exists()){
 
-                                    userbooking.Name = bookingname;
-                                    userbooking.Email = bookingemail;
-                                    userbooking.Contact = finalbookingnumber;
-                                    userbooking.Pax = finalbookingpax;
-                                    // Create subfolder in the event and name the subfolder booking and create another subfolder within with the booking email as the key to store the record
-                                    book.child(eventid).child(bookingemail.toLowerCase().replace(".", "")).setValue(userbooking);
-                                    // Let user know that Booking is successful
-                                    Toast.makeText(getApplicationContext(), "Booking Successfully", Toast.LENGTH_LONG).show();
+                                userbooking.Name = bookingname;
+                                userbooking.Email = bookingemail;
+                                userbooking.Contact = finalbookingnumber;
+                                userbooking.Pax = finalbookingpax;
+                                // Create subfolder in the event and name the subfolder booking and create another subfolder within with the booking email as the key to store the record
+                                book.child(eventid).child(bookingemail.toLowerCase().replace(".", "")).setValue(userbooking);
+                                // Let user know that Booking is successful
+                                Toast.makeText(getApplicationContext(), "Booking Successfully", Toast.LENGTH_LONG).show();
 
 
-                                    //Add event to the list of booked events
-                                    user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                            Integer numberChild = Math.toIntExact(task.getResult().getChildrenCount());
-                                            Integer storeID = numberChild +1 ;
-                                            user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
+                                //Add event to the list of booked events
+                                user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                        Integer numberChild = Math.toIntExact(task.getResult().getChildrenCount());
+                                        Integer storeID = numberChild +1 ;
+                                        user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
 
-                                            //Pass intent into the Profile Page
-                                            Intent profileData = new Intent(UserBooking.this,profile_page.class);
-                                            profileData.putExtra("Email",userEmail);
-                                            startActivity(profileData);
-                                        }
-                                    });
+                                        //Pass intent into the Profile Page
+                                        Intent profileData = new Intent(UserBooking.this,profile_page.class);
+                                        profileData.putExtra("Email",userEmail);
+                                        startActivity(profileData);
+                                    }
+                                });
 
-                                }
-                                else {
-                                    // Let user know that Booking is Unsuccessful
-                                    Toast.makeText(getApplicationContext(), "Booking Unsuccessfully, Please try again", Toast.LENGTH_LONG).show();
-                                }
                             }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                            else {
                                 // Let user know that Booking is Unsuccessful
                                 Toast.makeText(getApplicationContext(), "Booking Unsuccessfully, Please try again", Toast.LENGTH_LONG).show();
                             }
-                        });
+                        }
 
-
-                    }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // Let user know that Booking is Unsuccessful
+                            Toast.makeText(getApplicationContext(), "Booking Unsuccessfully, Please try again", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
             }
-
         });
     }
 }

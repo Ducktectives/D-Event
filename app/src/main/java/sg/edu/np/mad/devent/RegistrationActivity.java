@@ -16,9 +16,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,19 +42,16 @@ public class RegistrationActivity extends AppCompatActivity {
     Profile user = new Profile();
 
     Button btn_register;
-    EditText userName, userEmail, userContact,
-            userJob, userPassword,registration_userConfirmPassword;
-
 
     // Firebase for storing Image
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-
 
         // Dialog upon clicking Terms and Conditions
         TextView tcprompt = (TextView)findViewById(R.id.tcprompt);
@@ -204,32 +205,58 @@ public class RegistrationActivity extends AppCompatActivity {
                 String jobTitlePattern = "^[a-zA-Z0-9 -]{3,30}";
 
                 // Input validation to check if the values are empty
-                if (name.isEmpty() || email.isEmpty() || contact == null || job.isEmpty() || password.isEmpty()){
-                    errormessage.setText("Please enter a input for all the fields above");
+                if (name.isEmpty()){
+                    errormessage.setError("Name is required");
+                    return;
                 }
+
                 else if (!name.matches(namePattern)){
-                    errormessage.setText("Invalid name");
+                    errormessage.setText("Kindly enter a valid name");
                 }
+
+                else if (email.isEmpty()){
+                    errormessage.setText("Email is required");
+                }
+
                 else if (!email.trim().matches(emailPattern)){
                     errormessage.setText("Kindly enter a valid email");
                 }
+
+                else if (contact == null){
+                    errormessage.setText("Contact number is required");
+                }
+
                 else if (!((contact < 100000000 && contact >= 80000000) || (contact >= 60000000 && contact < 70000000))) {
                     errormessage.setText("Kindly enter a valid contact");
                 }
+
+                else if (job.isEmpty()) {
+                    errormessage.setText("Job Title is required");
+                }
+
                 else if (!job.matches(jobTitlePattern)) {
                     errormessage.setText("Invalid Job Title");
                 }
+
+                else if (password.isEmpty()) {
+                    errormessage.setText("Password is required");
+                }
+
                 else if (password.matches(passwordPattern)){
                     errormessage.setText("Kindly enter a password between 8 and 20 characters");
                 }
+
                 else if (!password.equals(cpass)){
                     errormessage.setText("The password fields do not match");
                 }
+
                 else if (!checkboxvalue.isChecked()){
                     errormessage.setText("Please agree to our terms and conditions");
                 }
+
                 else {
                     Integer finalContact = contact;
+
                     reference.child("Users").orderByChild("email").equalTo(email.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -237,6 +264,8 @@ public class RegistrationActivity extends AppCompatActivity {
                                 errormessage.setText("Email already exist, please try again");
                             }
                             else {
+
+
                                 // Create user account
                                 // Profile(int id, String username, String title, String email,Integer contact, String password)
                                 user = new Profile(profileID, name, job, email, finalContact, password);
@@ -271,6 +300,43 @@ public class RegistrationActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Account Creation Failed", Toast.LENGTH_LONG).show();
                         }
                     });
+
+                    /*
+
+                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                user = new Profile(profileID, name, job, email, finalContact, password);
+
+                                firebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Users")
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()){
+                                                    Toast.makeText(RegistrationActivity.this, "User has been registered successfully!", Toast.LENGTH_SHORT).show();
+                                                    // Send the profileID, email and name of user to the profile_page class
+                                                    Intent intent = new Intent(getApplicationContext(), NavDrawer.class);
+                                                    intent.putExtra("profile_id", profileID);
+                                                    intent.putExtra("Email", email);
+                                                    intent.putExtra("Username", name);
+                                                    // Start the intent
+                                                    startActivity(intent);
+                                                }
+                                                else{
+                                                    Toast.makeText(RegistrationActivity.this, "Failed to register! Try again!", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                            }
+                            else{
+                                Toast.makeText(RegistrationActivity.this, "Failed to register!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+                     */
                 }
             }
         });
