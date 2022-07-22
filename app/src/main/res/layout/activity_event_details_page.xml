@@ -72,6 +72,7 @@
             android:scrollbars="vertical"
             android:text="Event Name"
             android:textAlignment="viewStart"
+            android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="@+id/Detail"
             app:layout_constraintHorizontal_bias="0.0"
@@ -90,6 +91,7 @@
             android:scrollbars="vertical"
             android:text="by Who"
             android:textAlignment="viewStart"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/EventLocation"
             tools:ignore="TouchTargetSizeCheck" />
@@ -102,6 +104,7 @@
             android:layout_marginTop="83dp"
             android:scrollbars="vertical"
             android:text="OCT"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eventPicture" />
@@ -115,6 +118,7 @@
             android:layout_marginEnd="5dp"
             android:scrollbars="vertical"
             android:text="Event Description"
+            android:textColor="@color/black"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.004"
@@ -130,6 +134,7 @@
             android:scrollbars="vertical"
             android:text="Event Location"
             android:textAlignment="viewStart"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/EventName" />
 
@@ -141,6 +146,7 @@
             android:layout_marginTop="4dp"
             android:scrollbars="vertical"
             android:text="30"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/EventMonth" />
@@ -152,6 +158,7 @@
             android:layout_marginStart="88dp"
             android:layout_marginTop="24dp"
             android:text="Details"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/EventDescription" />
@@ -165,6 +172,7 @@
             android:layout_marginEnd="5dp"
             android:scrollbars="vertical"
             android:text="Event Details"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />

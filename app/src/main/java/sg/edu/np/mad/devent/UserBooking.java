@@ -154,10 +154,6 @@ public class UserBooking extends AppCompatActivity {
                     bookingpax = null;
                 }
 
-
-                if (bookingname.isEmpty() || bookingemail.isEmpty() || bookingnumber == null || bookingpax == null){
-                    errormessage.setText("Kindly fill up the fields above");
-                }
                 // Check for a filled name field which does not consist of invalid characters
                 if (bookingname.isEmpty()){
                     errormessage.setText("Name is required");
@@ -187,7 +183,7 @@ public class UserBooking extends AppCompatActivity {
                     errormessage.setText("Kindly enter a valid number of tickets to be booked");
                 }
                 else if (bookingpax > 4){
-                    errormessage.setText("Sorry you have hit the maximum number of tickets you cam booked");
+                    errormessage.setText("Sorry the maximum number of tickets you can book is 4");
                 }
                 else {
                     // Connect Database
@@ -227,8 +223,14 @@ public class UserBooking extends AppCompatActivity {
                                         user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
 
                                         //Pass intent into the Profile Page
-                                        Intent profileData = new Intent(UserBooking.this,profile_page.class);
+                                        Intent profileData = new Intent(UserBooking.this,BookingSummary.class);
                                         profileData.putExtra("Email",userEmail);
+                                        profileData.putExtra("EventName",userEmail);
+                                        profileData.putExtra("Name",userEmail);
+                                        profileData.putExtra("UserEmail",userEmail);
+                                        profileData.putExtra("ContactNum",userEmail);
+                                        profileData.putExtra("NumofTix",userEmail);
+                                        finishAndRemoveTask();
                                         startActivity(profileData);
                                     }
                                 });
