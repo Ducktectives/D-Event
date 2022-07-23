@@ -106,7 +106,7 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            gridImage.setImageResource(R.drawable.no_event_thumbnail);
+                            // gridImage.setImageResource(R.drawable.no_event_thumbnail);
                         }
                     });
 
@@ -164,5 +164,8 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
             }
         };
         return filter;
+    }
+    public void test(){
+
     }
 }

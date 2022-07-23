@@ -1,26 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/swipeContainer">
+    tools:context=".ui.home.HomeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <HorizontalScrollView
+        android:id="@+id/horizontalFilter"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/gridView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="?attr/actionBarSize">
 
-        <GridView
-            android:id="@+id/gridView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FADCD9"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:verticalSpacing="24dp"
-            android:numColumns="1"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/SportsFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/quantum_orange200"
+                android:text="Sports" />
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <Button
+                android:id="@+id/GamingFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/quantum_orange200"
+                android:text="Gaming" />
+
+            <Button
+                android:id="@+id/AnimeFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/quantum_orange200"
+                android:text="Anime" />
+
+            <Button
+                android:id="@+id/MusicFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/quantum_orange200"
+                android:text="Music" />
+
+            <Button
+                android:id="@+id/EducationFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/quantum_orange200"
+                android:text="Education" />
+
+            <Button
+                android:id="@+id/AnimalsFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/quantum_orange200"
+                android:text="Animals" />
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="104dp"
+        android:background="#FADCD9"
+        android:numColumns="1"
+        android:verticalSpacing="24dp">
+    </GridView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

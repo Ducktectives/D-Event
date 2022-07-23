@@ -98,8 +98,9 @@ public class profile_page extends AppCompatActivity {
                 // Meant to prevent duplication of data display in gridAdapter
                 if (eventsIDList.contains(eventID)) return;
 
+                List<String> eventType = Arrays.asList(eventDetail.split(", "));
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
-                        eventDetail, eventUserID, eventStorageID, eventBooked);
+                        eventDetail, eventUserID, eventStorageID, eventBooked, eventType);
 
                 eventsIDList.add(eventID);
                 DBevents.add(event);

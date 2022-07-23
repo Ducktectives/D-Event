@@ -3,6 +3,7 @@ package sg.edu.np.mad.devent;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Events implements Serializable {
     String Event_ID;
@@ -14,11 +15,14 @@ public class Events implements Serializable {
     String Event_UserID;
     String Event_StorageReferenceID;
     boolean Bookmarked;
+    List<String> Event_Type;
 
     public Events() {}
 
 
-    public Events(String event_ID, String event_Name, String event_Location, String event_Date, String event_Description, String event_Detail, String event_UserID, String event_StorageReferenceID, boolean bookmarked) {
+    public Events(String event_ID, String event_Name, String event_Location, String event_Date,
+                  String event_Description, String event_Detail, String event_UserID,
+                  String event_StorageReferenceID, boolean bookmarked, List<String> event_Type) {
         Event_ID = event_ID;
         Event_Name = event_Name;
         Event_Location = event_Location;
@@ -28,6 +32,7 @@ public class Events implements Serializable {
         Event_UserID = event_UserID;
         Event_StorageReferenceID = event_StorageReferenceID;
         Bookmarked = bookmarked;
+        Event_Type = event_Type;
     }
 
     public String getEvent_ID() {
@@ -101,4 +106,5 @@ public class Events implements Serializable {
     public void setBookmarked(boolean bookmarked) {
         Bookmarked = bookmarked;
     }
+    public List<String> getEvent_Type() { return Event_Type; }
 }

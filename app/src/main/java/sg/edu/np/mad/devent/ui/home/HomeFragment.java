@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SearchView;
 
@@ -32,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import sg.edu.np.mad.devent.Events;
@@ -45,6 +47,7 @@ public class HomeFragment extends Fragment {
     static List<Events> eventsList = new ArrayList<>();
     static List<String> eventsIDList = new ArrayList<>();
     HomeGridAdapter gridAdapter;
+    Button Sports;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -58,10 +61,6 @@ public class HomeFragment extends Fragment {
         //For firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
         DatabaseReference Ref = database.getReference("Event");
-
-        // List of events (Replaced with actual data retrieved from firebase)
-        int[] imageList = {R.drawable.a1,R.drawable.a2,R.drawable.a3, R.drawable.a4, R.drawable.me,
-                R.drawable.kirby_drawing};
 
         Ref.orderByChild("event_ID").addChildEventListener(new ChildEventListener() {
             @Override
@@ -79,12 +78,12 @@ public class HomeFragment extends Fragment {
                 // Meant to prevent duplication of data display in gridAdapter
                 if (eventsIDList.contains(eventID)) return;
 
+                List<String> eventType = Arrays.asList(eventDetail.split(", "));
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
-                        eventDetail, eventUserID, eventStorageID, eventBooked);
+                        eventDetail, eventUserID, eventStorageID, eventBooked, eventType);
 
                 eventsIDList.add(eventID);
                 eventsList.add(event);
-
 
                 gridAdapter.notifyDataSetChanged();
             }
@@ -111,12 +110,22 @@ public class HomeFragment extends Fragment {
             }
 
 
-
         });
 
         gridAdapter = new HomeGridAdapter(container.getContext(),eventsList);
         gridView.setAdapter(gridAdapter);
         setHasOptionsMenu(true);
+        Sports = binding.SportsFilter;
+        Sports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Events> resultData = new ArrayList<>();
+                for (Events event:eventsList){
+                    if (event.getEvent_Type().contains("Sports")) { resultData.add(event); }
+                }
+
+            }
+        });
         return root;
     }
 
