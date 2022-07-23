@@ -187,6 +187,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/UserBookingPax" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

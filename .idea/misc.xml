@@ -11,8 +11,16 @@
         <entry key="..\:/AndroidStudioProjects/D-Event/app/src/main/res/layout/loginpage.xml" value="0.1796875" />
         <entry key="..\:/AndroidStudioProjects/D-Event/app/src/main/res/layout/nav_header_nav_drawer.xml" value="0.1796875" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1375" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout-land/activity_event_details_page.xml" value="0.23345101500441306" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout-land/activity_login.xml" value="0.23345101500441306" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout-land/activity_registration.xml" value="0.13852073535699017" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout-land/activity_splash_screen.xml" value="0.23345101500441306" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout-land/activity_user_booking.xml" value="0.23345101500441306" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/accountmenu.xml" value="0.22606837606837607" />
-        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_event_details_page.xml" value="0.1455122393472348" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_booking_page.xml" value="0.1" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_booking_summary.xml" value="0.25" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_event_details_page.xml" value="0.2261650277896537" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_login.xml" value="0.2261650277896537" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_main.xml" value="0.1453804347826087" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_nav_drawer.xml" value="0.1455122393472348" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_profile_page.xml" value="0.1455122393472348" />

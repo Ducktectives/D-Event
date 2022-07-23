@@ -137,7 +137,7 @@ public class UserBooking extends AppCompatActivity {
         userinputemail.setText(userEmail);
 
         //search for the user with the same email
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
         DatabaseReference Ref2 = database.getReference("Users");
         Ref2.child(userEmail.replace(".","").toLowerCase()).get()
                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -249,6 +249,7 @@ public class UserBooking extends AppCompatActivity {
 
                                         //Pass intent into the Profile Page
                                         Intent profileData = new Intent(UserBooking.this,BookingSummary.class);
+                                        profileData.putExtra("EventID",eventid);
                                         profileData.putExtra("Email",userEmail);
                                         profileData.putExtra("EventName",userEmail);
                                         profileData.putExtra("Name",userEmail);

@@ -2,6 +2,8 @@ package sg.edu.np.mad.devent;
 
 import android.os.Parcelable;
 
+import com.google.type.DateTime;
+
 import java.io.Serializable;
 
 public class Events implements Serializable {
@@ -11,6 +13,8 @@ public class Events implements Serializable {
     String Event_Date;
     String Event_Description;
     String Event_Detail;
+    String Event_StartTime;
+    String Event_EndTime;
     String Event_UserID;
     String Event_StorageReferenceID;
     boolean Bookmarked;
@@ -18,13 +22,15 @@ public class Events implements Serializable {
     public Events() {}
 
 
-    public Events(String event_ID, String event_Name, String event_Location, String event_Date, String event_Description, String event_Detail, String event_UserID, String event_StorageReferenceID, boolean bookmarked) {
+    public Events(String event_ID, String event_Name, String event_Location, String event_Date, String event_Description, String event_Detail, String event_StartTime, String event_EndTime, String event_UserID, String event_StorageReferenceID, boolean bookmarked) {
         Event_ID = event_ID;
         Event_Name = event_Name;
         Event_Location = event_Location;
         Event_Date = event_Date;
         Event_Description = event_Description;
         Event_Detail = event_Detail;
+        Event_StartTime = event_StartTime;
+        Event_EndTime = event_EndTime;
         Event_UserID = event_UserID;
         Event_StorageReferenceID = event_StorageReferenceID;
         Bookmarked = bookmarked;
@@ -80,6 +86,14 @@ public class Events implements Serializable {
 
     public String getEvent_UserID() {
         return Event_UserID;
+    }
+
+    public String getEvent_StartTime() {
+        return Event_StartTime;
+    }
+
+    public void setEvent_StartTime(String event_StartTime) {
+        Event_StartTime = event_StartTime;
     }
 
     public void setEvent_UserID(String event_UserID) {

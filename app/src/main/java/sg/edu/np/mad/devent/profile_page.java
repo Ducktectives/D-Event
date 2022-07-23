@@ -94,12 +94,14 @@ public class profile_page extends AppCompatActivity {
                 String eventUserID = snapshot.child("event_UserID").getValue(String.class);
                 Boolean eventBooked = snapshot.child("bookmarked").getValue(Boolean.class);
                 String eventStorageID = snapshot.child("event_StorageReferenceID").getValue(String.class);
+                String eventStartTime = snapshot.child("event_StartTime").getValue(String.class);
+                String eventEndTime = snapshot.child("event_EndTime").getValue(String.class);
 
                 // Meant to prevent duplication of data display in gridAdapter
                 if (eventsIDList.contains(eventID)) return;
 
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
-                        eventDetail, eventUserID, eventStorageID, eventBooked);
+                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked);
 
                 eventsIDList.add(eventID);
                 DBevents.add(event);
