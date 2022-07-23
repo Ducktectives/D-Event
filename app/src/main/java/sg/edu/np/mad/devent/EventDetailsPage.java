@@ -142,7 +142,7 @@ public class EventDetailsPage extends AppCompatActivity {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(EventDetailsPage.this,"Image Failed to load.", Toast.LENGTH_SHORT).show();
+                                    eventPicture.setVisibility(View.INVISIBLE);
                                 }
                             });
 
