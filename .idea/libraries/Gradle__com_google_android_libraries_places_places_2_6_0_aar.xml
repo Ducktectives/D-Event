@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.android.libraries.places:places:2.6.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3f29a5a4779a33a9d350b75ce6219816/transformed/places-2.6.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/3f29a5a4779a33a9d350b75ce6219816/transformed/places-2.6.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3f29a5a4779a33a9d350b75ce6219816/transformed/places-2.6.0/AndroidManifest.xml" />
       <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/36261b1fac24736ba975a7d99dcc9253/transformed/jetified-places-2.6.0/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/36261b1fac24736ba975a7d99dcc9253/transformed/jetified-places-2.6.0/res" />
       <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/36261b1fac24736ba975a7d99dcc9253/transformed/jetified-places-2.6.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/3f29a5a4779a33a9d350b75ce6219816/transformed/places-2.6.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3f29a5a4779a33a9d350b75ce6219816/transformed/places-2.6.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3f29a5a4779a33a9d350b75ce6219816/transformed/places-2.6.0/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/modules-2/files-2.1/com.google.android.libraries.places/places/2.6.0/c23fd5eb65d0d9eb8c32bad01960074b17b87dab/places-2.6.0-javadoc.jar!/" />
