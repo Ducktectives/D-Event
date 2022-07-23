@@ -48,6 +48,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -409,9 +410,11 @@ public class EventFormActivity extends AppCompatActivity{
             event_StartTime = eventstart.getText().toString();
             event_EndTime = eventend.getText().toString();
             bookmarked = false;
+            List<String> eventType = Arrays.asList(event_Detail.replaceAll("\\s+","").split(", "));
+            // Removes all whitespaces and non-visible characters, (\n, tab) and splits them into a list
 
 
-            event = new Events( event_ID,  event_Name,  event_Location,  event_Date,  event_Description,  event_Detail,  event_StartTime, event_EndTime, userID, storageReference_ID,  bookmarked);
+            event = new Events( event_ID,  event_Name,  event_Location,  event_Date,  event_Description,  event_Detail,  event_StartTime, event_EndTime, userID, storageReference_ID,  bookmarked, eventType);
             // Insert the user-defined object to the database
             reference.child("Event").push().setValue(event);
 

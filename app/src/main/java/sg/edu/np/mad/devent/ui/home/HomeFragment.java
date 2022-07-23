@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import sg.edu.np.mad.devent.Events;
@@ -80,9 +81,11 @@ public class HomeFragment extends Fragment {
 
                 // Meant to prevent duplication of data display in gridAdapter
                 if (eventsIDList.contains(eventID)) return;
+                List<String> eventType = Arrays.asList(eventDetail.replaceAll("\\s+","").split(", "));
+                // Removes all whitespaces and non-visible characters, (\n, tab) and splits them into a list
 
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventStartTime, eventEndTime, eventDesc,
-                        eventDetail, eventUserID, eventStorageID, eventBooked);
+                        eventDetail, eventUserID, eventStorageID, eventBooked,eventType);
 
                 eventsIDList.add(eventID);
                 eventsList.add(event);

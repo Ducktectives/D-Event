@@ -2,6 +2,10 @@ package sg.edu.np.mad.devent;
 
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -78,6 +82,9 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details_page);
+
+        //Creation of notification channel
+        //createNotificationChannel();
 
         //receive Intent information
         Intent receiveEventAct = getIntent();
@@ -257,6 +264,20 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                 bookingInfo.putSerializable("EventList",(Serializable) eventList);
                 bookingInfo.putString("Event", eventID);
                 book.putExtras(bookingInfo);
+                /*
+                // Code below is used to set up notification for the user on the day of the event
+                Toast.makeText(EventDetailsPage.this,"Reminder has been set!", Toast.LENGTH_SHORT).show();
+                Intent notifyIntent = new Intent(EventDetailsPage.this, NotifyService.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(EventDetailsPage.this, 0,
+                        notifyIntent, 0);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+                long timeAtButtonClick = System.currentTimeMillis();
+                long tenSeconds = 1000 * 10;
+
+                alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtButtonClick + tenSeconds, pendingIntent);
+
+                 */
                 startActivity(book);
             }
         });
@@ -300,5 +321,17 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         marker1.position(new LatLng(eventLat,eventLong));
         marker1.title(eventNamedIs);
         googleMap.addMarker(marker1);
+    }
+
+    public void createNotificationChannel(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Devent";
+            String description = "Upcoming event!";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("notifyEvent", name, importance);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

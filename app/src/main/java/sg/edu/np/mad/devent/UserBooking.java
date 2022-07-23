@@ -3,12 +3,16 @@ package sg.edu.np.mad.devent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +53,9 @@ public class UserBooking extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_booking);
+
+        //Creation of notification channel
+        createNotificationChannel();
 
         Booking userbooking = new Booking();
 
@@ -274,8 +281,31 @@ public class UserBooking extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Booking Unsuccessfully, Please try again", Toast.LENGTH_LONG).show();
                         }
                     });
+
+                    // Code below is used to set up notification for the user on the day of the event
+                    Toast.makeText(UserBooking.this,"Reminder has been set!", Toast.LENGTH_LONG).show();
+                    Intent notifyIntent = new Intent(UserBooking.this, NotifyService.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(UserBooking.this, 0,
+                            notifyIntent, 0);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+                    long timeAtButtonClick = System.currentTimeMillis();
+                    long tenSeconds = 1000 * 10;
+
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtButtonClick + tenSeconds, pendingIntent);
                 }
             }
         });
+    }
+    public void createNotificationChannel(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Devent";
+            String description = "Upcoming event!";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("notifyEvent", name, importance);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

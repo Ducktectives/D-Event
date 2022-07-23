@@ -100,8 +100,13 @@ public class profile_page extends AppCompatActivity {
                 // Meant to prevent duplication of data display in gridAdapter
                 if (eventsIDList.contains(eventID)) return;
 
+                List<String> eventType = Arrays.asList(eventDetail.replaceAll("\\s+","").split(", "));
+                // Removes all whitespaces and non-visible characters, (\n, tab) and splits them into a list
+
+
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
-                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked);
+                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked,
+                        eventType);
 
                 eventsIDList.add(eventID);
                 DBevents.add(event);
