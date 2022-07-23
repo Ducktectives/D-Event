@@ -253,7 +253,7 @@ public class UserBooking extends AppCompatActivity {
                                         profileData.putExtra("Name",bookingname);
                                         profileData.putExtra("UserEmail",bookingemail);
                                         profileData.putExtra("ContactNum",finalbookingnumber);
-                                        profileData.putExtra("NumofTix",finalbookingpax);
+                                        profileData.putExtra("NumberofTix",finalbookingpax);
                                         startActivity(profileData);
                                     }
                                 });

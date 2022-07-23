@@ -44,14 +44,16 @@ public class LoginActivity extends AppCompatActivity {
         Button submittologin = (Button)findViewById(R.id.loginsubmit);
         TextView createuseraccount = (TextView)findViewById(R.id.registernewaccount);
 
+        String email, password;
 
+        // Getting the text entered by users
+        email = useremail.getText().toString();
+        password = userpassword.getText().toString();
 
         submittologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Getting the text entered by users
-                String email = useremail.getText().toString();
-                String password = userpassword.getText().toString();
+
                 String emailPattern = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]";
 
                 //For firebase

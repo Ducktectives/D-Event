@@ -55,7 +55,7 @@ public class BookingSummary extends AppCompatActivity {
         Name.setText(autofill.getStringExtra("Name"));
         UserEmail.setText(autofill.getStringExtra("UserEmail"));
         ContactNum.setText(autofill.getStringExtra("ContactNum"));
-        NumofTix.setText(autofill.getStringExtra("NumofTix"));
+        NumofTix.setText(autofill.getStringExtra("NumberofTix"));
 
         // End the activity and go back to the profile page
         Close.setOnClickListener(new View.OnClickListener() {
