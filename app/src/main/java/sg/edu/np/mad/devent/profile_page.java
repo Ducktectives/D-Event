@@ -4,20 +4,28 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.EditTextPreference;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,8 +42,12 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -58,6 +70,8 @@ public class profile_page extends AppCompatActivity {
     List<String> eventsBookedList;
     List<Events> DBevents = new ArrayList<>();
     List<String> eventsIDList = new ArrayList<>();
+    List<Events> pastDBevents = new ArrayList<>();
+    List<String> pastEventsIDList = new ArrayList<>();
 
 
     // Firebase stuff
@@ -79,6 +93,8 @@ public class profile_page extends AppCompatActivity {
         ScrollView v =  findViewById(R.id.ProfileScroll);
         v.requestFocus();
         gridView.setFocusable(false);
+
+
 
         user_id_unique = getIntent().getStringExtra("Email");
 
@@ -108,8 +124,23 @@ public class profile_page extends AppCompatActivity {
                         eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked,
                         eventType);
 
-                eventsIDList.add(eventID);
-                DBevents.add(event);
+                // Checking if past event or upcoming event
+                Date date = null;
+                Date today = Calendar.getInstance().getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    date = sdf.parse(eventDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(date.after(today)){
+                    eventsIDList.add(eventID);
+                    DBevents.add(event);
+                }
+                else{
+                    pastEventsIDList.add(eventID);
+                    pastDBevents.add(event);
+                }
             }
 
             @Override
@@ -226,7 +257,7 @@ public class profile_page extends AppCompatActivity {
                 past.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        gridView.setAdapter(new ProfileAdapter_Past(profile_page.this));
+                        gridView.setAdapter(new ProfileAdapter(profile_page.this,pastDBevents,pastDBevents.size()));
                     }
                 });
 
@@ -387,17 +418,84 @@ public class profile_page extends AppCompatActivity {
         }
 
 
+        // Social Media Stuff
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(profile_page.this);
 
-        // Changing Password
-        Bundle extras = getIntent().getExtras();
-        if (extras != null){
-            String value = extras.getString("new_pass");
-            //p.setPassword(value);
+        ImageButton insta = findViewById(R.id.InstaButton);
+        ImageButton facebook = findViewById(R.id.FacebookButton);
+        ImageButton linkedin = findViewById(R.id.linkedInButton);
+        ImageButton website = findViewById(R.id.WebsiteButton);
+
+        Boolean enableMedia = sharedPreferences.getBoolean("EnableMedia",false);
+
+        if (enableMedia) {
+            insta.setVisibility(View.VISIBLE);
+            facebook.setVisibility(View.VISIBLE);
+            linkedin.setVisibility(View.VISIBLE);
+            website.setVisibility(View.VISIBLE);
+        } else {
+            insta.setVisibility(View.INVISIBLE);
+            facebook.setVisibility(View.INVISIBLE);
+            linkedin.setVisibility(View.INVISIBLE);
+            website.setVisibility(View.INVISIBLE);
+
         }
 
+        String instaURL = sharedPreferences.getString("Instagram",null);
+        String facebookURL = sharedPreferences.getString("Facebook",null);
+        String linkedinURL = sharedPreferences.getString("LinkedIn",null);
+        String websiteURL = sharedPreferences.getString("Website",null);
+
+                insta.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d("instaClick","Instagram was clicked");
+                        try {
+                            Intent open = new Intent(Intent.ACTION_VIEW, Uri.parse(instaURL));
+                            startActivity(open);
+                        }
+                        catch(NullPointerException e){
+                            Toast.makeText(getBaseContext(),"Media not connected", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                facebook.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Intent open = new Intent(Intent.ACTION_VIEW, Uri.parse(facebookURL));
+                            startActivity(open);
+                        }
+                        catch(NullPointerException e){
+                            Toast.makeText(getBaseContext(),"Media not connected", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                linkedin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Intent open = new Intent(Intent.ACTION_VIEW, Uri.parse(linkedinURL));
+                            startActivity(open);
+                        }
+                        catch(NullPointerException e){
+                            Toast.makeText(getBaseContext(),"Media not connected", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                website.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Intent open = new Intent(Intent.ACTION_VIEW, Uri.parse(websiteURL));
+                            startActivity(open);
+                        }
+                        catch(NullPointerException e){
+                            Toast.makeText(getBaseContext(),"Media not connected", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
     }
-
-
-
 }

@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -42,6 +43,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 
 import com.bumptech.glide.Glide;
+import com.creativityapps.gmailbackgroundlibrary.BackgroundMail;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,8 +59,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.type.TimeOfDayOrBuilder;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 public class Settings extends AppCompatActivity {
@@ -70,6 +77,7 @@ public class Settings extends AppCompatActivity {
         static String username;
         static String user_id_unique;
         static String new_user_id_unique;
+        static Calendar lastReminded = Calendar.getInstance();
 
 
 
@@ -163,55 +171,6 @@ public class Settings extends AppCompatActivity {
             Settings s = new Settings();
             final Integer[] saltvalue = new Integer[1];
 
-
-//            // Changing password
-//            EditTextPreference password = findPreference("password");
-//            if (password != null)
-//            {
-//                password.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
-//                    @Override
-//                    public void onBindEditText(@NonNull EditText editText) {
-//                        // Get Salt value
-//                        s.user_path.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                Profile p = snapshot.getValue(Profile.class);
-//                                saltvalue[0] = p.Saltvalue;
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError error) {
-//
-//                            }
-//                        });
-//                        // Make editText box empty upon opening
-//                        editText.getText().clear();
-//                        // Mask entering of password
-//                        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-//                        editText.addTextChangedListener(new TextWatcher() {
-//                            @Override
-//                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//                            }
-//
-//                            @Override
-//                            public void afterTextChanged(Editable editable) {
-//                                String new_password = editText.getText().toString();
-//                                if(new_password != null){
-//                                    s.user_path.child(s.user_id_unique).child("hashedpassword")
-//                                            .setValue(Profile.HashPassword(saltvalue[0],new_password));
-//                                }
-//
-//                            }
-//                        });
-//                    }
-//                });
-//            }
 
             // Changing password
             Preference newpass = findPreference("password");
@@ -361,11 +320,57 @@ public class Settings extends AppCompatActivity {
                     }
                 });
             }
+        // End Change username
 
+        //  Send email notification
+//            Calendar today = Calendar.getInstance();
+//            today.set(Calendar.HOUR_OF_DAY, 0);
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
+            // Getting last reminded info
+//            if(!findPreference("notifs").isEnabled()){
+//                s.user_path.child("LastReminded").setValue(sdf.format(today));
+//            }
+//            else{
+//                Log.d("CheckEnabled", "switch is on");
+//                s.user_path.child(new_user_id_unique).get()
+//                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                                if(!task.isSuccessful()){
+//                                    Log.e("firebase", "Error getting lastReminded", task.getException());
+//                                }
+//                                else{
+//                                    Log.d("firebaseSuccessful", String.valueOf(task.getResult()
+//                                            .child("LastReminded").getValue()));
+//                                    Log.d("firebaseSuccessful", "lastReminded gotten from firebase");
+//                                    String remindedString = String.valueOf(task.getResult().child("LastReminded").getValue());
+//                                    try {
+//                                        lastReminded.setTime(sdf.parse(remindedString));
+//                                        Log.d("lastReminded","remindedString");
+//                                        Log.d("TodayIs","Today is"+today.toString());
+//                                    } catch (ParseException e) {
+//                                        e.printStackTrace();
+//                                    }
+//                                    if(lastReminded.before(today)){
+//                                        Log.d("EmailSent", "Processing email...");
+//                                        BackgroundMail bm = new BackgroundMail(getContext());
+//                                        bm.setGmailUserName("groupprojectmail2024@gmail.com");
+//                                        bm.setGmailPassword("pa1n1stemporary");
+//                                        bm.setMailTo(user_id_unique);
+//                                        bm.setFormSubject("You have upcoming events!");
+//                                        bm.setFormBody("You need therapy!");
+//                                        bm.send();
+//                                    }
+//                                }
+//                            }
+//                        });
+//            }
 
-
+            // ^ Doesn't work
         }
+
+
 
         // This just goes back to NavDrawer cause idk how to make it
         // go to the previous activity

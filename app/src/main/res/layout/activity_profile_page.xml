@@ -51,28 +51,79 @@
                 app:srcCompat="@android:drawable/sym_def_app_icon" />
 
 
-            <Button
-                android:id="@+id/FollowButton"
-                android:layout_width="376dp"
+            <ImageButton
+                android:id="@+id/InstaButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profilepic"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="36dp"
-                android:gravity="center_horizontal"
-                android:text="Follow"
-                android:textSize="13sp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="322dp"
+                android:src="@drawable/insta34"
+                android:background="@drawable/round_button"
                 android:theme="@style/Widget.AppCompat.Button.Colored"
-                android:visibility="invisible"
-                tools:visibility="invisible" />
+                android:visibility="visible"
+                tools:ignore="SpeakableTextPresentCheck"
+                tools:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/FacebookButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profilepic"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="113dp"
+                android:layout_marginTop="27dp"
+                android:layout_marginEnd="237dp"
+                android:background="@drawable/round_button"
+                android:src="@drawable/facebook2"
+                android:theme="@style/Widget.AppCompat.Button.Colored"
+                android:visibility="visible"
+                tools:ignore="SpeakableTextPresentCheck"
+                tools:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/WebsiteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profilepic"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="289dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="61dp"
+                android:background="@drawable/round_button"
+                android:src="@drawable/website2"
+                android:theme="@style/Widget.AppCompat.Button.Colored"
+                android:visibility="visible"
+                tools:ignore="SpeakableTextPresentCheck"
+                tools:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/linkedInButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profilepic"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="199dp"
+                android:layout_marginTop="27dp"
+                android:layout_marginEnd="151dp"
+                android:background="@drawable/round_button"
+                android:src="@drawable/linkedin2"
+                android:theme="@style/Widget.AppCompat.Button.Colored"
+                android:visibility="visible"
+                tools:ignore="SpeakableTextPresentCheck"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/UserDescription"
                 android:layout_width="fill_parent"
                 android:layout_height="45dp"
-                android:layout_below="@+id/FollowButton"
+                android:layout_below="@+id/InstaButton"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="16dp"
@@ -97,11 +148,11 @@
 
             <Button
                 android:id="@+id/backToNavDrawer"
-                android:layout_width="204dp"
-                android:layout_height="wrap_content"
+                android:layout_width="146dp"
+                android:layout_height="63dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="29dp"
-                android:layout_marginEnd="34dp"
+                android:layout_marginStart="68dp"
+                android:layout_marginEnd="53dp"
                 android:layout_toEndOf="@+id/profilepic"
                 android:text="Go to homepage" />
 
@@ -131,8 +182,8 @@
                 android:layout_gravity="left"
 
                 android:text="Past Events"
-                android:visibility="invisible"
-                tools:visibility="invisible" />
+                android:visibility="visible"
+                tools:visibility="visible" />
 
         </LinearLayout>
 
