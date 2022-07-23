@@ -91,7 +91,7 @@ public class UserBooking extends AppCompatActivity {
                     });
 
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
 
         //Auto Filling of details
