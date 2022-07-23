@@ -1,13 +1,16 @@
 package sg.edu.np.mad.devent;
 
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +23,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,6 +38,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 
 import org.w3c.dom.Text;
@@ -45,14 +59,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class EventDetailsPage extends AppCompatActivity {
+public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCallback {
     TextView eventOrg;
     String eventOrganizerEmail;
     String imageLink;
     String userEmail;
     String eventID;
+    Double eventLat;
+    Double eventLong;
+    String eventNamedIs;
 
     List<Events> eventList;
+
+    boolean PermisionGranted;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -83,6 +102,7 @@ public class EventDetailsPage extends AppCompatActivity {
             if (String.valueOf(ev.getEvent_ID()).equals(eventID)) {
                 //Set the information - Event Name
                 String eventNameFromList = ev.getEvent_Name(); //get
+                 eventNamedIs= eventNameFromList;
                 eventName.setText(eventNameFromList); //set
 
                 //Set the information - Event Description
@@ -101,7 +121,9 @@ public class EventDetailsPage extends AppCompatActivity {
                     Log.d("nom", String.valueOf(addressDetails.get(0)));
                     if (addressDetails != null && !addressDetails.isEmpty()){
                         Address address = addressDetails.get(0);
-                        finalAddress = geocoder.getFromLocation(address.getLatitude(), address.getLongitude(), 1);
+                        eventLat = address.getLatitude();
+                        eventLong = address.getLongitude();
+                        finalAddress = geocoder.getFromLocation(eventLat, eventLong, 1);
                         eventLocation.setText("Location: " + finalAddress.get(0).getAddressLine(0));
                     }
                 }
@@ -240,11 +262,43 @@ public class EventDetailsPage extends AppCompatActivity {
         });
 
 
+        //google maps
+        //checkMyPermission();
 
-
-
-
+        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        supportMapFragment.getMapAsync(this);
 
     }
 
+  /*  private void checkMyPermission(){
+        Dexter.withContext(this).withPermission(Manifest.permission.ACCESS_FINE_LOCATION).withListener(new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                 boolean PermissionGranted = true;
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS); //opens settings of the app.
+                Uri uri = Uri.fromParts("package",getPackageName(),"");
+                intent.setData(uri);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                permissionToken.continuePermissionRequest();
+            }
+        });
+    }*/
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        MarkerOptions marker1 = new MarkerOptions();
+        marker1.position(new LatLng(eventLat,eventLong));
+        marker1.title(eventNamedIs);
+        googleMap.addMarker(marker1);
+    }
 }

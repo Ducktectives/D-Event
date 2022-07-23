@@ -4,8 +4,10 @@ import static sg.edu.np.mad.devent.R.id.nav_host_fragment_content_nav_drawer;
 // import static sg.edu.np.mad.devent.RegistrationActivity.user;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -82,8 +84,12 @@ public class NavDrawer extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     // Just change code below to whatever you gotta do
-                    // Intent testAct = new Intent(NavDrawer.this, loginpage.class);
-                    //startActivity(testAct);
+                    SharedPreferences.Editor editor = getSharedPreferences("Settings", Context.MODE_PRIVATE).edit();
+                    editor.remove("Email");
+                    editor.remove("Hahedpass");
+                    editor.apply();
+                    Intent logoutAct = new Intent(NavDrawer.this, SplashScreen.class);
+                    startActivity(logoutAct);
                 }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

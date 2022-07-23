@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,204 +15,201 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <ImageView
-        android:id="@+id/bigC"
-        android:layout_width="492dp"
-        android:layout_height="414dp"
-        android:layout_marginTop="-120dp"
-        android:layout_marginEnd="-120dp"
-        android:adjustViewBounds="false"
-        android:cropToPadding="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pink_circle" />
-
-    <ImageView
-        android:id="@+id/smallC"
-        android:layout_width="430dp"
-        android:layout_height="371dp"
-        android:layout_marginStart="-170dp"
-        android:layout_marginTop="-100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/red_circle" />
-
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="264dp"
-        android:layout_height="133dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/file_upload_image_border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="100dp"
-        android:fontFamily="@font/zcool"
-        android:padding="5dp"
-        android:shadowColor="@color/white"
-
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="8"
-        android:text="Add Details"
-        android:textColor="@color/black"
-        android:textSize="21dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/zcool"
-        android:padding="2dp"
-        android:shadowColor="@color/white"
-
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="8"
-        android:text="Photo"
-        android:textColor="@color/black"
-        android:textSize="18dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/item_img"
-        android:layout_width="265dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/file_upload_field"
-        android:clickable="true"
-        android:drawableStart="@drawable/file_upload_icon"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:minHeight="48dp"
-        android:onClick="pick"
-        android:text="Upload image"
-        android:textColor="@color/white"
-        android:textCursorDrawable="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img" />
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/event_form_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Event Title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_img"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txt_event_form_name"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/event_form_location"
-        android:layout_width="191dp"
-        android:layout_height="74dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="8dp"
-        android:hint="Event Location"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_form_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txt_event_form_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent">
 
 
-    <Button
-        android:id="@+id/locate_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Locate"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/event_form_location"
-        app:layout_constraintTop_toTopOf="@+id/event_form_location" />
+            <ImageView
+                android:id="@+id/bigC"
+                android:layout_width="492dp"
+                android:layout_height="414dp"
+                android:layout_marginTop="-120dp"
+                android:layout_marginEnd="-120dp"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/pink_circle" />
 
-    <TextView
-        android:id="@+id/event_form_address"
-        android:layout_width="0dp"
-        android:layout_height="21dp"
-        android:text="Event Address"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/event_form_location"
-        app:layout_constraintTop_toBottomOf="@+id/event_form_location"
-        />
+            <ImageView
+                android:id="@+id/smallC"
+                android:layout_width="430dp"
+                android:layout_height="371dp"
+                android:layout_marginStart="-170dp"
+                android:layout_marginTop="-100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/red_circle" />
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="264dp"
+                android:layout_height="133dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/file_upload_image_border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.491"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="100dp"
+                android:fontFamily="@font/zcool"
+                android:padding="5dp"
+                android:shadowColor="@color/white"
+
+                android:shadowDx="0.0"
+                android:shadowDy="0.0"
+                android:shadowRadius="8"
+                android:text="Add Details"
+                android:textColor="@color/black"
+                android:textSize="21dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/zcool"
+                android:padding="2dp"
+                android:shadowColor="@color/white"
+
+                android:shadowDx="0.0"
+                android:shadowDy="0.0"
+                android:shadowRadius="8"
+                android:text="Photo"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <TextView
+                android:id="@+id/item_img"
+                android:layout_width="265dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/file_upload_field"
+                android:clickable="true"
+                android:drawableStart="@drawable/file_upload_icon"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:onClick="pick"
+                android:text="Upload image"
+                android:textColor="@color/white"
+                android:textCursorDrawable="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img" />
 
 
-    <TextView
-        android:id="@+id/event_form_sv_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:padding="5dp"
-        android:shadowColor="@color/white"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/event_form_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:hint="EVENT TITLE"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_img">
 
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="8"
-        android:text="About the event"
-        android:textColor="@color/black"
-        android:textSize="21dp"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_event_form_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_form_address" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/event_form_location"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="191dp"
+                android:layout_height="74dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:hint="EVENT LOCATION"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/event_form_name">
 
-    <com.google.android.material.textfield.TextInputLayout
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_event_form_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/locate_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Locate"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/event_form_location"
+                app:layout_constraintTop_toTopOf="@+id/event_form_location" />
+
+            <TextView
+                android:id="@+id/event_form_address"
+                android:layout_width="0dp"
+                android:layout_height="21dp"
+                android:text="Event Address"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/event_form_location"
+                app:layout_constraintTop_toBottomOf="@+id/event_form_location" />
+
+
+            <TextView
+                android:id="@+id/event_form_sv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:padding="5dp"
+                android:shadowColor="@color/white"
+
+                android:shadowDx="0.0"
+                android:shadowDy="0.0"
+                android:shadowRadius="8"
+                android:text="About the event"
+                android:textSize="21dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/event_form_address" />
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/event_form_date"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="18dp"
-                android:hint="Enter Date"
+                android:hint="ENTER DATE"
                 android:inputType="date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/event_form_sv_title"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-               >
+                app:layout_constraintTop_toBottomOf="@+id/event_form_sv_title">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txt_Date"
@@ -223,7 +221,46 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/event_form_StartTime"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="18dp"
+                android:hint="ENTER EVENT START TIME"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/event_form_date">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_StartTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/event_form_EndTime"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="18dp"
+                android:hint="ENTER EVENT END TIME"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/event_form_StartTime">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_EndTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/event_form_description"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
@@ -232,20 +269,18 @@
                 android:hint="ENTER DESCRIPTION"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/event_form_date"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                >
+                app:layout_constraintTop_toBottomOf="@+id/event_form_EndTime">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txt_Event_Description"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                  />
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/event_form_details"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
@@ -254,65 +289,59 @@
                 android:hint="ENTER MISCELLANEOUS"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/event_form_description"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                >
+                app:layout_constraintTop_toBottomOf="@+id/event_form_description">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txt_Event_Details"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
-
             <!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:id="@+id/textField5"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="18dp"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:layout_marginEnd="18dp"-->
-<!--                android:hint="Event Tags"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent">-->
+            <!--                android:id="@+id/textField5"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="18dp"-->
+            <!--                android:layout_marginTop="8dp"-->
+            <!--                android:layout_marginEnd="18dp"-->
+            <!--                android:hint="Event Tags"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent">-->
 
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content" />-->
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content" />-->
 
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
-
-    <TextView
-        android:id="@+id/btn_submit_form"
-        android:layout_width="265dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/file_upload_field"
-        android:drawableEnd="@drawable/file_upload_folder"
-        android:clickable="true"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:minHeight="48dp"
-        android:onClick="submit_form"
-        android:text="Submit form"
-        android:textColor="@color/white"
-        android:textCursorDrawable="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_form_details" />
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
 
+            <TextView
+                android:id="@+id/btn_submit_form"
+                android:layout_width="265dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="68dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="68dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/file_upload_field"
+                android:clickable="true"
+                android:drawableEnd="@drawable/file_upload_folder"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:onClick="submit_form"
+                android:text="Submit form"
+                android:textColor="@color/white"
+                android:textCursorDrawable="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/event_form_details" />
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
 </ScrollView>

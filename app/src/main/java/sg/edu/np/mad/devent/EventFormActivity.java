@@ -10,6 +10,9 @@ import androidx.core.app.ActivityCompat;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -25,6 +28,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -44,7 +48,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -58,14 +61,14 @@ public class EventFormActivity extends AppCompatActivity{
 
     //  Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked)
     Uri selectedImage; // event_Picture
-    EditText date, location, eventDescription, eventName, eventDetail; // event_Date, event_Location, event_Description
+    EditText date, location, eventDescription, eventName, eventDetail, eventstart, eventend; // event_Date, event_Location, event_Description, event_StartTime, event_EndTime
     Button retrieveAddress;
 
     private int _day, _month, _birthYear;
 
-    // Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, boolean bookmarked)
+    // Events(String event_Name, String event_Location, String event_Date, String event_Description, DateTime event_StartTime, DateTime event_EndTime, String event_UserID, boolean bookmarked)
     // Declaring the variables to upload the values to firebase
-    private String event_ID, event_Name, event_Location, event_Date, event_Description, userID, storageReference_ID, event_Detail;
+    private String event_ID, event_Name, event_Location, event_Date, event_Description, event_StartTime, event_EndTime, userID, storageReference_ID, event_Detail;
     private Boolean bookmarked;
 
 
@@ -87,6 +90,8 @@ public class EventFormActivity extends AppCompatActivity{
     boolean isAllFieldsChecked = false;
     // boolean variable to check whether date field is accurate
     boolean isDateFieldChecked = false;
+    // boolean variable to check whether time field is accurate
+    boolean isTimeFieldChecked = false;
 
     FirebaseAuth mAuth;
 
@@ -106,13 +111,12 @@ public class EventFormActivity extends AppCompatActivity{
         eventDescription = (EditText) findViewById(R.id.txt_Event_Description);
         eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
 
-
+        EditText eventstart = findViewById(R.id.txt_StartTime);
+        EditText eventend = findViewById(R.id.txt_EndTime);
 
         retrieveAddress = findViewById(R.id.locate_address);
 
         updateAddress = findViewById(R.id.event_form_address);
-
-
 
         database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
@@ -187,6 +191,81 @@ public class EventFormActivity extends AppCompatActivity{
         storageReference = FirebaseStorage.getInstance().getReference();
 
 
+        // Initialise Variables for selecting Start and End Time
+        final int[] startHour = new int[1];
+        final int[] startMinute = new int[1];
+        final int[] endHour = new int[1];
+        final int[] endMinute = new int[1];
+
+        eventstart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        EventFormActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourofday, int minofday) {
+                                startHour[0] = hourofday;
+                                startMinute[0] = minofday;
+                                String time = startHour[0] + ":" + startMinute[0];
+                                SimpleDateFormat f24hr = new SimpleDateFormat(
+                                        "HH:mm"
+                                );
+                                try {
+                                    Date date = f24hr.parse(time);
+                                    SimpleDateFormat f12hr = new SimpleDateFormat(
+                                            "HH:mm aa"
+                                    );
+
+                                    eventstart.setText(f12hr.format(date));
+                                }
+                                catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, 12, 0, false
+                );
+
+                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                timePickerDialog.updateTime(startHour[0], startMinute[0]);
+                timePickerDialog.show();
+            }
+        });
+
+        eventend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        EventFormActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourofday, int minofday) {
+                                endHour[0] = hourofday;
+                                endMinute[0] = minofday;
+                                String time = endHour[0] + ":" + endMinute[0];
+                                SimpleDateFormat f24hr = new SimpleDateFormat(
+                                        "HH:mm"
+                                );
+                                try {
+                                    Date date = f24hr.parse(time);
+                                    SimpleDateFormat f12hr = new SimpleDateFormat(
+                                            "HH:mm aa"
+                                    );
+
+                                    eventend.setText(f12hr.format(date));
+                                }
+                                catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, 12, 0, false
+                );
+
+                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                timePickerDialog.updateTime(endHour[0], endMinute[0]);
+                timePickerDialog.show();
+            }
+        });
 
     }
 
@@ -314,6 +393,7 @@ public class EventFormActivity extends AppCompatActivity{
         // whether the entered data is valid or if any fields are left blank.
         isAllFieldsChecked = checkEmptyFields();
         isDateFieldChecked = checkDate();
+        isTimeFieldChecked = checkTime();
 
         if(isAllFieldsChecked){
             // Create an object of Firebase Database Reference
@@ -326,13 +406,12 @@ public class EventFormActivity extends AppCompatActivity{
             event_Date  = date.getText().toString();
             event_Description  = eventDescription.getText().toString();
             event_Detail = eventDetail.getText().toString();
+            event_StartTime = eventstart.getText().toString();
+            event_EndTime = eventend.getText().toString();
             bookmarked = false;
-            List<String> eventType = Arrays.asList(event_Detail.replaceAll("\\s+","").split(", "));
-            // Removes all whitespaces and non-visible characters, (\n, tab) and splits them into a list
 
 
-            event = new Events(event_ID,  event_Name,  event_Location,  event_Date,  event_Description,
-                    event_Detail,  userID, storageReference_ID,  bookmarked, eventType);
+            event = new Events( event_ID,  event_Name,  event_Location,  event_Date,  event_Description,  event_Detail,  event_StartTime, event_EndTime, userID, storageReference_ID,  bookmarked);
             // Insert the user-defined object to the database
             reference.child("Event").push().setValue(event);
 
@@ -376,22 +455,24 @@ public class EventFormActivity extends AppCompatActivity{
         event_Name  = eventName.getText().toString();
         event_Location  = location.getText().toString();
         event_Date  = date.getText().toString();
+        event_StartTime = eventstart.getText().toString();
+        event_EndTime = eventend.getText().toString();
         event_Description  = eventDescription.getText().toString();
         event_Detail = eventDetail.getText().toString();
 
-          if (event_Name.length() == 0){
+          if (event_Name.isEmpty()){
               eventName.setError("This field is required");
               return false;
           }
-          if (event_Date.length() == 0){
+          if (event_Date.isEmpty()){
               date.setError("This field is required");
               return false;
           }
-        if (event_Location.length() == 0){
+        if (event_Location.isEmpty()){
             location.setError("This field is required");
             return false;
         }
-        if (event_Description.length() == 0){
+        if (event_Description.isEmpty()){
             eventDescription.setError("This field is required");
             return false;
         }
@@ -414,6 +495,17 @@ public class EventFormActivity extends AppCompatActivity{
         }
         // if validation for date is true
         return true;
+    }
+
+    private boolean checkTime(){
+        event_StartTime = eventstart.getText().toString();
+        event_EndTime = eventend.getText().toString();
+        if (event_StartTime.isEmpty() || event_EndTime.isEmpty()){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
 }

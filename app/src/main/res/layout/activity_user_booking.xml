@@ -13,8 +13,10 @@
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -23,9 +25,9 @@
 
             <EditText
                 android:id="@+id/UserBookingName"
-                android:layout_width="260dp"
+                android:layout_width="0dp"
                 android:layout_height="55dp"
-                android:layout_marginStart="60dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/txt_rounded_background"
@@ -41,11 +43,12 @@
 
             <TextView
                 android:id="@+id/bookingName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="30dp"
                 android:text="Name"
+                android:textAlignment="textEnd"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/UserBookingName"
@@ -56,11 +59,12 @@
 
             <TextView
                 android:id="@+id/bookingEmail"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="50dp"
                 android:text="Email"
+                android:textAlignment="textEnd"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/UserBookingEmail"
@@ -71,9 +75,9 @@
 
             <EditText
                 android:id="@+id/UserBookingPhone"
-                android:layout_width="260dp"
+                android:layout_width="0dp"
                 android:layout_height="55dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/txt_rounded_background"
@@ -89,9 +93,9 @@
 
             <EditText
                 android:id="@+id/UserBookingEmail"
-                android:layout_width="260dp"
+                android:layout_width="0dp"
                 android:layout_height="55dp"
-                android:layout_marginStart="62dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/txt_rounded_background"
@@ -107,11 +111,12 @@
 
             <TextView
                 android:id="@+id/bookingContact"
-                android:layout_width="93dp"
-                android:layout_height="51dp"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="48dp"
                 android:text="Contact Number"
+                android:textAlignment="textEnd"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/UserBookingPhone"
@@ -122,11 +127,11 @@
 
             <EditText
                 android:id="@+id/UserBookingPax"
-                android:layout_width="260dp"
+                android:layout_width="0dp"
                 android:layout_height="55dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/txt_rounded_background"
                 android:ems="10"
                 android:inputType="number"
@@ -140,11 +145,12 @@
 
             <TextView
                 android:id="@+id/bookingNumberoftix"
-                android:layout_width="112dp"
-                android:layout_height="56dp"
+                android:layout_width="193dp"
+                android:layout_height="38dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="32dp"
                 android:text="Number of Tickets"
+                android:textAlignment="textEnd"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/UserBookingPax"
@@ -178,6 +184,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/UserBookingPax" />
