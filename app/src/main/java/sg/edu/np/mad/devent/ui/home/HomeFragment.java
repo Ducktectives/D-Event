@@ -81,8 +81,8 @@ public class HomeFragment extends Fragment {
                 // Meant to prevent duplication of data display in gridAdapter
                 if (eventsIDList.contains(eventID)) return;
 
-                Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventStartTime, eventEndTime, eventDesc,
-                        eventDetail, eventUserID, eventStorageID, eventBooked);
+                Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
+                        eventDetail , eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked);
 
                 eventsIDList.add(eventID);
                 eventsList.add(event);

@@ -166,6 +166,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support:exifinterface:27.1.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.yesidlazaro:GmailBackground:1.2.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.karumi:dexter:6.2.3@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.maps.android:android-maps-utils:2.3.0@aar" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="D'Event.app.main" />
 </module>

@@ -23,11 +23,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -103,7 +106,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             if (String.valueOf(ev.getEvent_ID()).equals(eventID)) {
                 //Set the information - Event Name
                 String eventNameFromList = ev.getEvent_Name(); //get
-                 eventNamedIs= eventNameFromList;
+                eventNamedIs= eventNameFromList;
                 eventName.setText(eventNameFromList); //set
 
                 //Set the information - Event Description
@@ -136,7 +139,6 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                 //Set the information - Event Details
                 String eventDet= ev.getEvent_Detail(); //get
                 eventDetail.setText(eventDet); //set
-
 
                 //Set the information - Event Organizer
                 eventOrganizerEmail = ev.getEvent_UserID(); //get
@@ -189,7 +191,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                             });
 
                 } catch (IOException e) {
-
+                    e.printStackTrace();
                 }
 
                 //for date of event
@@ -299,13 +301,24 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
     public void onMapReady(@NonNull GoogleMap googleMap) {
         //add a marker on the google map
         MarkerOptions marker1 = new MarkerOptions();
-        marker1.position(new LatLng(eventLat,eventLong));
-        marker1.title(eventNamedIs);
-        googleMap.addMarker(marker1);
+        if (eventLat!= null && eventLong !=null){
+            marker1.position(new LatLng(eventLat,eventLong));
+            marker1.title(eventNamedIs);
+            googleMap.addMarker(marker1);
+        }
 
         //add zoom controls
         googleMap.getUiSettings().setZoomControlsEnabled(true);
         googleMap.getUiSettings().setZoomGesturesEnabled(true);
+
+        //ensure that user can see Indoor Levels
         googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
+
+        //pan the focus of the google maps pin to the center
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(marker1.getPosition());
+        LatLngBounds markerLoc = builder.build();
+        googleMap.setLatLngBoundsForCameraTarget(markerLoc);
+
     }
 }
