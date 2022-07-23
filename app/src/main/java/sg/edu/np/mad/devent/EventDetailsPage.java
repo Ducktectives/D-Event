@@ -30,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -317,10 +318,16 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+        //add a marker on the google map
         MarkerOptions marker1 = new MarkerOptions();
         marker1.position(new LatLng(eventLat,eventLong));
         marker1.title(eventNamedIs);
         googleMap.addMarker(marker1);
+
+        //add zoom controls
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setZoomGesturesEnabled(true);
+        googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
     }
 
     public void createNotificationChannel(){

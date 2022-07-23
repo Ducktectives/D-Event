@@ -243,8 +243,7 @@ public class UserBooking extends AppCompatActivity {
                                 // Create subfolder in the event and name the subfolder booking and create another subfolder within with the booking email as the key to store the record
                                 book.child(eventid).child(bookingemail.toLowerCase().replace(".", "")).setValue(userbooking);
                                 // Let user know that Booking is successful
-                                Toast.makeText(getApplicationContext(), "Booking Successfully", Toast.LENGTH_LONG).show();
-
+                                Toast.makeText(getApplicationContext(), "Booking Made Successfully", Toast.LENGTH_LONG).show();
 
                                 //Add event to the list of booked events
                                 user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -258,12 +257,10 @@ public class UserBooking extends AppCompatActivity {
                                         Intent profileData = new Intent(UserBooking.this,BookingSummary.class);
                                         profileData.putExtra("EventID",eventid);
                                         profileData.putExtra("Email",userEmail);
-                                        profileData.putExtra("EventName",userEmail);
-                                        profileData.putExtra("Name",userEmail);
-                                        profileData.putExtra("UserEmail",userEmail);
-                                        profileData.putExtra("ContactNum",userEmail);
-                                        profileData.putExtra("NumofTix",userEmail);
-                                        finishAndRemoveTask();
+                                        profileData.putExtra("Name",bookingname);
+                                        profileData.putExtra("UserEmail",bookingemail);
+                                        profileData.putExtra("ContactNum",finalbookingnumber);
+                                        profileData.putExtra("NumofTix",finalbookingpax);
                                         startActivity(profileData);
                                     }
                                 });
@@ -271,14 +268,14 @@ public class UserBooking extends AppCompatActivity {
                             }
                             else {
                                 // Let user know that Booking is Unsuccessful
-                                Toast.makeText(getApplicationContext(), "Booking Unsuccessfully, Please try again", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Booking Made Unsuccessfully, Please try again", Toast.LENGTH_LONG).show();
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             // Let user know that Booking is Unsuccessful
-                            Toast.makeText(getApplicationContext(), "Booking Unsuccessfully, Please try again", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Booking Made Unsuccessfully, Please try again", Toast.LENGTH_LONG).show();
                         }
                     });
 

@@ -112,8 +112,8 @@ public class EventFormActivity extends AppCompatActivity{
         eventDescription = (EditText) findViewById(R.id.txt_Event_Description);
         eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
 
-        EditText eventstart = findViewById(R.id.txt_StartTime);
-        EditText eventend = findViewById(R.id.txt_EndTime);
+        eventstart = findViewById(R.id.txt_StartTime);
+        eventend = findViewById(R.id.txt_EndTime);
 
         retrieveAddress = findViewById(R.id.locate_address);
 
@@ -281,7 +281,11 @@ public class EventFormActivity extends AppCompatActivity{
 
     public void submit_form(View view){
 
-            uploadForm();
+        uploadForm();
+        Intent submitform = new Intent(EventFormActivity.this, NavDrawer.class);
+        (EventFormActivity.this).finish();
+        submitform.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(submitform);
 
     }
 
@@ -396,7 +400,7 @@ public class EventFormActivity extends AppCompatActivity{
         isDateFieldChecked = checkDate();
         isTimeFieldChecked = checkTime();
 
-        if(isAllFieldsChecked){
+        if(isAllFieldsChecked && isDateFieldChecked && isTimeFieldChecked){
             // Create an object of Firebase Database Reference
             DatabaseReference reference ;
             reference = database.getReference();
@@ -463,19 +467,19 @@ public class EventFormActivity extends AppCompatActivity{
         event_Description  = eventDescription.getText().toString();
         event_Detail = eventDetail.getText().toString();
 
-          if (event_Name.isEmpty()){
+          if (event_Name.length() == 0){
               eventName.setError("This field is required");
               return false;
           }
-          if (event_Date.isEmpty()){
+          if (event_Date.length() == 0){
               date.setError("This field is required");
               return false;
           }
-        if (event_Location.isEmpty()){
+        if (event_Location.length() == 0){
             location.setError("This field is required");
             return false;
         }
-        if (event_Description.isEmpty()){
+        if (event_Description.length() == 0){
             eventDescription.setError("This field is required");
             return false;
         }
@@ -485,7 +489,7 @@ public class EventFormActivity extends AppCompatActivity{
 
     private boolean checkDate(){
         event_Date  = date.getText().toString();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
             Date dateStr = dateFormat.parse(event_Date);
             if (new Date().after(dateStr)) {
@@ -504,6 +508,7 @@ public class EventFormActivity extends AppCompatActivity{
         event_StartTime = eventstart.getText().toString();
         event_EndTime = eventend.getText().toString();
         if (event_StartTime.isEmpty() || event_EndTime.isEmpty()){
+            Toast.makeText(EventFormActivity.this, "Enter Event Time", Toast.LENGTH_SHORT).show();
             return false;
         }
         else{
