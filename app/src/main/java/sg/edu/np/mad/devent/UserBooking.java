@@ -125,13 +125,38 @@ public class UserBooking extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(UserBooking.this,"Image Failed to load.", Toast.LENGTH_SHORT).show();
+                            eventimage.setImageResource(R.drawable.ducketive);
                         }
                     });
 
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
+
+        //Auto Filling of details
+        userinputemail.setText(userEmail);
+
+        //search for the user with the same email
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        DatabaseReference Ref2 = database.getReference("Users");
+        Ref2.child(userEmail.replace(".","").toLowerCase()).get()
+                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()){
+                            Toast.makeText(UserBooking.this,"Please try booking again", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            String username = String.valueOf(task.getResult().child("username").getValue());
+                            userinputname.setText(username);
+
+                            String contactNo = String.valueOf(task.getResult().child("contactnum").getValue());
+                            userinputcontact.setText(contactNo);
+                        }
+                    }
+                });
+
+
 
         // Set up an onclick listener for the submission of booking
         confirmbooking.setOnClickListener(new View.OnClickListener() {
