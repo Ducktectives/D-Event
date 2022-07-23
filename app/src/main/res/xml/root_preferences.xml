@@ -19,39 +19,37 @@
             app:key="profile_pic"
             app:title="@string/change_pic"
             />
-
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/messages_header">
-
+    <PreferenceCategory app:title="Social Media">
+        <SwitchPreference
+            app:key="EnableMedia"
+            app:title="Enable Social Media Links"
+            />
         <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
-
-        <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
-            app:useSimpleSummaryProvider="true" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/sync_header">
-
-        <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
-
+            app:key="Instagram"
+            app:title="Connect Your Instagram"
+            app:dialogTitle="Enter your Instagram URL"
+            app:useSimpleSummaryProvider="true"
+        />
+        <EditTextPreference
+            app:key="LinkedIn"
+            app:title="Connect Your LinkedIn"
+            app:dialogTitle="Enter your LinkedIn URL"
+            app:useSimpleSummaryProvider="true"
+        />
+        <EditTextPreference
+            app:key="Facebook"
+            app:title="Connect Your Facebook"
+            app:dialogTitle="Enter your Facebook URL"
+            app:useSimpleSummaryProvider="true"
+        />
+        <EditTextPreference
+            app:key="Website"
+            app:title="Connect Your Website"
+            app:dialogTitle="Enter your Website's URL"
+            app:useSimpleSummaryProvider="true"
+        />
     </PreferenceCategory>
 
 </PreferenceScreen>

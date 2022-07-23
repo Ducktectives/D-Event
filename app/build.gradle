@@ -78,7 +78,8 @@ dependencies {
     //for picasso
     implementation 'com.squareup.picasso:picasso:2.8'
 
-
+    //for background email
+    implementation 'com.github.yesidlazaro:GmailBackground:1.2.0'
     //dexter, for google maps
     implementation 'com.karumi:dexter:6.2.3'
 

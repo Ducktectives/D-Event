@@ -194,6 +194,7 @@
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-places-placereport:17.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.picasso:picasso:2.71828@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:exifinterface:27.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.yesidlazaro:GmailBackground:1.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.karumi:dexter:6.2.3@aar" level="project" />
   </component>
 </module>
