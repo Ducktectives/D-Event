@@ -8,7 +8,7 @@
     tools:context=".BookingSummary">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/bookingSummaryView"
         android:layout_width="417dp"
         android:layout_height="255dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -163,7 +163,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/bookingSummaryView" />
 
     <Button
         android:id="@+id/BookingAddCalander"
