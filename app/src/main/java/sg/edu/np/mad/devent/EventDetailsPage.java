@@ -4,6 +4,8 @@ package sg.edu.np.mad.devent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -89,7 +91,24 @@ public class EventDetailsPage extends AppCompatActivity {
 
                 //Set the information - Event Location
                 String eventLoc = ev.getEvent_Location(); //get
-                eventLocation.setText("Postal Code: " + eventLoc); //set
+
+                Geocoder geocoder = new Geocoder(EventDetailsPage.this, Locale.getDefault());
+
+                //convert from postal code to string
+                try{
+                    List<Address> addressDetails = geocoder.getFromLocationName(eventLoc, 1);
+                    List<Address> finalAddress ;
+                    Log.d("nom", String.valueOf(addressDetails.get(0)));
+                    if (addressDetails != null && !addressDetails.isEmpty()){
+                        Address address = addressDetails.get(0);
+                        finalAddress = geocoder.getFromLocation(address.getLatitude(), address.getLongitude(), 1);
+                        eventLocation.setText("Location: " + finalAddress.get(0).getAddressLine(0));
+                    }
+                }
+                catch (Exception ex){
+                    eventLocation.setText("Postal Code: " + eventLoc);
+                }
+
 
                 //Set the information - Event Details
                 String eventDet= ev.getEvent_Detail(); //get
@@ -142,12 +161,12 @@ public class EventDetailsPage extends AppCompatActivity {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(EventDetailsPage.this,"Image Failed to load.", Toast.LENGTH_SHORT).show();
+                                    eventPicture.setVisibility(View.INVISIBLE);
                                 }
                             });
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+
                 }
 
                 //for date of event
@@ -184,7 +203,7 @@ public class EventDetailsPage extends AppCompatActivity {
 
 
                 } catch (ParseException e) {
-                    e.printStackTrace();
+
                 }
 
             }
