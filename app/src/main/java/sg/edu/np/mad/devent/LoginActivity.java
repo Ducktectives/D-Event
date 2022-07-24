@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                                         }
                                         else {
                                             // Giving a common user error when login failure
-                                            errormsg.setText("Email or Password is invalid1");
+                                            errormsg.setText("Email or Password is invalid");
                                         }
                                     }
                                 }
@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else {
                             // Giving a common user error when login failure
-                            errormsg.setText("Email or Password is invalid2");
+                            errormsg.setText("Email or Password is invalid");
                         }
                     }
                     @Override

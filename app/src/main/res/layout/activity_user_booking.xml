@@ -129,6 +129,7 @@
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!--
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/bookingNumberoftix"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -152,7 +153,6 @@
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--
             <TextView
                 android:id="@+id/bookingEmail"
                 android:layout_width="0dp"
@@ -239,23 +239,62 @@
                 app:layout_constraintTop_toBottomOf="@+id/UserBookingPhone"
                 tools:ignore="SpeakableTextPresentCheck" />
 
+
+
+            -->
+
             <TextView
                 android:id="@+id/bookingNumberoftix"
                 android:layout_width="193dp"
                 android:layout_height="38dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
                 android:text="Number of Tickets"
-                android:textAlignment="textEnd"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/UserBookingPax"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bookingContact" />
 
-            -->
+            <ImageButton
+                android:id="@+id/TicketAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38dp"
+                android:background="@color/rose_quartz"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/TicketCounter"
+                app:layout_constraintTop_toBottomOf="@+id/bookingNumberoftix"
+                app:srcCompat="@drawable/ic_plus" />
+
+            <ImageButton
+                android:id="@+id/TicketDeduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38dp"
+                android:background="@color/rose_quartz"
+                app:layout_constraintEnd_toStartOf="@+id/TicketCounter"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bookingNumberoftix"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <TextView
+                android:id="@+id/TicketCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:inputType="number"
+                android:text="1"
+                android:textColor="@color/black"
+                android:textSize="50sp"
+                app:layout_constraintEnd_toStartOf="@+id/TicketAdd"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/TicketDeduct"
+                app:layout_constraintTop_toBottomOf="@+id/bookingNumberoftix" />
 
             <Button
                 android:id="@+id/confirmbooking"
@@ -279,13 +318,17 @@
 
             <TextView
                 android:id="@+id/Errormessage"
-                android:layout_width="50dp"
-                android:layout_height="27dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bookingNumberoftix" />
+                app:layout_constraintTop_toBottomOf="@+id/TicketCounter" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
