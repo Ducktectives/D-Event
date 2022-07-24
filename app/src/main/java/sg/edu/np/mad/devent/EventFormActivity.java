@@ -418,7 +418,7 @@ public class EventFormActivity extends AppCompatActivity{
             // Removes all whitespaces and non-visible characters, (\n, tab) and splits them into a list
 
 
-            event = new Events( event_ID,  event_Name,  event_Location,  event_Date,  event_Description,  event_Detail,  event_StartTime, event_EndTime, userID, storageReference_ID,  bookmarked, eventType);
+            event = new Events( event_ID,  event_Name,  event_Location,  event_Date,  event_Description,  event_Detail,  event_StartTime, event_EndTime, userID, storageReference_ID,  bookmarked);
             // Insert the user-defined object to the database
             reference.child("Event").push().setValue(event);
 

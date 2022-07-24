@@ -37,10 +37,15 @@ import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.type.DateTime;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,6 +55,7 @@ public class UserBooking extends AppCompatActivity {
     String eventid;
     String eventName;
     List<Events> eventList;
+    String eventDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,7 @@ public class UserBooking extends AppCompatActivity {
         imageLinkfromEventDetails = fromEventDetailsPage.getStringExtra("EventPicture");
         userEmail = fromEventDetailsPage.getStringExtra("User_Email");
         eventid = fromEventDetailsPage.getStringExtra("Event");
+        eventDate = fromEventDetailsPage.getStringExtra("EventDate");
         eventList = (List<Events>) fromEventDetailsPage.getSerializableExtra("EventList");
         eventName = fromEventDetailsPage.getStringExtra("EventName");
 
@@ -255,7 +262,6 @@ public class UserBooking extends AppCompatActivity {
                     DatabaseReference book = database.getReference("Booking");
                     DatabaseReference user = database.getReference("Users");
 
-
                     int finalbookingnumber = bookingnumber;
                     int finalbookingpax = bookingpax;
 
@@ -316,14 +322,16 @@ public class UserBooking extends AppCompatActivity {
                     // Code below is used to set up notification for the user on the day of the event
                     Toast.makeText(UserBooking.this,"Reminder has been set!", Toast.LENGTH_LONG).show();
                     Intent notifyIntent = new Intent(UserBooking.this, NotifyService.class);
+                    notifyIntent.putExtra("eventDate", eventDate);
+                    notifyIntent.putExtra("eventName", eventName);
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(UserBooking.this, 0,
                             notifyIntent, 0);
-                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
                     long timeAtButtonClick = System.currentTimeMillis();
-                    long tenSeconds = 1000 * 10;
+                    long seconds = 5000; // 10 seconds,
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtButtonClick + seconds, pendingIntent);
 
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtButtonClick + tenSeconds, pendingIntent);
                 }
             }
         });

@@ -18,7 +18,6 @@ public class Events implements Serializable {
     String Event_EndTime;
     String Event_UserID;
     String Event_StorageReferenceID;
-    List<String> Event_EventType;
     boolean Bookmarked;
 
     public Events() {}
@@ -27,7 +26,7 @@ public class Events implements Serializable {
     public Events(String event_ID, String event_Name, String event_Location, String event_Date,
                   String event_Description, String event_Detail, String event_StartTime,
                   String event_EndTime, String event_UserID, String event_StorageReferenceID,
-                  boolean bookmarked, List<String>eventType) {
+                  boolean bookmarked) {
         Event_ID = event_ID;
         Event_Name = event_Name;
         Event_Location = event_Location;
@@ -39,7 +38,6 @@ public class Events implements Serializable {
         Event_UserID = event_UserID;
         Event_StorageReferenceID = event_StorageReferenceID;
         Bookmarked = bookmarked;
-        Event_EventType = eventType;
     }
 
     public String getEvent_ID() {

@@ -123,7 +123,6 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
                 eventAct.putExtra("event_List", (Serializable) eventsList);
                 eventAct.putExtra("event_Name",filteredEventsList.get(i).getEvent_ID());
                 eventAct.putExtra("Email", NavDrawer.getemailofuser);
-
                 context.startActivity(eventAct);
             }
         });

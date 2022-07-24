@@ -26,16 +26,12 @@ import androidx.annotation.NonNull;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -114,7 +110,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             if (String.valueOf(ev.getEvent_ID()).equals(eventID)) {
                 //Set the information - Event Name
                 String eventNameFromList = ev.getEvent_Name(); //get
-                eventNamedIs= eventNameFromList;
+                 eventNamedIs= eventNameFromList;
                 eventName.setText(eventNameFromList); //set
 
                 //Set the information - Event Description
@@ -147,6 +143,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                 //Set the information - Event Details
                 String eventDet= ev.getEvent_Detail(); //get
                 eventDetail.setText(eventDet); //set
+
 
                 //Set the information - Event Organizer
                 eventOrganizerEmail = ev.getEvent_UserID(); //get
@@ -199,7 +196,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                             });
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+
                 }
 
                 //for date of event
@@ -267,7 +264,6 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                 bookingInfo.putString("User_Email",userEmail);
                 bookingInfo.putSerializable("EventList",(Serializable) eventList);
                 bookingInfo.putString("Event", eventID);
-                bookingInfo.putString("EventName",eventNamedIs);
                 book.putExtras(bookingInfo);
                 /*
                 // Code below is used to set up notification for the user on the day of the event
@@ -290,59 +286,48 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
 
         //google maps
         //checkMyPermission();
-        try {
-            SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
-            supportMapFragment.getMapAsync(this);
 
-
-        }
-        catch (NullPointerException e){
-
-        }
-
-
-
+        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        supportMapFragment.getMapAsync(this);
 
     }
 
+  /*  private void checkMyPermission(){
+        Dexter.withContext(this).withPermission(Manifest.permission.ACCESS_FINE_LOCATION).withListener(new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                 boolean PermissionGranted = true;
+            }
 
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS); //opens settings of the app.
+                Uri uri = Uri.fromParts("package",getPackageName(),"");
+                intent.setData(uri);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                permissionToken.continuePermissionRequest();
+            }
+        });
+    }*/
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-                try {
-                    //add a marker on the google map
-                    MarkerOptions marker1 = new MarkerOptions();
-                    if (eventLat!= null && eventLong !=null){
-                        marker1.position(new LatLng(eventLat,eventLong));
-                        marker1.title(eventNamedIs);
-                        googleMap.addMarker(marker1);
-                    }
+        //add a marker on the google map
+        MarkerOptions marker1 = new MarkerOptions();
+        marker1.position(new LatLng(eventLat,eventLong));
+        marker1.title(eventNamedIs);
+        googleMap.addMarker(marker1);
 
-                    //add zoom controls
-                    googleMap.getUiSettings().setZoomControlsEnabled(true);
-                    googleMap.getUiSettings().setZoomGesturesEnabled(true);
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker1.getPosition(), 16));
-
-                    //ensure that user can see Indoor Levels
-                    googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
-
-                    //pan the focus of the google maps pin to the center
-                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                    builder.include(marker1.getPosition());
-                    LatLngBounds markerLoc = builder.build();
-                    googleMap.setLatLngBoundsForCameraTarget(markerLoc);
-                }
-
-                catch (NullPointerException e){
-
-                }
-            }
-        });
-
-
+        //add zoom controls
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setZoomGesturesEnabled(true);
+        googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
     }
 
     public void createNotificationChannel(){

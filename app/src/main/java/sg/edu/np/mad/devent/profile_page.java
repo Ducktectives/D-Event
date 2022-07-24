@@ -125,8 +125,7 @@ public class profile_page extends AppCompatActivity {
 
 
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
-                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked,
-                        eventType);
+                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked);
 
                 // Checking if past event or upcoming event
                 Date date = null;
