@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -284,35 +285,42 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
     }
 
 
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        try {
-            //add a marker on the google map
-            MarkerOptions marker1 = new MarkerOptions();
-            if (eventLat!= null && eventLong !=null){
-                marker1.position(new LatLng(eventLat,eventLong));
-                marker1.title(eventNamedIs);
-                googleMap.addMarker(marker1);
+        googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                try {
+                    //add a marker on the google map
+                    MarkerOptions marker1 = new MarkerOptions();
+                    if (eventLat!= null && eventLong !=null){
+                        marker1.position(new LatLng(eventLat,eventLong));
+                        marker1.title(eventNamedIs);
+                        googleMap.addMarker(marker1);
+                    }
+
+                    //add zoom controls
+                    googleMap.getUiSettings().setZoomControlsEnabled(true);
+                    googleMap.getUiSettings().setZoomGesturesEnabled(true);
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker1.getPosition(), 16));
+
+                    //ensure that user can see Indoor Levels
+                    googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
+
+                    //pan the focus of the google maps pin to the center
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                    builder.include(marker1.getPosition());
+                    LatLngBounds markerLoc = builder.build();
+                    googleMap.setLatLngBoundsForCameraTarget(markerLoc);
+                }
+
+                catch (NullPointerException e){
+
+                }
             }
+        });
 
-            //add zoom controls
-            googleMap.getUiSettings().setZoomControlsEnabled(true);
-            googleMap.getUiSettings().setZoomGesturesEnabled(true);
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker1.getPosition(), 16));
-
-            //ensure that user can see Indoor Levels
-            googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
-
-            //pan the focus of the google maps pin to the center
-            LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            builder.include(marker1.getPosition());
-            LatLngBounds markerLoc = builder.build();
-            googleMap.setLatLngBoundsForCameraTarget(markerLoc);
-        }
-
-        catch (NullPointerException e){
-
-        }
 
     }
 }

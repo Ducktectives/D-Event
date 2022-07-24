@@ -96,7 +96,6 @@ public class BookingSummary extends AppCompatActivity {
                     DatabaseReference book = database.getReference("Booking");
                     DatabaseReference user = database.getReference("Users");
 
-                    Log.d("subway2","ck");
 
                     // Query the database in the Events folders in the Event Details
                     Ref.orderByChild("event_ID").equalTo(eventid).addListenerForSingleValueEvent(new ValueEventListener() {
