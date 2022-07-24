@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/rose_quartz"
     tools:context=".LoginActivity">
 
     <ScrollView
@@ -54,7 +53,7 @@
                 app:srcCompat="@drawable/ducketive" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/loginuseremailbox"
+                android:id="@+id/loginemail"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,8 +61,6 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="8dp"
                 android:hint="ENTER USER EMAIL"
-                android:textColorHint="@color/black"
-                app:boxStrokeColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/applogo">
@@ -72,12 +69,11 @@
                     android:id="@+id/loginuseremail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="true"
-                    android:textColor="@color/black" />
+                    android:focusable="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/loginuserpasswordbox"
+                android:id="@+id/loginpassword"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,18 +81,18 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:hint="ENTER USER PASSWORD"
-                android:textColorHint="@color/black"
-                app:boxStrokeColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginuseremailbox">
+                app:layout_constraintTop_toBottomOf="@+id/loginuseremailbox"
+                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/loginuserpassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="true"
-                    android:textColor="@color/black" />
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--
@@ -170,12 +166,10 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
-                android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginuserpasswordbox" />
-
 
 
             <TextView
@@ -185,7 +179,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="I do not have an account"
-                android:textColor="@color/purple_700"
+                android:textColor="@color/purple_500"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

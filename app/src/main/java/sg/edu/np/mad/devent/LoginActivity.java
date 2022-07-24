@@ -44,15 +44,14 @@ public class LoginActivity extends AppCompatActivity {
         Button submittologin = (Button)findViewById(R.id.loginsubmit);
         TextView createuseraccount = (TextView)findViewById(R.id.registernewaccount);
 
-        String email, password;
-
-        // Getting the text entered by users
-        email = useremail.getText().toString();
-        password = userpassword.getText().toString();
 
         submittologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // Getting the text entered by users
+                String email = useremail.getText().toString();
+                String password = userpassword.getText().toString();
 
                 String emailPattern = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]";
 
@@ -101,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                                         }
                                         else {
                                             // Giving a common user error when login failure
-                                            errormsg.setText("Email or Password is invalid");
+                                            errormsg.setText("Email or Password is invalid1");
                                         }
                                     }
                                 }
@@ -109,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else {
                             // Giving a common user error when login failure
-                            errormsg.setText("Email or Password is invalid");
+                            errormsg.setText("Email or Password is invalid2");
                         }
                     }
                     @Override
