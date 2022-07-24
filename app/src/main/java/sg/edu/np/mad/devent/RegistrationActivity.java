@@ -284,6 +284,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 intent.putExtra("profile_id", profileID);
                                 intent.putExtra("Email", email);
                                 intent.putExtra("Username", name);
+                                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 // Start the intent
                                 startActivity(intent);
                             }

@@ -71,6 +71,7 @@ public class BookingSummary extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i2 = new Intent(BookingSummary.this, profile_page.class);
                 i2.putExtra("Email", Email);
+                i2.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i2);
             }
         });
@@ -144,6 +145,7 @@ public class BookingSummary extends AppCompatActivity {
                                             Calender.putExtra(CalendarContract.Events.AVAILABILITY, "Busy");
 
                                             if (Calender.resolveActivity(getPackageManager()) != null){
+                                                Calender.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 startActivity(Calender);
                                             }
                                             else {

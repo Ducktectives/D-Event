@@ -41,6 +41,7 @@ public class SplashScreen extends AppCompatActivity {
         if (savedemail.equals("") || savedhashpassword.equals("")){
             progressbar.setProgress(75);
             Intent i1 = new Intent(SplashScreen.this, LoginActivity.class);
+            i1.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
             progressbar.setProgress(100);
             startActivity(i1);
         }
@@ -75,6 +76,7 @@ public class SplashScreen extends AppCompatActivity {
                                         login.putExtra("Email", email);
                                         login.putExtra("Username", username);
                                         login.putExtra("profile_id", profileid);
+                                        login.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(login);
                                     }
                                 }
@@ -83,6 +85,7 @@ public class SplashScreen extends AppCompatActivity {
                     }
                     else{
                         Intent i2 = new Intent(SplashScreen.this, LoginActivity.class);
+                        i2.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         progressbar.setProgress(100);
                         startActivity(i2);
                     }
@@ -91,6 +94,7 @@ public class SplashScreen extends AppCompatActivity {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     Intent i3 = new Intent(SplashScreen.this, LoginActivity.class);
+                    i3.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     progressbar.setProgress(100);
                     startActivity(i3);
                 }

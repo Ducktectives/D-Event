@@ -93,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                                             // Passing the Email and Username to the next activity for user
                                             login.putExtra("Email", email);
                                             login.putExtra("Username", username);
+                                            login.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(login);
                                         }
                                         else if (!email.trim().matches(emailPattern)){

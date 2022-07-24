@@ -301,6 +301,7 @@ public class UserBooking extends AppCompatActivity {
                                         profileDatas.putInt("NumberofTix",finalbookingpax);
                                         profileDatas.putString("EventName",eventName);
                                         profileData.putExtras(profileDatas);
+                                        profileData.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(profileData);
                                     }
                                 });
