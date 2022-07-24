@@ -75,6 +75,8 @@ public class UserBooking extends AppCompatActivity {
         String emailPattern = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]";
         String namePattern = "^[a-zA-Z- ]{3,30}";
 
+
+        // Ticket Adding Button to add tickets to the count
         final Integer[] numoftix = new Integer[1];
 
         addticket.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +95,7 @@ public class UserBooking extends AppCompatActivity {
             }
         });
 
+        // Ticket Removal Button to remove tickets from the count
         removeticket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
