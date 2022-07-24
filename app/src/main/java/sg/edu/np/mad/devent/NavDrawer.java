@@ -89,6 +89,7 @@ public class NavDrawer extends AppCompatActivity {
                     editor.remove("Hahedpass");
                     editor.apply();
                     Intent logoutAct = new Intent(NavDrawer.this, SplashScreen.class);
+                    logoutAct.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(logoutAct);
                 }
             });
@@ -107,6 +108,7 @@ public class NavDrawer extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Intent settingAct = new Intent(NavDrawer.this, Settings.class);
                 settingAct.putExtra("Email", getemailofuser);
+                settingAct.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(settingAct);
                 return true;
             }
@@ -121,6 +123,7 @@ public class NavDrawer extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Intent eventFormAct = new Intent(NavDrawer.this, EventFormActivity.class);
                 eventFormAct.putExtra("Email", getemailofuser);
+                eventFormAct.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(eventFormAct);
                 return true;
             }
@@ -137,6 +140,7 @@ public class NavDrawer extends AppCompatActivity {
                 i2.putExtra("Username_forprofile", getusernameofuser);
                 i2.putExtra("Email", getemailofuser);
                 i2.putExtra("profile_id_forprofile", getuserprofileId);
+                i2.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i2);
             }
         });

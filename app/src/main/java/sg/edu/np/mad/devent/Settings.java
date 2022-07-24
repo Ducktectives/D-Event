@@ -145,6 +145,7 @@ public class Settings extends AppCompatActivity {
                 Intent i2 = new Intent(Settings.this,profile_page.class);
                 i2.putExtra("Email",user_id_unique);
                 Log.d("backbutton","hey the back button is being pressed");
+                i.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }
         };
@@ -179,6 +180,7 @@ public class Settings extends AppCompatActivity {
                 public boolean onPreferenceClick(Preference preference) {
                     Intent i = new Intent(getActivity(),change_password.class);
                     i.putExtra("Email",user_id_unique);
+                    i.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                     return false;
                 }
@@ -194,6 +196,7 @@ public class Settings extends AppCompatActivity {
                     Intent i = new Intent(getActivity(),Change_ProfilePic.class);
                     i.putExtra("Email",user_id_unique);
                     Log.d("help",user_id_unique);
+                    i.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                     return false;
                 }
@@ -385,6 +388,7 @@ public class Settings extends AppCompatActivity {
                     i.putExtra("Username",username);
                     Intent i2 = new Intent(getActivity(), profile_page.class);
                     i2.putExtra("Email",user_id_unique);
+                    i.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                     return true;
             }

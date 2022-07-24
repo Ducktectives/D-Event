@@ -31,6 +31,7 @@ public class EditDescription extends AppCompatActivity {
                 String newDesc = edits.getText().toString();
                 Intent setNewDesc = new Intent(EditDescription.this,profile_page.class);
                 setNewDesc.putExtra("new",newDesc);
+                setNewDesc.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(setNewDesc);
             }
         });
@@ -41,6 +42,7 @@ public class EditDescription extends AppCompatActivity {
             public void onClick(View v) {
                 Intent cancelNewDesc
                         = new Intent(EditDescription.this,profile_page.class);
+                cancelNewDesc.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(cancelNewDesc);
             }
         });

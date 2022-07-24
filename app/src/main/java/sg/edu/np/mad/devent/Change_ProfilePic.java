@@ -80,6 +80,7 @@ public class Change_ProfilePic extends AppCompatActivity {
                 i.putExtra("Email",a);
                 Log.d("aa","Image uploaded");
                 uploadImage();
+                i.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 // Need to reflect change in profile page activity
 
@@ -90,6 +91,7 @@ public class Change_ProfilePic extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(Change_ProfilePic.this,profile_page.class);
                 i.putExtra("Email",a);
+                i.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }
         });

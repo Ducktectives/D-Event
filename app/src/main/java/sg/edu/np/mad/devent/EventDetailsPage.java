@@ -279,6 +279,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                 alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtButtonClick + tenSeconds, pendingIntent);
 
                  */
+                book.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(book);
             }
         });

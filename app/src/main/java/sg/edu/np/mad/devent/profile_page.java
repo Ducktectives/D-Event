@@ -282,6 +282,7 @@ public class profile_page extends AppCompatActivity {
                         eList.add(e);
                         showDetails.putExtra("event_List",(Serializable) eList);
                         Log.d("eListCreated","Event list is created " + String.valueOf(e.getEvent_ID()));
+                        showDetails.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(showDetails);
 
                         // Need to figure out what to do with the position.
@@ -379,6 +380,7 @@ public class profile_page extends AppCompatActivity {
                 i2.putExtra("Email",user_id_unique);
                 i2.putExtra("Username",username);
                 Log.d("Intent i2","" + user_id_unique +" "+ username);
+                i2.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i2);
             }
         });
@@ -478,6 +480,7 @@ public class profile_page extends AppCompatActivity {
                                 instaURL = "http://" + instaURL;
                             }
                             Intent open = new Intent(Intent.ACTION_VIEW, Uri.parse(instaURL));
+                            open.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(open);
                         }
                         catch(NullPointerException e){
@@ -493,6 +496,7 @@ public class profile_page extends AppCompatActivity {
                                 facebookURL = "http://" + facebookURL;
                             }
                             Intent open = new Intent(Intent.ACTION_VIEW, Uri.parse(facebookURL));
+                            open.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(open);
                         }
                         catch(NullPointerException e){
@@ -509,6 +513,7 @@ public class profile_page extends AppCompatActivity {
                                 linkedinURL = "http://" + linkedinURL;
                             }
                             Intent open = new Intent(Intent.ACTION_VIEW, Uri.parse(linkedinURL));
+                            open.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(open);
                         }
                         catch(NullPointerException e){
@@ -524,6 +529,7 @@ public class profile_page extends AppCompatActivity {
                                 websiteURL = "http://" + websiteURL;
                             }
                             Intent open = new Intent(Intent.ACTION_VIEW, Uri.parse(websiteURL));
+                            open.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(open);
                         }
                         catch(NullPointerException e){
