@@ -43,6 +43,7 @@ public class UserBooking extends AppCompatActivity {
     String imageLinkfromEventDetails;
     String userEmail;
     String eventid;
+    String eventName;
     List<Events> eventList;
 
     @Override
@@ -58,6 +59,7 @@ public class UserBooking extends AppCompatActivity {
         userEmail = fromEventDetailsPage.getStringExtra("User_Email");
         eventid = fromEventDetailsPage.getStringExtra("Event");
         eventList = (List<Events>) fromEventDetailsPage.getSerializableExtra("EventList");
+        eventName = fromEventDetailsPage.getStringExtra("EventName");
 
         // Assign the texts, buttons and images to a variable to be called
         ImageView eventimage = (ImageView)findViewById(R.id.eventimage);
@@ -157,7 +159,6 @@ public class UserBooking extends AppCompatActivity {
                 });
 
 
-
         // Set up an onclick listener for the submission of booking
         confirmbooking.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,12 +249,15 @@ public class UserBooking extends AppCompatActivity {
 
                                         //Pass intent into the Profile Page
                                         Intent profileData = new Intent(UserBooking.this,BookingSummary.class);
-                                        profileData.putExtra("EventID",eventid);
-                                        profileData.putExtra("Email",userEmail);
-                                        profileData.putExtra("Name",bookingname);
-                                        profileData.putExtra("UserEmail",bookingemail);
-                                        profileData.putExtra("ContactNum",finalbookingnumber);
-                                        profileData.putExtra("NumberofTix",finalbookingpax);
+                                        Bundle profileDatas = new Bundle();
+                                        profileDatas.putString("EventID",eventid);
+                                        profileDatas.putString("Email",userEmail);
+                                        profileDatas.putString("Name",bookingname);
+                                        profileDatas.putString("UserEmail",bookingemail);
+                                        profileDatas.putInt("ContactNum",finalbookingnumber);
+                                        profileDatas.putInt("NumberofTix",finalbookingpax);
+                                        profileDatas.putString("EventName",eventName);
+                                        profileData.putExtras(profileDatas);
                                         startActivity(profileData);
                                     }
                                 });

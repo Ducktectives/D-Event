@@ -25,6 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.security.Permission;
 import java.util.Calendar;
 
@@ -49,13 +51,19 @@ public class BookingSummary extends AppCompatActivity {
         Button AddtoCalender = (Button)findViewById(R.id.BookingAddCalander);
 
         // Get the intent from the previous activity and setting the values
-        Intent autofill = getIntent();
-        String eventid = autofill.getStringExtra("EventID");
-        String Email = autofill.getStringExtra("Email");
-        Name.setText(autofill.getStringExtra("Name"));
-        UserEmail.setText(autofill.getStringExtra("UserEmail"));
-        ContactNum.setText(autofill.getStringExtra("ContactNum"));
-        NumofTix.setText(autofill.getStringExtra("NumberofTix"));
+        Bundle autofill = getIntent().getExtras();
+        String eventid = autofill.getString("EventID");
+        String Email = autofill.getString("Email");
+        String nameFromBundle = autofill.getString("Name");
+        String userEmailFromBundle = autofill.getString("UserEmail");
+        Integer contactNoFromBundle = autofill.getInt("ContactNum");
+        Integer numberOfTixFromBundle = autofill.getInt("NumberofTix");
+        String eventName = autofill.getString("EventName");
+        EventName.setText(eventName);
+        Name.setText(nameFromBundle);
+        UserEmail.setText(userEmailFromBundle);
+        ContactNum.setText(contactNoFromBundle.toString());
+        NumofTix.setText(numberOfTixFromBundle.toString());
 
         // End the activity and go back to the profile page
         Close.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +95,8 @@ public class BookingSummary extends AppCompatActivity {
                     DatabaseReference Ref = database.getReference("Event");
                     DatabaseReference book = database.getReference("Booking");
                     DatabaseReference user = database.getReference("Users");
+
+                    Log.d("subway2","ck");
 
                     // Query the database in the Events folders in the Event Details
                     Ref.orderByChild("event_ID").equalTo(eventid).addListenerForSingleValueEvent(new ValueEventListener() {

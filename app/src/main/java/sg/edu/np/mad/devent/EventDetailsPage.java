@@ -259,6 +259,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                 bookingInfo.putString("User_Email",userEmail);
                 bookingInfo.putSerializable("EventList",(Serializable) eventList);
                 bookingInfo.putString("Event", eventID);
+                bookingInfo.putString("EventName",eventNamedIs);
                 book.putExtras(bookingInfo);
                 startActivity(book);
             }
@@ -267,58 +268,51 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
 
         //google maps
         //checkMyPermission();
+        try {
+            SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+            supportMapFragment.getMapAsync(this);
 
-        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
-        supportMapFragment.getMapAsync(this);
+
+        }
+        catch (NullPointerException e){
+
+        }
+
+
+
 
     }
 
-  /*  private void checkMyPermission(){
-        Dexter.withContext(this).withPermission(Manifest.permission.ACCESS_FINE_LOCATION).withListener(new PermissionListener() {
-            @Override
-            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                 boolean PermissionGranted = true;
-            }
-
-            @Override
-            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS); //opens settings of the app.
-                Uri uri = Uri.fromParts("package",getPackageName(),"");
-                intent.setData(uri);
-                startActivity(intent);
-
-            }
-
-            @Override
-            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                permissionToken.continuePermissionRequest();
-            }
-        });
-    }*/
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        //add a marker on the google map
-        MarkerOptions marker1 = new MarkerOptions();
-        if (eventLat!= null && eventLong !=null){
-            marker1.position(new LatLng(eventLat,eventLong));
-            marker1.title(eventNamedIs);
-            googleMap.addMarker(marker1);
+        try {
+            //add a marker on the google map
+            MarkerOptions marker1 = new MarkerOptions();
+            if (eventLat!= null && eventLong !=null){
+                marker1.position(new LatLng(eventLat,eventLong));
+                marker1.title(eventNamedIs);
+                googleMap.addMarker(marker1);
+            }
+
+            //add zoom controls
+            googleMap.getUiSettings().setZoomControlsEnabled(true);
+            googleMap.getUiSettings().setZoomGesturesEnabled(true);
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker1.getPosition(), 16));
+
+            //ensure that user can see Indoor Levels
+            googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
+
+            //pan the focus of the google maps pin to the center
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            builder.include(marker1.getPosition());
+            LatLngBounds markerLoc = builder.build();
+            googleMap.setLatLngBoundsForCameraTarget(markerLoc);
         }
 
-        //add zoom controls
-        googleMap.getUiSettings().setZoomControlsEnabled(true);
-        googleMap.getUiSettings().setZoomGesturesEnabled(true);
+        catch (NullPointerException e){
 
-        //ensure that user can see Indoor Levels
-        googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
-
-        //pan the focus of the google maps pin to the center
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        builder.include(marker1.getPosition());
-        LatLngBounds markerLoc = builder.build();
-        googleMap.setLatLngBoundsForCameraTarget(markerLoc);
+        }
 
     }
 }
