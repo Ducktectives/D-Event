@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".LoginActivity">
 
     <ScrollView
@@ -79,12 +78,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:hint="ENTER USER PASSWORD"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginuseremailbox"
+                app:layout_constraintTop_toBottomOf="@+id/loginemail"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -150,27 +149,27 @@
 
             -->
 
-            <Button
-                android:id="@+id/loginsubmit"
-                android:layout_width="107dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="32dp"
-                android:text="Login"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginerror" />
-
             <TextView
                 android:id="@+id/loginerror"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginuserpasswordbox" />
+                app:layout_constraintTop_toBottomOf="@+id/loginpassword" />
+
+            <Button
+                android:id="@+id/loginsubmit"
+                android:layout_width="107dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:text="Login"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loginerror" />
 
 
             <TextView
