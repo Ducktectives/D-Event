@@ -201,7 +201,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 String cpass  = confirmpassword.getText().toString();
                 String emailPattern = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]";
                 String namePattern = "^[a-zA-Z- ]{3,30}";
-                String passwordPattern = "^[a-zA-Z0-9+_.-@!#$%^&* ]{8,20}";
                 String jobTitlePattern = "^[a-zA-Z0-9 -]{3,30}";
 
                 // Input validation to check if the values are empty
@@ -240,10 +239,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 else if (password.isEmpty()) {
                     errormessage.setText("Password is required");
-                }
-
-                else if (password.matches(passwordPattern)){
-                    errormessage.setText("Kindly enter a password between 8 and 20 characters");
                 }
 
                 else if (!password.equals(cpass)){

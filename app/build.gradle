@@ -83,4 +83,7 @@ dependencies {
     //dexter, for google maps
     implementation 'com.karumi:dexter:6.2.3'
 
+    //for google maps error
+    implementation 'com.google.maps.android:android-maps-utils:2.3.0'
+
 }

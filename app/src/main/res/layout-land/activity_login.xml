@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/rose_quartz"
     tools:context=".LoginActivity">
 
     <ScrollView
@@ -19,12 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!--
             <EditText
                 android:id="@+id/loginuserpassword"
                 android:layout_width="260dp"
                 android:layout_height="55dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/txt_rounded_background"
                 android:ems="10"
                 android:importantForAutofill="no"
@@ -37,6 +38,8 @@
                 app:layout_constraintStart_toEndOf="@+id/loginpassword"
                 app:layout_constraintTop_toBottomOf="@+id/loginuseremail"
                 tools:ignore="SpeakableTextPresentCheck" />
+            -->
+
 
             <ImageView
                 android:id="@+id/applogo"
@@ -49,12 +52,57 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ducketive" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/loginemail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:hint="ENTER USER EMAIL"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/applogo">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/loginuseremail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/loginpassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:hint="ENTER USER PASSWORD"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loginemail"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/loginuserpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--
             <EditText
                 android:id="@+id/loginuseremail"
                 android:layout_width="260dp"
                 android:layout_height="55dp"
-                android:layout_marginStart="52dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/txt_rounded_background"
                 android:ems="10"
                 android:importantForAutofill="no"
@@ -68,6 +116,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/applogo"
                 tools:ignore="SpeakableTextPresentCheck" />
 
+
             <TextView
                 android:id="@+id/loginemail"
                 android:layout_width="wrap_content"
@@ -79,7 +128,7 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/loginuseremail"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/applogo" />
 
@@ -94,32 +143,34 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/loginuserpassword"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginemail" />
 
-            <Button
-                android:id="@+id/loginsubmit"
-                android:layout_width="107dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="32dp"
-                android:text="Login"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginerror" />
+            -->
 
             <TextView
                 android:id="@+id/loginerror"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                android:textColor="@color/black"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginuserpassword" />
+                app:layout_constraintTop_toBottomOf="@+id/loginpassword" />
+
+            <Button
+                android:id="@+id/loginsubmit"
+                android:layout_width="107dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:text="Login"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loginerror" />
+
 
             <TextView
                 android:id="@+id/registernewaccount"
@@ -128,7 +179,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="I do not have an account"
-                android:textColor="@color/purple_700"
+                android:textColor="@color/purple_500"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

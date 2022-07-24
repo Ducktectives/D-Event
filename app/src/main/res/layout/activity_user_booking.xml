@@ -23,6 +23,8 @@
             android:layout_height="wrap_content"
             android:paddingBottom="10px">
 
+            <!--
+
             <EditText
                 android:id="@+id/UserBookingName"
                 android:layout_width="0dp"
@@ -56,6 +58,100 @@
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/eventimage" />
+            -->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bookingName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:hint="ENTER NAME OF USER"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eventimage">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/UserBookingName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bookingEmail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:hint="ENTER EMAIL OF USER"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bookingName">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/UserBookingEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bookingContact"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:hint="ENTER CONTACT OF USER"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bookingEmail">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/UserBookingPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bookingNumberoftix"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:hint="ENTER NUMBER OF TICKETS"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bookingContact">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/UserBookingPax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/bookingEmail"
@@ -143,21 +239,62 @@
                 app:layout_constraintTop_toBottomOf="@+id/UserBookingPhone"
                 tools:ignore="SpeakableTextPresentCheck" />
 
+
+
+            -->
+
             <TextView
                 android:id="@+id/bookingNumberoftix"
                 android:layout_width="193dp"
                 android:layout_height="38dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
                 android:text="Number of Tickets"
-                android:textAlignment="textEnd"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/UserBookingPax"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bookingContact" />
+
+            <ImageButton
+                android:id="@+id/TicketAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38dp"
+                android:background="@color/rose_quartz"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/TicketCounter"
+                app:layout_constraintTop_toBottomOf="@+id/bookingNumberoftix"
+                app:srcCompat="@drawable/ic_plus" />
+
+            <ImageButton
+                android:id="@+id/TicketDeduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38dp"
+                android:background="@color/rose_quartz"
+                app:layout_constraintEnd_toStartOf="@+id/TicketCounter"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bookingNumberoftix"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <TextView
+                android:id="@+id/TicketCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:inputType="number"
+                android:text="1"
+                android:textColor="@color/black"
+                android:textSize="50sp"
+                app:layout_constraintEnd_toStartOf="@+id/TicketAdd"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/TicketDeduct"
+                app:layout_constraintTop_toBottomOf="@+id/bookingNumberoftix" />
 
             <Button
                 android:id="@+id/confirmbooking"
@@ -183,11 +320,15 @@
                 android:id="@+id/Errormessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/UserBookingPax" />
+                app:layout_constraintTop_toBottomOf="@+id/TicketCounter" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

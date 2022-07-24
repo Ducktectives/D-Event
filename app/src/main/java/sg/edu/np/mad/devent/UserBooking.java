@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,7 @@ public class UserBooking extends AppCompatActivity {
     String imageLinkfromEventDetails;
     String userEmail;
     String eventid;
+    String eventName;
     List<Events> eventList;
 
     @Override
@@ -65,6 +67,7 @@ public class UserBooking extends AppCompatActivity {
         userEmail = fromEventDetailsPage.getStringExtra("User_Email");
         eventid = fromEventDetailsPage.getStringExtra("Event");
         eventList = (List<Events>) fromEventDetailsPage.getSerializableExtra("EventList");
+        eventName = fromEventDetailsPage.getStringExtra("EventName");
 
         // Assign the texts, buttons and images to a variable to be called
         ImageView eventimage = (ImageView)findViewById(R.id.eventimage);
@@ -72,12 +75,51 @@ public class UserBooking extends AppCompatActivity {
         EditText userinputname = (EditText)findViewById(R.id.UserBookingName);
         EditText userinputemail = (EditText)findViewById(R.id.UserBookingEmail);
         EditText userinputcontact = (EditText)findViewById(R.id.UserBookingPhone);
-        EditText userinputpax = (EditText)findViewById(R.id.UserBookingPax);
+        TextView userinputpax = (TextView) findViewById(R.id.TicketCounter);
         TextView errormessage = (TextView)findViewById(R.id.Errormessage);
+        ImageButton addticket = (ImageButton)findViewById(R.id.TicketAdd);
+        ImageButton removeticket = (ImageButton)findViewById(R.id.TicketDeduct);
 
 
         String emailPattern = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]";
         String namePattern = "^[a-zA-Z- ]{3,30}";
+
+
+        // Ticket Adding Button to add tickets to the count
+        final Integer[] numoftix = new Integer[1];
+
+        addticket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                numoftix[0] = Integer.parseInt(userinputpax.getText().toString());
+                if (numoftix[0] == 4){
+                    numoftix[0] = 4;
+                    Toast.makeText(UserBooking.this, "You have hit the maximum number of tickets you can book", Toast.LENGTH_SHORT).show();
+                    userinputpax.setText(numoftix[0].toString());
+                }
+                else {
+                    numoftix[0] += 1;
+                    userinputpax.setText(numoftix[0].toString());
+                }
+            }
+        });
+
+        // Ticket Removal Button to remove tickets from the count
+        removeticket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                numoftix[0] = Integer.parseInt(userinputpax.getText().toString());
+                if (numoftix[0] == 1){
+                    numoftix[0] = 1;
+                    userinputpax.setText(numoftix[0].toString());
+                    Toast.makeText(UserBooking.this, "1 is the minimum number of tickets that can be booked", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    numoftix[0] -= 1;
+                    userinputpax.setText(numoftix[0].toString());
+                }
+            }
+        });
 
         //For firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -164,7 +206,6 @@ public class UserBooking extends AppCompatActivity {
                 });
 
 
-
         // Set up an onclick listener for the submission of booking
         confirmbooking.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,16 +248,6 @@ public class UserBooking extends AppCompatActivity {
                 else if (!((bookingnumber < 100000000 && bookingnumber >= 80000000) || (bookingnumber >= 60000000 && bookingnumber < 70000000))) {
                     errormessage.setText("Kindly enter a valid contact");
                 }
-                // Check for negative booking pax or booking for more that 4 pax
-                else if (bookingpax == null ){
-                    errormessage.setText("Number of Tickets is required");
-                }
-                else if (bookingpax <= 0){
-                    errormessage.setText("Kindly enter a valid number of tickets to be booked");
-                }
-                else if (bookingpax > 4){
-                    errormessage.setText("Sorry the maximum number of tickets you can book is 4");
-                }
                 else {
                     // Connect Database
                     FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -255,12 +286,15 @@ public class UserBooking extends AppCompatActivity {
 
                                         //Pass intent into the Profile Page
                                         Intent profileData = new Intent(UserBooking.this,BookingSummary.class);
-                                        profileData.putExtra("EventID",eventid);
-                                        profileData.putExtra("Email",userEmail);
-                                        profileData.putExtra("Name",bookingname);
-                                        profileData.putExtra("UserEmail",bookingemail);
-                                        profileData.putExtra("ContactNum",finalbookingnumber);
-                                        profileData.putExtra("NumofTix",finalbookingpax);
+                                        Bundle profileDatas = new Bundle();
+                                        profileDatas.putString("EventID",eventid);
+                                        profileDatas.putString("Email",userEmail);
+                                        profileDatas.putString("Name",bookingname);
+                                        profileDatas.putString("UserEmail",bookingemail);
+                                        profileDatas.putInt("ContactNum",finalbookingnumber);
+                                        profileDatas.putInt("NumberofTix",finalbookingpax);
+                                        profileDatas.putString("EventName",eventName);
+                                        profileData.putExtras(profileDatas);
                                         startActivity(profileData);
                                     }
                                 });

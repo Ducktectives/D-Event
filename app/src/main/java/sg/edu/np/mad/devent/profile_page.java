@@ -72,6 +72,10 @@ public class profile_page extends AppCompatActivity {
     List<String> eventsIDList = new ArrayList<>();
     List<Events> pastDBevents = new ArrayList<>();
     List<String> pastEventsIDList = new ArrayList<>();
+    String instaURL;
+    String facebookURL;
+    String linkedinURL;
+    String websiteURL;
 
 
     // Firebase stuff
@@ -356,35 +360,8 @@ public class profile_page extends AppCompatActivity {
                     }
                 });
 
-//                // Change title
-//                String new_title = setting.getStringExtra("new_title");
-//                Log.d("a","sent new_title is "+ new_title);
-//                if(new_title != null){
-//                    user_path.child(user_id_unique.toLowerCase().replace(".","")).child("title").setValue(new_title);
-//                }
-
-                // ^ Moved to settings activity
             }
         });
-
-
-
-
-        // !!! Make if else statement to only show edit desc if profile owner is viewing own profile
-        // !!! Also should not show follow button on own profile
-        // !!! Someone teach me how to use database
-//        Button followButton = findViewById(R.id.FollowButton);
-//        if(p.Id == "1") // Change ID to reflect actual user ID
-//        {
-//            followButton.setVisibility(View.VISIBLE);
-//        }
-//        else{
-//            followButton.setVisibility(View.INVISIBLE);
-//        }
-
-        // !!! Make follow button do something
-        // Wait where follow property of profile go
-
 
 
         // OnClickListener to start the edit description activity
@@ -425,7 +402,7 @@ public class profile_page extends AppCompatActivity {
         ImageButton insta = findViewById(R.id.InstaButton);
         ImageButton facebook = findViewById(R.id.FacebookButton);
         ImageButton linkedin = findViewById(R.id.linkedInButton);
-        ImageButton website = findViewById(R.id.WebsiteButton);
+        final ImageButton[] website = {findViewById(R.id.WebsiteButton)};
 
         Boolean enableMedia = sharedPreferences.getBoolean("EnableMedia",false);
 
@@ -433,25 +410,74 @@ public class profile_page extends AppCompatActivity {
             insta.setVisibility(View.VISIBLE);
             facebook.setVisibility(View.VISIBLE);
             linkedin.setVisibility(View.VISIBLE);
-            website.setVisibility(View.VISIBLE);
+            website[0].setVisibility(View.VISIBLE);
         } else {
             insta.setVisibility(View.INVISIBLE);
             facebook.setVisibility(View.INVISIBLE);
             linkedin.setVisibility(View.INVISIBLE);
-            website.setVisibility(View.INVISIBLE);
+            website[0].setVisibility(View.INVISIBLE);
 
         }
 
-        String instaURL = sharedPreferences.getString("Instagram",null);
-        String facebookURL = sharedPreferences.getString("Facebook",null);
-        String linkedinURL = sharedPreferences.getString("LinkedIn",null);
-        String websiteURL = sharedPreferences.getString("Website",null);
 
-                insta.setOnClickListener(new View.OnClickListener() {
+        // App gets links from preferences first before running this
+        user_path.child(user_id_unique).orderByChild("Media").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(instaURL == null || instaURL.length() == 0 ){
+                    instaURL = snapshot.child("Instagram").getValue(String.class);
+                }
+                if(facebookURL == null || facebookURL.length() == 0){
+                    facebookURL = snapshot.child("Facebook").getValue(String.class);
+                }
+                if(linkedinURL == null || linkedinURL.length() == 0){
+                    linkedinURL = snapshot.child("LinkedIn").getValue(String.class);
+                }
+                if(websiteURL == null || websiteURL.length() == 0){
+                    websiteURL = snapshot.child("Website").getValue(String.class);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        instaURL = sharedPreferences.getString("Instagram",null);
+        facebookURL = sharedPreferences.getString("Facebook",null);
+        linkedinURL = sharedPreferences.getString("LinkedIn",null);
+        websiteURL = sharedPreferences.getString("Website",null);
+
+        user_path.child(user_id_unique).child("Media").child("Instagram").setValue(instaURL);
+        user_path.child(user_id_unique).child("Media").child("Facebook").setValue(facebookURL);
+        user_path.child(user_id_unique).child("Media").child("LinkedIn").setValue(linkedinURL);
+        user_path.child(user_id_unique).child("Media").child("Website").setValue(websiteURL);
+
+        // Onclick listeners for all the icons
+        insta.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Log.d("instaClick","Instagram was clicked");
                         try {
+                            if (!instaURL.startsWith("http://") && !instaURL.startsWith("https://")){
+                                instaURL = "http://" + instaURL;
+                            }
                             Intent open = new Intent(Intent.ACTION_VIEW, Uri.parse(instaURL));
                             startActivity(open);
                         }
@@ -460,10 +486,13 @@ public class profile_page extends AppCompatActivity {
                         }
                     }
                 });
-                facebook.setOnClickListener(new View.OnClickListener() {
+        facebook.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try {
+                            if (!facebookURL.startsWith("http://") && !facebookURL.startsWith("https://")){
+                                facebookURL = "http://" + facebookURL;
+                            }
                             Intent open = new Intent(Intent.ACTION_VIEW, Uri.parse(facebookURL));
                             startActivity(open);
                         }
@@ -472,10 +501,14 @@ public class profile_page extends AppCompatActivity {
                         }
                     }
                 });
-                linkedin.setOnClickListener(new View.OnClickListener() {
+
+        linkedin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try {
+                            if (!linkedinURL.startsWith("http://") && !linkedinURL.startsWith("https://")){
+                                linkedinURL = "http://" + linkedinURL;
+                            }
                             Intent open = new Intent(Intent.ACTION_VIEW, Uri.parse(linkedinURL));
                             startActivity(open);
                         }
@@ -484,10 +517,13 @@ public class profile_page extends AppCompatActivity {
                         }
                     }
                 });
-                website.setOnClickListener(new View.OnClickListener() {
+        website[0].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try {
+                            if (!websiteURL.startsWith("http://") && !websiteURL.startsWith("https://")){
+                                websiteURL = "http://" + websiteURL;
+                            }
                             Intent open = new Intent(Intent.ACTION_VIEW, Uri.parse(websiteURL));
                             startActivity(open);
                         }

@@ -50,16 +50,16 @@
 
         <ImageView
             android:id="@+id/Detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-30dp"
+            android:layout_width="599dp"
+            android:layout_height="767dp"
+            android:layout_marginTop="-40dp"
+            android:layout_marginBottom="-700dp"
             android:cropToPadding="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eventPicture"
-            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/pink_rounded_square" />
 
         <TextView
@@ -67,7 +67,7 @@
             android:layout_width="349dp"
             android:layout_height="match_parent"
             android:layout_marginStart="88dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="70dp"
             android:layout_marginEnd="30dp"
             android:scrollbars="vertical"
             android:text="Event Name"
@@ -95,13 +95,13 @@
             android:id="@+id/EventMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="148dp"
-            android:layout_marginTop="55dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="72dp"
             android:scrollbars="vertical"
             android:text="OCT"
             android:textColor="@color/black"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/Detail"
             app:layout_constraintTop_toBottomOf="@+id/eventPicture" />
 
         <TextView
@@ -135,13 +135,13 @@
             android:id="@+id/EventDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="156dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="4dp"
             android:scrollbars="vertical"
             android:text="30"
             android:textColor="@color/black"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/Detail"
             app:layout_constraintTop_toBottomOf="@+id/EventMonth" />
 
         <TextView
@@ -170,19 +170,39 @@
             app:layout_constraintStart_toStartOf="@+id/Detail"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
+
+        <TextView
+            android:id="@+id/LocationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="24dp"
+            android:text="Location"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/Detail"
+            app:layout_constraintTop_toBottomOf="@+id/eventDetails" />
+
+        <fragment
+            android:id="@+id/fragment"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="272dp"
+            android:layout_height="211dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.335"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/LocationText" />
+
         <Button
             android:id="@+id/bookbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="40dp"
             android:text="Book Now"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/Detail"
             app:layout_constraintStart_toStartOf="@+id/Detail"
-            app:layout_constraintTop_toBottomOf="@+id/eventDetails"
-            app:layout_constraintVertical_bias="0.0" />
-
+            app:layout_constraintTop_toBottomOf="@+id/fragment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
