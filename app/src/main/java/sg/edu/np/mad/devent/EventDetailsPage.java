@@ -103,6 +103,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         ImageView eventPicture = findViewById(R.id.eventPicture);
         TextView eventDateMonth = findViewById(R.id.EventMonth);
         TextView eventDateDay = findViewById(R.id.EventDate);
+        Button bookmark = findViewById(R.id.BookmarkButton);
 
 
         //Goes through the eventList to find the correct event
@@ -291,6 +292,29 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         supportMapFragment.getMapAsync(this);
 
+
+        //for bookmark
+        bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                DatabaseReference Ref2 = database.getReference("Event");
+                Ref2.child(eventID).get()
+                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (!task.isSuccessful()){
+                                    //if the task is unsucessful
+                                }
+                                else{
+                                    //set bookmark value to true/false
+                                }
+                            }
+                        });
+            }
+        });
+
+
     }
 
   /*  private void checkMyPermission(){
@@ -342,4 +366,9 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             notificationManager.createNotificationChannel(channel);
         }
     }
+
+
+
+
+
 }

@@ -86,4 +86,7 @@ dependencies {
     //for google maps error
     implementation 'com.google.maps.android:android-maps-utils:2.3.0'
 
+    //for payment page
+    implementation 'com.shreyaspatil:EasyUpiPayment:2.0'
+
 }
