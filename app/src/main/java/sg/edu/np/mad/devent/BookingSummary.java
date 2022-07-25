@@ -121,14 +121,18 @@ public class BookingSummary extends AppCompatActivity {
                                             String eventEndTime = task.getResult().child("event_StartTime").getValue(String.class);
                                             String eventdate = task.getResult().child("event_Date").getValue(String.class);
                                             String [] datedetails = eventdate.split("/");
+                                            String [] timestart = eventStartTime.split(":");
+                                            String [] starttimeofday = timestart[1].split(" ");
+                                            String [] timeend = eventEndTime.split(":");
+                                            String [] endtimeofday = timeend[1].split(" ");
 
                                             long startMillis = 0;
                                             long endMillis = 0;
                                             Calendar beginTime = Calendar.getInstance();
-                                            beginTime.set(Integer.parseInt(datedetails[2]), Integer.parseInt(datedetails[1]), Integer.parseInt(datedetails[0]), 7, 30);
+                                            beginTime.set(Integer.parseInt(datedetails[2]), Integer.parseInt(datedetails[1]), Integer.parseInt(datedetails[0]), Integer.parseInt(timestart[0]), Integer.parseInt(starttimeofday[0]));
                                             startMillis = beginTime.getTimeInMillis();
                                             Calendar endTime = Calendar.getInstance();
-                                            endTime.set(Integer.parseInt(datedetails[2]), Integer.parseInt(datedetails[1]), Integer.parseInt(datedetails[0]), 8, 45);
+                                            endTime.set(Integer.parseInt(datedetails[2]), Integer.parseInt(datedetails[1]), Integer.parseInt(datedetails[0]), Integer.parseInt(timeend[0]), Integer.parseInt(endtimeofday[0]));
                                             endMillis = endTime.getTimeInMillis();
 
                                             // Assigning the value to put in the Calendar

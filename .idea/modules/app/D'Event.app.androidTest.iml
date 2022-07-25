@@ -195,6 +195,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.asynclayoutinflater:asynclayoutinflater:1.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.paging:paging-rxjava3:3.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.firebaseui:firebase-ui-storage:7.2.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.karumi:dexter:6.0.2@aar" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="D'Event.app.main" />
 </module>
