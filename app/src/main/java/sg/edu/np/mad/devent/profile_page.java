@@ -301,7 +301,7 @@ public class profile_page extends AppCompatActivity {
                 saltvalue = Integer.parseInt(String.valueOf(task.getResult().child("saltvalue").getValue()));
 
 
-                p.setId(userid);
+
                 p.setUsername(username);
                 p.setTitle(usertitle);
                 p.setEmail(useremail);

@@ -4,10 +4,8 @@ import static sg.edu.np.mad.devent.R.id.nav_host_fragment_content_nav_drawer;
 // import static sg.edu.np.mad.devent.RegistrationActivity.user;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,9 +14,14 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.view.menu.MenuView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -32,11 +35,20 @@ import java.io.Serializable;
 import sg.edu.np.mad.devent.databinding.ActivityNavDrawerBinding;
 import sg.edu.np.mad.devent.databinding.FragmentGalleryBinding;
 
+import com.firebase.ui.auth.AuthUI;
+
 public class NavDrawer extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavDrawerBinding binding;
     public static String getemailofuser;
+
+    /* Arthur Edit */
+    private FirebaseUser user;
+    private String userID;
+    private NavigationView nav_view;
+
+    /* Arthur Edit */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +57,24 @@ public class NavDrawer extends AppCompatActivity {
         binding = ActivityNavDrawerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Intent i1 = getIntent();
-        getemailofuser = i1.getStringExtra("Email");
-        String getusernameofuser = i1.getStringExtra("Username");
-        String getuserprofileId = i1.getStringExtra("profile_id");
+//        Intent i1 = getIntent();
+//        getemailofuser = i1.getStringExtra("Email");
+//        String getusernameofuser = i1.getStringExtra("Username");
+//        String getuserprofileId = i1.getStringExtra("profile_id");
+
+        /* Arthur Edit */
+        nav_view = (NavigationView) findViewById(R.id.nav_view);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userID = user.getUid();
+
+        Toast.makeText(this, "User ID : " + userID.toString(), Toast.LENGTH_SHORT).show();
+
+
+
+
+        /* Arthur Edit */
+
 
         setSupportActionBar(binding.appBarNavDrawer.toolbar);
         /*
@@ -72,84 +98,154 @@ public class NavDrawer extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_nav_drawer);
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+
+                    case R.id.nav_signout:
+                        AlertDialog.Builder builder = new AlertDialog.Builder(nav_view.getContext());
+                        builder.setTitle("Profile");
+                        builder.setMessage("Are you sure you want to sign out?");
+                        builder.setCancelable(false);
+                        builder.setPositiveButton("Sign out", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // Just change code below to whatever you gotta do
+                                // Intent testAct = new Intent(NavDrawer.this, loginpage.class);
+                                //startActivity(testAct);
+                                AuthUI.getInstance()
+                                        .signOut(NavDrawer.this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            public void onComplete(@NonNull Task<Void> task){
+                                                Toast.makeText(NavDrawer.this,"User Signed Out", Toast.LENGTH_SHORT).show();
+                                                // below line is to go to MainActivity via an intent.
+                                                Intent i = new Intent(NavDrawer.this, LoginActivity.class);
+                                                startActivity(i);
+                                            }
+                                        });
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        });
+                        builder.show();
+
+                        break;
+                    case R.id.nav_settings:
+                        Intent settingAct = new Intent(NavDrawer.this, Settings.class);
+                        settingAct.putExtra("Email", getemailofuser);
+                        startActivity(settingAct);
+
+                        break;
+                    case R.id.nav_AddEvent:
+                        Intent eventForm = new Intent(NavDrawer.this, EventFormActivity.class);
+
+                        startActivity(eventForm);
+
+                        break;
+                    case R.id.nav_eventList:
+                        Intent eventList = new Intent(NavDrawer.this, EventListActivity.class);
+
+                        startActivity(eventList);
+
+                        break;
+                }
+                return true;
+            }
+        });
         // ^ Used for displaying bottom right icon of email
 
         // Sign out menu item's Alert dialog
-        navigationView.getMenu().findItem(R.id.nav_signout).setOnMenuItemClickListener(menuItem -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(navigationView.getContext());
-            builder.setTitle("Profile");
-            builder.setMessage("Are you sure you want to sign out?");
-            builder.setCancelable(false);
-            builder.setPositiveButton("Sign out", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    // Just change code below to whatever you gotta do
-                    SharedPreferences.Editor editor = getSharedPreferences("Settings", Context.MODE_PRIVATE).edit();
-                    editor.remove("Email");
-                    editor.remove("Hahedpass");
-                    editor.apply();
-                    Intent logoutAct = new Intent(NavDrawer.this, SplashScreen.class);
-                    logoutAct.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    startActivity(logoutAct);
-                }
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
-            });
-            builder.show();
-            return true;
-        });
+//        navigationView.getMenu().findItem(R.id.nav_signout).setOnMenuItemClickListener(menuItem -> {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(navigationView.getContext());
+//            builder.setTitle("Profile");
+//            builder.setMessage("Are you sure you want to sign out?");
+//            builder.setCancelable(false);
+//            builder.setPositiveButton("Sign out", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    // Just change code below to whatever you gotta do
+//                    // Intent testAct = new Intent(NavDrawer.this, loginpage.class);
+//                    //startActivity(testAct);
+//                    AuthUI.getInstance()
+//                            .signOut(NavDrawer.this).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                public void onComplete(@NonNull Task<Void> task){
+//                                    Toast.makeText(NavDrawer.this,"User Signed Out", Toast.LENGTH_SHORT).show();
+//                                    // below line is to go to MainActivity via an intent.
+//                                    Intent i = new Intent(NavDrawer.this, LoginActivity.class);
+//                                    startActivity(i);
+//                                }
+//                            });
+//                }
+//            });
+//            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                }
+//            });
+//            builder.show();
+//            return true;
+//        });
+//
+//        // Setting an OnClick listener for Menu item "Settings"
+//        navigationView.getMenu().findItem(R.id.nav_settings).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem menuItem) {
+//                Intent settingAct = new Intent(NavDrawer.this, Settings.class);
+//                settingAct.putExtra("Email", getemailofuser);
+//                startActivity(settingAct);
+//                return true;
+//            }
+//        });
+//
+//        Log.d("Profile ID at EventForm", String.valueOf(getemailofuser));
+//        Log.d("Profile ID at EventForm", "Do NOTE");
+//
+//        // Setting an OnClick listener for Menu item "AddEvent"
+//        navigationView.getMenu().findItem(R.id.nav_AddEvent).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem menuItem) {
+//                Intent eventFormAct = new Intent(NavDrawer.this, EventFormActivity.class);
+//                eventFormAct.putExtra("Email", getemailofuser);
+//                startActivity(eventFormAct);
+//                return true;
+//            }
+//        });
+//
+//        // Setting an OnClick listener for Menu item "My Own Event List"
+//        navigationView.getMenu().findItem(R.id.update_event_list).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem menuItem) {
+//                Intent eventFormAct = new Intent(NavDrawer.this, EventFormActivity.class);
+//                eventFormAct.putExtra("Email", getemailofuser);
+//                startActivity(eventFormAct);
+//                return true;
+//            }
+//        });
 
-        // Setting an OnClick listener for Menu item "Settings"
-        navigationView.getMenu().findItem(R.id.nav_settings).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent settingAct = new Intent(NavDrawer.this, Settings.class);
-                settingAct.putExtra("Email", getemailofuser);
-                settingAct.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(settingAct);
-                return true;
-            }
-        });
-
-        Log.d("Profile ID at EventForm", String.valueOf(getemailofuser));
-        Log.d("Profile ID at EventForm", "Do NOTE");
-
-        // Setting an OnClick listener for Menu item "AddEvent"
-        navigationView.getMenu().findItem(R.id.nav_AddEvent).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent eventFormAct = new Intent(NavDrawer.this, EventFormActivity.class);
-                eventFormAct.putExtra("Email", getemailofuser);
-                eventFormAct.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(eventFormAct);
-                return true;
-            }
-        });
 
         // NAV HEADER
         // Used for displaying profile pic / Username / email in nav header
         View navHeader = navigationView.getHeaderView(0);
         // Pull data of user and display *** ! IMPORTANT COME BACK TO THIS LATER
-        navHeader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i2 = new Intent(NavDrawer.this, profile_page.class);
-                i2.putExtra("Username_forprofile", getusernameofuser);
-                i2.putExtra("Email", getemailofuser);
-                i2.putExtra("profile_id_forprofile", getuserprofileId);
-                i2.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i2);
-            }
-        });
-
-        TextView username = (TextView) navHeader.findViewById(R.id.nav_username);
-        username.setText(getusernameofuser);
-
-        TextView email = (TextView) navHeader.findViewById(R.id.nav_email);
-        email.setText(getemailofuser);
+//        navHeader.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i2 = new Intent(NavDrawer.this, profile_page.class);
+//                i2.putExtra("Username_forprofile", getusernameofuser);
+//                i2.putExtra("Email", getemailofuser);
+//                i2.putExtra("profile_id_forprofile", getuserprofileId);
+//                startActivity(i2);
+//            }
+//        });
+//
+//        TextView username = (TextView) navHeader.findViewById(R.id.nav_username);
+//        username.setText(getusernameofuser);
+//
+//        TextView email = (TextView) navHeader.findViewById(R.id.nav_email);
+//        email.setText(getemailofuser);
 
     }
 

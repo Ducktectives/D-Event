@@ -13,9 +13,11 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -30,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 
 import sg.edu.np.mad.devent.EventDetailsPage;
+import sg.edu.np.mad.devent.EventListActivity;
 import sg.edu.np.mad.devent.Events;
 import sg.edu.np.mad.devent.NavDrawer;
 import sg.edu.np.mad.devent.R;
@@ -42,6 +45,13 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
     String imgLink;
 
     LayoutInflater inflater;
+
+    /*Arthur Edit*/
+    // Firebase for storing Image
+    private StorageReference reference;
+    FirebaseStorage firebaseStorage;
+    /*Arthur Edit*/
+
 
     public HomeGridAdapter(Context context, List<Events> eventsList) {
         this.context = context;
@@ -74,7 +84,6 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
         notifyDataSetChanged();
     }
 
-
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
@@ -92,8 +101,11 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
 
         StorageReference firebaseStorage= FirebaseStorage.getInstance().getReference("images/" + imgLink);
 
+//        firebaseStorage = FirebaseStorage.getInstance();
+//        reference = FirebaseStorage firebaseStorage.getReferenceFromUrl(adapter.getItem(position).Event_StorageReferenceID);
+
         try {
-            File localfile = File.createTempFile("image",".jpg");
+            File localfile = File.createTempFile("image",".png");
             firebaseStorage.getFile(localfile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
@@ -109,8 +121,19 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
                             // gridImage.setImageResource(R.drawable.no_event_thumbnail);
                         }
                     });
+            // Reference to an image file in Cloud Storage
+//            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images");
+//
+//            Toast.makeText(context, "Image ID " + storageReference.getDownloadUrl(), Toast.LENGTH_LONG).show();
+//
+//
+//            // Download directly from StorageReference using Glide
+//            // (See MyAppGlideModule for Loader registration)
+//                        Glide.with(context)
+//                                .load(storageReference)
+//                                .into(gridImage);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

@@ -16,7 +16,6 @@ public class Profile implements Serializable {
     String Username;
     String Title;
     String Email;
-    String Id;
     int Contactnum;
     int Eventsattended;
     int Saltvalue;
@@ -26,8 +25,7 @@ public class Profile implements Serializable {
 
     public Profile() {}
 
-    public Profile(String id, String username, String title, String email,Integer contact, String password){
-        Id = id;
+    public Profile(String username, String title, String email,Integer contact, String password){
         Username = username;
         Title = title;
         Contactnum = contact;
@@ -122,7 +120,6 @@ public class Profile implements Serializable {
     }
 
 
-
     public String getUsername() {
         return Username;
     }
@@ -145,14 +142,6 @@ public class Profile implements Serializable {
 
     public void setEmail(String email) {
         Email = email;
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        Id = id;
     }
 
     public int getContactnum() {
@@ -185,5 +174,13 @@ public class Profile implements Serializable {
 
     public void setHashedpassword(String hashedpassword) {
         Hashedpassword = hashedpassword;
+    }
+
+    public Bitmap getProfpic() {
+        return profpic;
+    }
+
+    public void setProfpic(Bitmap profpic) {
+        this.profpic = profpic;
     }
 }

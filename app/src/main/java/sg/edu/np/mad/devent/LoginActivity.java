@@ -12,10 +12,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +33,16 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
+
+    /* Arthur edit */
+
+    /* Firebase Auth */
+    private FirebaseAuth mAuth;
+    /* Firebase Auth */
+
+    private ProgressBar progressBar;
+    /* Arthur edit */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,78 +57,110 @@ public class LoginActivity extends AppCompatActivity {
         TextView createuseraccount = (TextView)findViewById(R.id.registernewaccount);
 
 
+        /* Firebase Auth */
+        mAuth = FirebaseAuth.getInstance();
+        /* Firebase Auth */
+
+        /* Arthur edit */
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        /* Arthur edit */
+
+
         submittologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 // Getting the text entered by users
                 String email = useremail.getText().toString();
                 String password = userpassword.getText().toString();
-
                 String emailPattern = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]";
 
                 //For firebase
                 FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
                 DatabaseReference Ref = database.getReference("Users");
 
-                //Using get to get info from database once, rather than setting an event listener
-                Ref.orderByChild("email").equalTo(email.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+                /* Arthur edit */
+                progressBar.setVisibility(View.VISIBLE);
 
+                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()) {
-                            // Getting the values required to authenticate the user
-                            Ref.child(email.toLowerCase().replace(".", "")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    if (!task.isSuccessful()) {
-                                        Log.e("firebase", "Error getting data. Please reload.", task.getException());
-                                    }
-                                    else {
-                                        Log.d("firebase", String.valueOf(task.getResult().child("username").getValue()));
-                                        String username = task.getResult().child("username").getValue(String.class);
-                                        String hashpassword = task.getResult().child("hashedpassword").getValue(String.class);
-                                        Integer saltvalue = task.getResult().child("saltvalue").getValue(Integer.class);
-                                        if (hashpassword.equals(Profile.HashPassword(saltvalue, password))){
-                                            // Saving account details to users device
-                                            SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-                                            //save data of User Name and hashed password
-                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                                            editor.putString("Email", email);
-                                            editor.putString("Hahedpass", hashpassword);
-                                            editor.apply();
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
 
-                                            // Let user know that login is successful
-                                            Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
 
-                                            Intent login = new Intent(LoginActivity.this, NavDrawer.class);
-                                            // Passing the Email and Username to the next activity for user
-                                            login.putExtra("Email", email);
-                                            login.putExtra("Username", username);
-                                            login.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(login);
-                                        }
-                                        else if (!email.trim().matches(emailPattern)){
-                                            errormsg.setText("Kindly enter a valid email");
-                                        }
-                                        else {
-                                            // Giving a common user error when login failure
-                                            errormsg.setText("Email or Password is invalid");
-                                        }
-                                    }
-                                }
-                            });
+                            Toast.makeText(LoginActivity.this, "User Login successfully!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginActivity.this, NavDrawer.class));
+
+
+
+
+                        }else{
+                            Toast.makeText(LoginActivity.this, "Failed to login! Please check your credentials!", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
                         }
-                        else {
-                            // Giving a common user error when login failure
-                            errormsg.setText("Email or Password is invalid");
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
+                /* Arthur edit */
+
+
+
+
+                //Using get to get info from database once, rather than setting an event listener
+//                Ref.orderByChild("email").equalTo(email.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+//
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        if(snapshot.exists()) {
+//                            // Getting the values required to authenticate the user
+//                            Ref.child(email.toLowerCase().replace(".", "")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//                                @Override
+//                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                                    if (!task.isSuccessful()) {
+//                                        Log.e("firebase", "Error getting data. Please reload.", task.getException());
+//                                    }
+//                                    else {
+//                                        Log.d("firebase", String.valueOf(task.getResult().child("username").getValue()));
+//                                        String username = task.getResult().child("username").getValue(String.class);
+//                                        String hashpassword = task.getResult().child("hashedpassword").getValue(String.class);
+//                                        Integer saltvalue = task.getResult().child("saltvalue").getValue(Integer.class);
+//                                        if (hashpassword.equals(Profile.HashPassword(saltvalue, password))){
+//                                            // Saving account details to users device
+//                                            SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+//                                            //save data of User Name and hashed password
+//                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+//                                            editor.putString("Email", email);
+//                                            editor.putString("Hahedpass", hashpassword);
+//                                            editor.apply();
+//
+//                                            // Let user know that login is successful
+//                                            Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
+//
+//                                            Intent login = new Intent(LoginActivity.this, NavDrawer.class);
+//                                            // Passing the Email and Username to the next activity for user
+//                                            login.putExtra("Email", email);
+//                                            login.putExtra("Username", username);
+//                                            startActivity(login);
+//                                        }
+//                                        else if (!email.trim().matches(emailPattern)){
+//                                            errormsg.setText("Kindly enter a valid email");
+//                                        }
+//                                        else {
+//                                            // Giving a common user error when login failure
+//                                            errormsg.setText("Email or Password is invalid");
+//                                        }
+//                                    }
+//                                }
+//                            });
+//                        }
+//                        else {
+//                            // Giving a common user error when login failure
+//                            errormsg.setText("Email or Password is invalid");
+//                        }
+//                    }
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
             }
         });
 
