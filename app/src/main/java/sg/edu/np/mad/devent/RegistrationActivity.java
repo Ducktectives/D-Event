@@ -269,7 +269,9 @@ public class RegistrationActivity extends AppCompatActivity {
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
                                                             Toast.makeText(RegistrationActivity.this, "User has been registered successfully!", Toast.LENGTH_SHORT).show();
-                                                            startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                                                            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                                            startActivity(intent);
 
                                                         } else {
                                                             Toast.makeText(RegistrationActivity.this, "Failed to register! Try again!", Toast.LENGTH_SHORT).show();
@@ -319,6 +321,7 @@ public class RegistrationActivity extends AppCompatActivity {
 //                                intent.putExtra("profile_id", profileID);
 //                                intent.putExtra("Email", email);
 //                                intent.putExtra("Username", name);
+//                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
 //                                // Start the intent
 //                                startActivity(intent);
 //                            }

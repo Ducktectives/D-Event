@@ -299,7 +299,7 @@ public class EventFormActivity extends AppCompatActivity{
 
         uploadForm();
         Intent submitform = new Intent(EventFormActivity.this, NavDrawer.class);
-        (EventFormActivity.this).finish();
+        //(EventFormActivity.this).finish();
         submitform.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(submitform);
 
