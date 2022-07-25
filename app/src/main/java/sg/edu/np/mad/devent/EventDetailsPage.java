@@ -37,6 +37,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -103,7 +104,8 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         ImageView eventPicture = findViewById(R.id.eventPicture);
         TextView eventDateMonth = findViewById(R.id.EventMonth);
         TextView eventDateDay = findViewById(R.id.EventDate);
-        Button bookmark = findViewById(R.id.BookmarkButton);
+        TextView eventTiming = findViewById(R.id.timing);
+        FloatingActionButton bookmark = findViewById(R.id.BookmarkButton);
 
 
         //Goes through the eventList to find the correct event
@@ -111,7 +113,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             if (String.valueOf(ev.getEvent_ID()).equals(eventID)) {
                 //Set the information - Event Name
                 String eventNameFromList = ev.getEvent_Name(); //get
-                 eventNamedIs= eventNameFromList;
+                eventNamedIs= eventNameFromList;
                 eventName.setText(eventNameFromList); //set
 
                 //Set the information - Event Description
@@ -343,19 +345,27 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        //add a marker on the google map
-        MarkerOptions marker1 = new MarkerOptions();
-        marker1.position(new LatLng(eventLat,eventLong));
-        marker1.title(eventNamedIs);
-        googleMap.addMarker(marker1);
+        googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                //add a marker on the google map
+                MarkerOptions marker1 = new MarkerOptions();
+                marker1.position(new LatLng(eventLat,eventLong));
+                marker1.title(eventNamedIs);
+                googleMap.addMarker(marker1);
 
-        //add zoom controls
-        googleMap.getUiSettings().setZoomControlsEnabled(true);
-        googleMap.getUiSettings().setZoomGesturesEnabled(true);
-        googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
+                //add zoom controls
+                googleMap.getUiSettings().setZoomControlsEnabled(true);
+                googleMap.getUiSettings().setZoomGesturesEnabled(true);
+                googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
+            }
+        });
+
     }
 
-    public void createNotificationChannel(){
+
+
+   /* public void createNotificationChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Devent";
             String description = "Upcoming event!";
@@ -365,7 +375,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-    }
+    }*/
 
 
 
