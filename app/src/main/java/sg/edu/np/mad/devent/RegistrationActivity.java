@@ -236,15 +236,15 @@ public class RegistrationActivity extends AppCompatActivity {
                 else if (!email.trim().matches(emailPattern)){
                     errormessage.setText("Kindly enter a valid email");
                 }
-//                else if (!((contact < 100000000 && contact >= 80000000) || (contact >= 60000000 && contact < 70000000))) {
-//                    errormessage.setText("Kindly enter a valid contact");
-//                }
+                else if (!((contact < 100000000 && contact >= 80000000) || (contact >= 60000000 && contact < 70000000))) {
+                    errormessage.setText("Kindly enter a valid contact");
+                }
                 else if (!job.matches(jobTitlePattern)) {
                     errormessage.setText("Invalid Job Title");
                 }
-//                else if (password.matches(passwordPattern)){
-//                    errormessage.setText("Kindly enter a password between 8 and 20 characters");
-//                }
+                else if (password.matches(passwordPattern)){
+                    errormessage.setText("Kindly enter a password between 8 and 20 characters");
+                }
                 else if (!password.equals(cpass)){
                     errormessage.setText("The password fields do not match");
                 }
