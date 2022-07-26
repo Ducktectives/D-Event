@@ -28,6 +28,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -65,12 +67,15 @@ public class UserBooking extends AppCompatActivity {
         //Creation of notification channel
         createNotificationChannel();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+
         Booking userbooking = new Booking();
 
         //receive intent
         Intent fromEventDetailsPage = getIntent();
         imageLinkfromEventDetails = fromEventDetailsPage.getStringExtra("EventPicture");
-        userEmail = fromEventDetailsPage.getStringExtra("User_Email");
+        userEmail = user.getEmail();
         eventid = fromEventDetailsPage.getStringExtra("Event");
         eventDate = fromEventDetailsPage.getStringExtra("EventDate");
         eventList = (List<Events>) fromEventDetailsPage.getSerializableExtra("EventList");
@@ -133,12 +138,12 @@ public class UserBooking extends AppCompatActivity {
         DatabaseReference Ref = database.getReference("Users");
 
         //Using get to get info from database once, rather than setting an event listener
-        Ref.orderByChild("email").equalTo(userEmail.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+        Ref.equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     // Getting the values required to authenticate the user
-                    Ref.child(userEmail.toLowerCase().replace(".", "")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    Ref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
                             if (!task.isSuccessful()) {
@@ -195,7 +200,7 @@ public class UserBooking extends AppCompatActivity {
         //search for the user with the same email
         database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
         DatabaseReference Ref2 = database.getReference("Users");
-        Ref2.child(userEmail.replace(".","").toLowerCase()).get()
+        Ref2.equalTo(userID).get()
                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -283,7 +288,7 @@ public class UserBooking extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Booking Made Successfully", Toast.LENGTH_LONG).show();
 
                                 //Add event to the list of booked events
-                                user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                user.child(userID).child("event_booked").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                                         Integer numberChild = Math.toIntExact(task.getResult().getChildrenCount());

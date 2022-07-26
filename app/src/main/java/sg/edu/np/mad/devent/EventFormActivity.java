@@ -78,7 +78,7 @@ public class EventFormActivity extends AppCompatActivity{
 
     //  Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked)
     Uri selectedImage; // event_Picture
-    EditText et_date, et_location, et_eventDescription, et_eventName, et_eventDetail, eventstart, eventend; // event_Date, event_Location, event_Description, event_StartTime, event_EndTime
+    EditText et_date, et_location, et_eventDescription, et_eventName, et_eventDetail, et_eventstart, et_eventend; // event_Date, event_Location, event_Description, event_StartTime, event_EndTime
 
     private int _day, _month, _birthYear;
 
@@ -119,6 +119,8 @@ public class EventFormActivity extends AppCompatActivity{
         et_date = (EditText) findViewById(R.id.txt_Date);
         et_eventDescription = (EditText) findViewById(R.id.txt_Event_Description);
         et_eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
+        et_eventstart = (EditText) findViewById(R.id.txt_StartTime);
+        et_eventend = (EditText) findViewById(R.id.txt_EndTime);
 
 
 
@@ -203,7 +205,7 @@ public class EventFormActivity extends AppCompatActivity{
         final int[] endHour = new int[1];
         final int[] endMinute = new int[1];
 
-        eventstart.setOnClickListener(new View.OnClickListener() {
+        et_eventstart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(
@@ -223,7 +225,7 @@ public class EventFormActivity extends AppCompatActivity{
                                             "HH:mm aa"
                                     );
 
-                                    eventstart.setText(f12hr.format(date));
+                                    et_eventstart.setText(f12hr.format(date));
                                 }
                                 catch (ParseException e) {
                                     e.printStackTrace();
@@ -238,7 +240,7 @@ public class EventFormActivity extends AppCompatActivity{
             }
         });
 
-        eventend.setOnClickListener(new View.OnClickListener() {
+        et_eventend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(
@@ -258,7 +260,7 @@ public class EventFormActivity extends AppCompatActivity{
                                             "HH:mm aa"
                                     );
 
-                                    eventend.setText(f12hr.format(date));
+                                    et_eventend.setText(f12hr.format(date));
                                 }
                                 catch (ParseException e) {
                                     e.printStackTrace();
@@ -385,8 +387,8 @@ public class EventFormActivity extends AppCompatActivity{
         event_Date  = et_date.getText().toString();
         event_Description  = et_eventDescription.getText().toString();
         event_Detail = et_eventDetail.getText().toString();
-        event_StartTime = eventstart.getText().toString();
-        event_EndTime = eventend.getText().toString();
+        event_StartTime = et_eventstart.getText().toString();
+        event_EndTime = et_eventend.getText().toString();
         bookmarked = false;
 
 

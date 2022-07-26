@@ -31,6 +31,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -83,7 +85,8 @@ public class profile_page extends AppCompatActivity {
     DatabaseReference event_path = database.getReference("Event");
     DatabaseReference user_path = database.getReference("Users");
 
-    //String user_id_unique = "CLEMENT"; // Change this to get from intent;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String userID = user.getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,8 +170,8 @@ public class profile_page extends AppCompatActivity {
             }
         });
 
-        Log.d("email",user_id_unique);
-        String a = user_id_unique.toLowerCase().replace(".","");
+        Log.d("email",user.getEmail());
+        String a = user.getEmail();
         Log.d("email a", "a is "+ a);
 
         // Get username to send to NavDrawer
@@ -200,11 +203,6 @@ public class profile_page extends AppCompatActivity {
 
 
 
-
-
-        user_id_unique = user_id_unique.toLowerCase().replace(".","");
-
-
         // Getting all the views as variables
         TextView EditDesc = findViewById(R.id.EditDesc);
         TextView UserDesc = findViewById(R.id.UserDescription);
@@ -215,7 +213,7 @@ public class profile_page extends AppCompatActivity {
 //        String getusernameofuser = setting.getStringExtra("username");
 //        String geruserprofileid = setting.getStringExtra("profile_id");
 
-        user_path.child(user_id_unique).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        user_path.child(userID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
 
@@ -298,14 +296,19 @@ public class profile_page extends AppCompatActivity {
                     usercontact = null;
                 }
                 userpass = String.valueOf(task.getResult().child("hashedpassword").getValue());
-                saltvalue = Integer.parseInt(String.valueOf(task.getResult().child("saltvalue").getValue()));
+                //saltvalue = Integer.parseInt(String.valueOf(task.getResult().child("saltvalue").getValue()));
 
 
 
                 p.setUsername(username);
                 p.setTitle(usertitle);
                 p.setEmail(useremail);
-                p.setContactnum(usercontact);
+                try {
+                    p.setContactnum(usercontact);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 p.setHashedpassword(userpass);
 
                 // Set default texts
@@ -322,7 +325,7 @@ public class profile_page extends AppCompatActivity {
                 // ^ Moved to change_password class
 
                 // Change Pic
-                user_path.child(user_id_unique).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                user_path.child(userID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (!task.isSuccessful()) {
@@ -422,7 +425,7 @@ public class profile_page extends AppCompatActivity {
 
 
         // App gets links from preferences first before running this
-        user_path.child(user_id_unique).orderByChild("Media").addChildEventListener(new ChildEventListener() {
+        user_path.child(userID).orderByChild("Media").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if(instaURL == null || instaURL.length() == 0 ){
@@ -465,10 +468,10 @@ public class profile_page extends AppCompatActivity {
         linkedinURL = sharedPreferences.getString("LinkedIn",null);
         websiteURL = sharedPreferences.getString("Website",null);
 
-        user_path.child(user_id_unique).child("Media").child("Instagram").setValue(instaURL);
-        user_path.child(user_id_unique).child("Media").child("Facebook").setValue(facebookURL);
-        user_path.child(user_id_unique).child("Media").child("LinkedIn").setValue(linkedinURL);
-        user_path.child(user_id_unique).child("Media").child("Website").setValue(websiteURL);
+        user_path.child(userID).child("Media").child("Instagram").setValue(instaURL);
+        user_path.child(userID).child("Media").child("Facebook").setValue(facebookURL);
+        user_path.child(userID).child("Media").child("LinkedIn").setValue(linkedinURL);
+        user_path.child(userID).child("Media").child("Website").setValue(websiteURL);
 
         // Onclick listeners for all the icons
         insta.setOnClickListener(new View.OnClickListener() {

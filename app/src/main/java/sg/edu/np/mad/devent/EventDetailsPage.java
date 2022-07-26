@@ -32,11 +32,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -103,7 +105,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         ImageView eventPicture = findViewById(R.id.eventPicture);
         TextView eventDateMonth = findViewById(R.id.EventMonth);
         TextView eventDateDay = findViewById(R.id.EventDate);
-        Button bookmark = findViewById(R.id.BookmarkButton);
+        FloatingActionButton bookmark = findViewById(R.id.BookmarkButton);
 
 
         //Goes through the eventList to find the correct event
@@ -343,16 +345,28 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        //add a marker on the google map
-        MarkerOptions marker1 = new MarkerOptions();
-        marker1.position(new LatLng(eventLat,eventLong));
-        marker1.title(eventNamedIs);
-        googleMap.addMarker(marker1);
+        googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                //code here
+                //add a marker on the google map
+                MarkerOptions marker1 = new MarkerOptions();
+                marker1.position(new LatLng(eventLat,eventLong));
+                marker1.title(eventNamedIs);
+                googleMap.addMarker(marker1);
 
-        //add zoom controls
-        googleMap.getUiSettings().setZoomControlsEnabled(true);
-        googleMap.getUiSettings().setZoomGesturesEnabled(true);
-        googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
+                //pan the focus of the google maps pin to the center
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                builder.include(marker1.getPosition());
+                LatLngBounds markerLoc = builder.build();
+                googleMap.setLatLngBoundsForCameraTarget(markerLoc);
+
+                //add zoom controls
+                googleMap.getUiSettings().setZoomControlsEnabled(true);
+                googleMap.getUiSettings().setZoomGesturesEnabled(true);
+                googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
+            }
+        });
     }
 
     public void createNotificationChannel(){
