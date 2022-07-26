@@ -93,7 +93,6 @@
     <orderEntry type="library" name="Gradle: com.google.auto.value:auto-value-annotations:1.6.2" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.9" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.10.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.android.support:support-annotations:27.1.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.paging:paging-common:3.0.0" level="project" />
     <orderEntry type="library" name="Gradle: io.reactivex.rxjava3:rxjava:3.0.2" level="project" />
     <orderEntry type="library" name="Gradle: org.reactivestreams:reactive-streams:1.0.3" level="project" />
@@ -190,11 +189,10 @@
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-encoders-json:16.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-location:17.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-places-placereport:17.0.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.squareup.picasso:picasso:2.71828@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.android.support:exifinterface:27.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.firebaseui:firebase-ui-auth:7.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-auth:19.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-auth-base:17.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.picasso:picasso:2.71828@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.firebaseui:firebase-ui-database:8.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.firebaseui:firebase-ui-common:8.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.legacy:legacy-support-v4:1.0.0@aar" level="project" />
@@ -204,5 +202,6 @@
     <orderEntry type="library" name="Gradle: androidx.paging:paging-rxjava3:3.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.firebaseui:firebase-ui-storage:7.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.karumi:dexter:6.0.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.yesidlazaro:GmailBackground:1.2.0@aar" level="project" />
   </component>
 </module>

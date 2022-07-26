@@ -23,6 +23,8 @@ public class Events implements Serializable {
     public Events() {}
 
 
+
+
     public Events(String event_ID, String event_Name, String event_Location, String event_Date,
                   String event_Description, String event_Detail, String event_StartTime,
                   String event_EndTime, String event_UserID, String event_StorageReferenceID,
@@ -38,6 +40,14 @@ public class Events implements Serializable {
         Event_UserID = event_UserID;
         Event_StorageReferenceID = event_StorageReferenceID;
         Bookmarked = bookmarked;
+    }
+
+    public String getEvent_EndTime() {
+        return Event_EndTime;
+    }
+
+    public void setEvent_EndTime(String event_EndTime) {
+        Event_EndTime = event_EndTime;
     }
 
     public String getEvent_ID() {
