@@ -208,31 +208,6 @@ public class EventListUpdateActivity extends AppCompatActivity{
         });
 
 
-
-/*                get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(!task.isSuccessful()){
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else{
-                    event_ID = String.valueOf(task.getResult().child("event_ID").getValue());
-                    event_Name = String.valueOf(task.getResult().child("event_Name").getValue());
-                    event_Location = String.valueOf(task.getResult().child("event_Location").getValue());
-                    event_Date = String.valueOf(task.getResult().child("event_ID").getValue());
-                    event_Description = String.valueOf(task.getResult().child("event_Description").getValue());
-                    userID = String.valueOf(task.getResult().child("event_UserID").getValue());
-                    event_Detail = String.valueOf(task.getResult().child("event_Detail").getValue());
-                    storageReference_ID = String.valueOf(task.getResult().child("event_StorageReferenceID").getValue());
-
-                }
-            }
-        });*/
-/*        Toast.makeText(this, "event_Name  : " + event_Name.toString(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "event_Location  : " + event_Location.toString(), Toast.LENGTH_SHORT).show();*/
-
-
-
         et_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -288,10 +263,6 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
     // Method for starting the activity for selecting image from phone storage
     public void pick(View view) {
-
-//            Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//            galleryIntent.setType("image/*");
-//            launcher.launch("image/*");
         // here, the image is successfully selected from the Gallery
         if (ActivityCompat.checkSelfPermission(EventListUpdateActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(EventListUpdateActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_IMAGE_REQUEST);
@@ -338,31 +309,6 @@ public class EventListUpdateActivity extends AppCompatActivity{
     );
 
 
-//    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
-//            new ActivityResultContracts.StartActivityForResult(),
-//            new ActivityResultCallback<ActivityResult>() {
-//                @Override
-//                public void onActivityResult(ActivityResult result) {
-//                    if (result.getResultCode() == Activity.RESULT_OK) {
-//                        Intent data = result.getData();
-//                        selectedImage = data.getData(); // get the file uri
-//                        if (selectedImage != null) {
-//                            try{
-//
-//                                // update the preview image in the layout
-////                            image.setImageURI(selectedImage);
-//
-//                                // Glide is an API that supports fetching of images.
-//                                // here we are setting image on image view using Glide
-//                                Glide.with(EventFormActivity.this).load(selectedImage).into(image);
-//                            }catch (Exception ex){
-//                                Log.d("Image upload error", String.valueOf(ex));
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//    );
 
 
     private void updateDateTxt(){
