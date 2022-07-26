@@ -85,16 +85,13 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-
-
                             Toast.makeText(LoginActivity.this, "User Login successfully!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(LoginActivity.this, NavDrawer.class));
-
-
-
-
-                        }else{
-                            Toast.makeText(LoginActivity.this, "Failed to login! Please check your credentials!", Toast.LENGTH_SHORT).show();
+                            Intent i1 = new Intent(LoginActivity.this, NavDrawer.class);
+                            i1.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                            startActivity(i1);
+                        }
+                        else{
+                            errormsg.setText("Failed to login! Please check your credentials!");
                             progressBar.setVisibility(View.GONE);
                         }
                     }

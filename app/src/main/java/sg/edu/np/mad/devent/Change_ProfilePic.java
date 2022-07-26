@@ -96,9 +96,6 @@ public class Change_ProfilePic extends AppCompatActivity {
             }
         });
 
-
-
-
     }
 
     private final ActivityResultLauncher<Intent> launchGallery = registerForActivityResult(

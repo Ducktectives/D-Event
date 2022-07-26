@@ -95,7 +95,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/EventLocation"
             tools:ignore="TouchTargetSizeCheck" />
-
         <TextView
             android:id="@+id/EventMonth"
             android:layout_width="51dp"
@@ -240,7 +239,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/Detail"
             app:rippleColor="@color/white"
-            app:srcCompat="@android:drawable/ic_input_get" />
+            app:srcCompat="@android:drawable/ic_input_get"
+            tools:ignore="SpeakableTextPresentCheck" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

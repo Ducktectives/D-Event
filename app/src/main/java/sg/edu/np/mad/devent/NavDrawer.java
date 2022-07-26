@@ -36,23 +36,29 @@ import sg.edu.np.mad.devent.databinding.ActivityNavDrawerBinding;
 import sg.edu.np.mad.devent.databinding.FragmentGalleryBinding;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class NavDrawer extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavDrawerBinding binding;
-    public static String getemailofuser;
+    public static String getuserprofileId, getemailofuser, getusernameofuser;
 
     /* Arthur Edit */
     private FirebaseUser user;
     private String userID;
     private NavigationView nav_view;
 
-    /* Arthur Edit */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         binding = ActivityNavDrawerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -66,14 +72,44 @@ public class NavDrawer extends AppCompatActivity {
         nav_view = (NavigationView) findViewById(R.id.nav_view);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        userID = user.getUid();
+        getuserprofileId = user.getUid();
+        getemailofuser = user.getEmail();
 
-        Toast.makeText(this, "User ID : " + userID.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "User ID : " + user.toString(), Toast.LENGTH_SHORT).show();
 
+        try {
+            FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+            DatabaseReference Ref = database.getReference("Users");
 
+            Ref.equalTo(getuserprofileId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()) {
+                            // Getting the values required to authenticate the user
+                            Ref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.e("firebase", "Error getting data. Please reload.", task.getException());
+                                    }
+                                    else {
+                                        Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                                        getusernameofuser = task.getResult().child("username").getValue(String.class);
+                                    }
+                                }
+                            });
+                        }
+                }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-        /* Arthur Edit */
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         setSupportActionBar(binding.appBarNavDrawer.toolbar);
@@ -117,7 +153,7 @@ public class NavDrawer extends AppCompatActivity {
                                 AuthUI.getInstance()
                                         .signOut(NavDrawer.this).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             public void onComplete(@NonNull Task<Void> task){
-                                                Toast.makeText(NavDrawer.this,"User Signed Out", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(NavDrawer.this,"Signed Out Complete", Toast.LENGTH_SHORT).show();
                                                 // below line is to go to MainActivity via an intent.
                                                 Intent i = new Intent(NavDrawer.this, LoginActivity.class);
                                                 startActivity(i);
@@ -136,18 +172,19 @@ public class NavDrawer extends AppCompatActivity {
                     case R.id.nav_settings:
                         Intent settingAct = new Intent(NavDrawer.this, Settings.class);
                         settingAct.putExtra("Email", getemailofuser);
+                        settingAct.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(settingAct);
 
                         break;
                     case R.id.nav_AddEvent:
                         Intent eventForm = new Intent(NavDrawer.this, EventFormActivity.class);
-
+                        eventForm.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(eventForm);
 
                         break;
                     case R.id.nav_eventList:
                         Intent eventList = new Intent(NavDrawer.this, EventListActivity.class);
-
+                        eventList.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(eventList);
 
                         break;
@@ -166,9 +203,9 @@ public class NavDrawer extends AppCompatActivity {
 //            builder.setPositiveButton("Sign out", new DialogInterface.OnClickListener() {
 //                @Override
 //                public void onClick(DialogInterface dialogInterface, int i) {
-//                    // Just change code below to whatever you gotta do
-//                    // Intent testAct = new Intent(NavDrawer.this, loginpage.class);
-//                    //startActivity(testAct);
+                    // Just change code below to whatever you gotta do
+                    // Intent testAct = new Intent(NavDrawer.this, loginpage.class);
+                    //startActivity(testAct);
 //                    AuthUI.getInstance()
 //                            .signOut(NavDrawer.this).addOnCompleteListener(new OnCompleteListener<Void>() {
 //                                public void onComplete(@NonNull Task<Void> task){
@@ -230,22 +267,23 @@ public class NavDrawer extends AppCompatActivity {
         // Used for displaying profile pic / Username / email in nav header
         View navHeader = navigationView.getHeaderView(0);
         // Pull data of user and display *** ! IMPORTANT COME BACK TO THIS LATER
-//        navHeader.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i2 = new Intent(NavDrawer.this, profile_page.class);
-//                i2.putExtra("Username_forprofile", getusernameofuser);
-//                i2.putExtra("Email", getemailofuser);
-//                i2.putExtra("profile_id_forprofile", getuserprofileId);
-//                startActivity(i2);
-//            }
-//        });
+        navHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i2 = new Intent(NavDrawer.this, profile_page.class);
+                i2.putExtra("Username_forprofile", getusernameofuser);
+                i2.putExtra("Email", getemailofuser);
+                i2.putExtra("profile_id_forprofile", getuserprofileId);
+                i2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i2);
+            }
+        });
 //
-//        TextView username = (TextView) navHeader.findViewById(R.id.nav_username);
-//        username.setText(getusernameofuser);
-//
-//        TextView email = (TextView) navHeader.findViewById(R.id.nav_email);
-//        email.setText(getemailofuser);
+        TextView username = (TextView) navHeader.findViewById(R.id.nav_username);
+        username.setText(getusernameofuser);
+
+        TextView email = (TextView) navHeader.findViewById(R.id.nav_email);
+        email.setText(getemailofuser);
 
     }
 

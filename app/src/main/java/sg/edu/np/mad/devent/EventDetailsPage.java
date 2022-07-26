@@ -32,6 +32,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -104,7 +105,6 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         ImageView eventPicture = findViewById(R.id.eventPicture);
         TextView eventDateMonth = findViewById(R.id.EventMonth);
         TextView eventDateDay = findViewById(R.id.EventDate);
-        TextView eventTiming = findViewById(R.id.timing);
         FloatingActionButton bookmark = findViewById(R.id.BookmarkButton);
 
 
@@ -113,7 +113,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             if (String.valueOf(ev.getEvent_ID()).equals(eventID)) {
                 //Set the information - Event Name
                 String eventNameFromList = ev.getEvent_Name(); //get
-                eventNamedIs= eventNameFromList;
+                 eventNamedIs= eventNameFromList;
                 eventName.setText(eventNameFromList); //set
 
                 //Set the information - Event Description
@@ -348,11 +348,18 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
+                //code here
                 //add a marker on the google map
                 MarkerOptions marker1 = new MarkerOptions();
                 marker1.position(new LatLng(eventLat,eventLong));
                 marker1.title(eventNamedIs);
                 googleMap.addMarker(marker1);
+
+                //pan the focus of the google maps pin to the center
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                builder.include(marker1.getPosition());
+                LatLngBounds markerLoc = builder.build();
+                googleMap.setLatLngBoundsForCameraTarget(markerLoc);
 
                 //add zoom controls
                 googleMap.getUiSettings().setZoomControlsEnabled(true);
@@ -360,12 +367,9 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                 googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
             }
         });
-
     }
 
-
-
-   /* public void createNotificationChannel(){
+    public void createNotificationChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Devent";
             String description = "Upcoming event!";
@@ -375,7 +379,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-    }*/
+    }
 
 
 

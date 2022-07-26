@@ -227,33 +227,57 @@ public class RegistrationActivity extends AppCompatActivity {
                 String jobTitlePattern = "^[a-zA-Z0-9 -]{3,30}";
 
                 // Input validation to check if the values are empty
-                if (name.isEmpty() || email.isEmpty() || contacts.isEmpty() || job.isEmpty() || password.isEmpty() || cpass.isEmpty()){
-                    errormessage.setText("Please enter a input for all the fields above");
+                if (name.isEmpty()){
+                    errormessage.setError("Name is required");
+                    return;
                 }
+
                 else if (!name.matches(namePattern)){
-                    errormessage.setText("Invalid name");
+                    errormessage.setText("Kindly enter a valid name");
                 }
+
+                else if (email.isEmpty()){
+                    errormessage.setText("Email is required");
+                }
+
                 else if (!email.trim().matches(emailPattern)){
                     errormessage.setText("Kindly enter a valid email");
                 }
+
+                else if (contact == null){
+                    errormessage.setText("Contact number is required");
+                }
+
                 else if (!((contact < 100000000 && contact >= 80000000) || (contact >= 60000000 && contact < 70000000))) {
                     errormessage.setText("Kindly enter a valid contact");
                 }
+
+                else if (job.isEmpty()) {
+                    errormessage.setText("Job Title is required");
+                }
+
                 else if (!job.matches(jobTitlePattern)) {
                     errormessage.setText("Invalid Job Title");
                 }
-                else if (password.matches(passwordPattern)){
-                    errormessage.setText("Kindly enter a password between 8 and 20 characters");
+
+                else if (password.isEmpty()) {
+                    errormessage.setText("Password is required");
                 }
-                else if (!password.equals(cpass)){
+
+                else if (password.length() < 8){
+                    errormessage.setText("The password need to be at least 8 characters long");
+                }
+
+                else if (!password.equals(cpass)) {
                     errormessage.setText("The password fields do not match");
                 }
-                else if (!checkboxvalue.isChecked()){
+
+                else if (!checkboxvalue.isChecked()) {
                     errormessage.setText("Please agree to our terms and conditions");
                 }
                 else {
-                    progressBar.setVisibility(View.VISIBLE);
-                    Toast.makeText(RegistrationActivity.this, "Email " + email, Toast.LENGTH_SHORT).show();
+                    //progressBar.setVisibility(View.VISIBLE);
+                    //Toast.makeText(RegistrationActivity.this, "Email " + email, Toast.LENGTH_SHORT).show();
 
                     Integer finalContact = contact;
                     mAuth.createUserWithEmailAndPassword(email, password)
@@ -269,20 +293,20 @@ public class RegistrationActivity extends AppCompatActivity {
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
                                                             Toast.makeText(RegistrationActivity.this, "User has been registered successfully!", Toast.LENGTH_SHORT).show();
-                                                            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                                            Intent intent = new Intent(RegistrationActivity.this, NavDrawer.class);
+                                                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                                                             startActivity(intent);
 
                                                         } else {
                                                             Toast.makeText(RegistrationActivity.this, "Failed to register! Try again!", Toast.LENGTH_SHORT).show();
 
                                                         }
-                                                        progressBar.setVisibility(View.GONE);
+                                                        //progressBar.setVisibility(View.GONE);
                                                     }
                                                 });
                                     } else {
                                         Toast.makeText(RegistrationActivity.this, "Failed to register!", Toast.LENGTH_SHORT).show();
-                                        progressBar.setVisibility(View.GONE);
+                                        //progressBar.setVisibility(View.GONE);
 
                                     }
                                 }

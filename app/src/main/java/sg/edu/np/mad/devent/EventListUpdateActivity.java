@@ -440,7 +440,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
         // Defining the child of storageReference
         //selectedImage => URI
-        // SorageReference represents a reference to Google Cloud Storage Object
+        // StorageReference represents a reference to Google Cloud Storage Object
 
         StorageReference ref = firebaseStorage.getReferenceFromUrl(storageReference_ID);
 

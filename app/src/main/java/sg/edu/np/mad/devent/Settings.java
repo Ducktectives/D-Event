@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -24,6 +25,8 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,13 +53,26 @@ public class Settings extends AppCompatActivity {
     private StorageReference storageReference;
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
     DatabaseReference event_path = database.getReference("Event");
-    DatabaseReference user_path = database.getReference("Users");
+    DatabaseReference user_path = database.getReference().child("Users");
 
+    FirebaseUser user;
+    private String userID;
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+
+        // Getting an instance out of Firebase AUth
+        auth = FirebaseAuth.getInstance();
+
+        // have a ref to the realtime database
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userID = user.getUid();
+        Toast.makeText(this, "User ID : " + userID, Toast.LENGTH_LONG).show();
+
+
         Intent setting = getIntent();
 
         user_id_unique = setting.getStringExtra("Email");
@@ -66,7 +82,7 @@ public class Settings extends AppCompatActivity {
         new_user_id_unique = user_id_unique.toLowerCase().replace(".","");
 
         // Get username to send in activity
-        user_path.child(new_user_id_unique).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        user_path.child(userID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(!task.isSuccessful()){
@@ -74,6 +90,8 @@ public class Settings extends AppCompatActivity {
                 }
                 else{
                     username = String.valueOf(task.getResult().child("username").getValue());
+                    Toast.makeText(Settings.this, "Username : " + username, Toast.LENGTH_LONG).show();
+
                 }
             }
         });
@@ -130,12 +148,17 @@ public class Settings extends AppCompatActivity {
 
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
+        private FirebaseUser user;
+        private String userID;
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
             Settings s = new Settings();
             final Integer[] saltvalue = new Integer[1];
+
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            userID = user.getUid();
 
 
             // Changing password
@@ -219,7 +242,7 @@ public class Settings extends AppCompatActivity {
                             public void afterTextChanged(Editable editable) {
                                 new_title[0] = editText.getText().toString();
                             if (new_title[0] != null){
-                                s.user_path.child(new_user_id_unique).child("title").setValue(new_title[0]);
+                                s.user_path.child(userID).child("title").setValue(new_title[0]);
                             }
                             }
                         });
@@ -258,6 +281,12 @@ public class Settings extends AppCompatActivity {
 
                 }
             });
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            String userID = user.getUid();
+
+
+
             if(changename != null){
                 final String[] new_name = new String[1];
                 changename.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
