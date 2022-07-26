@@ -4,12 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -22,7 +21,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -34,8 +32,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +49,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -66,13 +67,13 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
     //  Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked)
     Uri selectedImage; // event_Picture
-    EditText et_date, et_start, et_end, et_location, et_eventDescription, et_eventName, et_eventDetail; // event_Date, event_Start, event_End, event_Location, event_Description
+    EditText et_date, et_location, et_eventDescription, et_eventName, et_eventDetail, et_eventStartTime, et_eventStopTime; // event_Date, event_Location, event_Description
 
     private int _day, _month, _birthYear;
 
-    // Events(String event_Name, String event_Location, String event_Date, String event_Start, String event_End, String event_Description, String event_UserID, boolean bookmarked)
+    // Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, boolean bookmarked)
     // Declaring the variables to upload the values to firebase
-    private String event_ID, event_Name, event_Location, event_Date, event_Start, event_End, event_Description, userID, storageReference_ID, event_Detail, download_ImageUrl;
+    private String event_ID, event_Name, event_Location, event_Date, event_Description, userID, storageReference_ID, event_Detail, download_ImageUrl, event_StartTime, event_StopTime;
     private Boolean bookmarked;
 
     private FirebaseUser user;
@@ -86,9 +87,10 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
 
     // Firebase for storing Image
-    private StorageReference reference;
+    private StorageReference storageReference;
     FirebaseStorage firebaseStorage;
     private FirebaseDatabase database;
+    DatabaseReference databaseReference;
 
     FirebaseAuth mAuth;
 
@@ -100,15 +102,21 @@ public class EventListUpdateActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list_update);
 
+        database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+
+
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             event_ID = extras.getString("Event_ID");
             storageReference_ID = extras.getString("Event_Storage");
-            Toast.makeText(this, "Event ID " + event_ID, Toast.LENGTH_LONG).show();
-            Toast.makeText(this, "Storage ID " + storageReference_ID, Toast.LENGTH_LONG).show();
+            /*Toast.makeText(this, "Event ID " + event_ID, Toast.LENGTH_LONG).show();*/
+            /*Toast.makeText(this, "Storage ID " + storageReference_ID, Toast.LENGTH_LONG).show();*/
 
             //The key argument here must match that used in the other activity
         }
+
+
 
 
         imgPath = findViewById(R.id.item_img);
@@ -119,10 +127,11 @@ public class EventListUpdateActivity extends AppCompatActivity{
         et_eventName = (EditText) findViewById(R.id.txt_event_form_name);
         et_location = (EditText) findViewById(R.id.txt_event_form_location);
         et_date = (EditText) findViewById(R.id.txt_Date);
-        et_start = (EditText) findViewById(R.id.txt_StartTime);
-        et_end = (EditText) findViewById(R.id.txt_EndTime);
         et_eventDescription = (EditText) findViewById(R.id.txt_Event_Description);
         et_eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
+
+        et_eventStartTime = (EditText) findViewById(R.id.txt_event_StartTime);
+        et_eventStopTime = (EditText) findViewById(R.id.txt_event_EndTime);
 
 
 
@@ -133,7 +142,6 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
 
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -146,10 +154,82 @@ public class EventListUpdateActivity extends AppCompatActivity{
         firebaseStorage.getMaxUploadRetryTimeMillis();
 
 
-        Toast.makeText(this, "User ID : " + userID.toString(), Toast.LENGTH_SHORT).show();
 
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+
+        DatabaseReference reference ;
+        reference = database.getInstance().getReference();
+
+
+        /* 26/07 - Set the form when user comes in */
+        // Get username to send in activity
+
+        reference.child("Event").child(event_ID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Events events = dataSnapshot.getValue(Events.class);
+                event_ID = events.Event_ID;
+                event_Name = events.Event_Name;
+                event_Location = events.Event_Location;
+                event_Date = events.Event_Date;
+                event_Description = events.Event_Description;
+                storageReference_ID = events.Event_StorageReferenceID;
+                event_Detail = events.Event_Detail;
+                event_StartTime = events.Event_StartTime;
+                event_StopTime = events.Event_EndTime;
+
+
+                et_eventName.setText(event_Name);
+                et_location.setText(event_Location);
+                et_date.setText(event_Date);
+                et_eventDescription.setText(event_Description);
+                et_location.setText(event_Location);
+                et_eventDetail.setText(event_Detail);
+                et_eventStartTime.setText(event_StartTime);
+                et_eventStopTime.setText(event_StopTime);
+
+                try{
+
+                    Glide.with(EventListUpdateActivity.this).load(storageReference_ID).into(image);
+                    selectedImage = Uri.parse(storageReference_ID);
+
+                }catch (Exception ex){
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
+
+/*                get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(!task.isSuccessful()){
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else{
+                    event_ID = String.valueOf(task.getResult().child("event_ID").getValue());
+                    event_Name = String.valueOf(task.getResult().child("event_Name").getValue());
+                    event_Location = String.valueOf(task.getResult().child("event_Location").getValue());
+                    event_Date = String.valueOf(task.getResult().child("event_ID").getValue());
+                    event_Description = String.valueOf(task.getResult().child("event_Description").getValue());
+                    userID = String.valueOf(task.getResult().child("event_UserID").getValue());
+                    event_Detail = String.valueOf(task.getResult().child("event_Detail").getValue());
+                    storageReference_ID = String.valueOf(task.getResult().child("event_StorageReferenceID").getValue());
+
+                }
+            }
+        });*/
+/*        Toast.makeText(this, "event_Name  : " + event_Name.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "event_Location  : " + event_Location.toString(), Toast.LENGTH_SHORT).show();*/
 
 
 
@@ -200,81 +280,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
             }
         });
 
-        // Initialise Variables for selecting Start and End Time
-        final int[] startHour = new int[1];
-        final int[] startMinute = new int[1];
-        final int[] endHour = new int[1];
-        final int[] endMinute = new int[1];
 
-        et_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        EventListUpdateActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker timePicker, int hourofday, int minofday) {
-                                startHour[0] = hourofday;
-                                startMinute[0] = minofday;
-                                String time = startHour[0] + ":" + startMinute[0];
-                                SimpleDateFormat f24hr = new SimpleDateFormat(
-                                        "HH:mm"
-                                );
-                                try {
-                                    Date date = f24hr.parse(time);
-                                    SimpleDateFormat f12hr = new SimpleDateFormat(
-                                            "HH:mm aa"
-                                    );
-
-                                    et_start.setText(f12hr.format(date));
-                                }
-                                catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, 12, 0, false
-                );
-
-                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                timePickerDialog.updateTime(startHour[0], startMinute[0]);
-                timePickerDialog.show();
-            }
-        });
-
-        et_end.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        EventListUpdateActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker timePicker, int hourofday, int minofday) {
-                                endHour[0] = hourofday;
-                                endMinute[0] = minofday;
-                                String time = endHour[0] + ":" + endMinute[0];
-                                SimpleDateFormat f24hr = new SimpleDateFormat(
-                                        "HH:mm"
-                                );
-                                try {
-                                    Date date = f24hr.parse(time);
-                                    SimpleDateFormat f12hr = new SimpleDateFormat(
-                                            "HH:mm aa"
-                                    );
-
-                                    et_end.setText(f12hr.format(date));
-                                }
-                                catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, 12, 0, false
-                );
-
-                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                timePickerDialog.updateTime(endHour[0], endMinute[0]);
-                timePickerDialog.show();
-            }
-        });
 
 
     }
@@ -301,10 +307,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
     public void submit_form(View view){
 
         uploadForm();
-        Intent submitform = new Intent(EventListUpdateActivity.this, NavDrawer.class);
-        //(EventFormActivity.this).finish();
-        submitform.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivity(submitform);
+
 
     }
 
@@ -412,10 +415,6 @@ public class EventListUpdateActivity extends AppCompatActivity{
             et_eventDescription.requestFocus();
             return;
         }
-        if (event_Start.isEmpty() || event_End.isEmpty()){
-            Toast.makeText(EventListUpdateActivity.this, "Enter Event Time", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
         try {
@@ -440,7 +439,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
         // Defining the child of storageReference
         //selectedImage => URI
-        // StorageReference represents a reference to Google Cloud Storage Object
+        // SorageReference represents a reference to Google Cloud Storage Object
 
         StorageReference ref = firebaseStorage.getReferenceFromUrl(storageReference_ID);
 
@@ -464,12 +463,18 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
 
 
+        image.setDrawingCacheEnabled(true);
+        image.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
 
 
+       /* Toast.makeText(EventListUpdateActivity.this, "Selected Image " + selectedImage, Toast.LENGTH_SHORT).show();
+*/
 
-
-
-        ref.putFile(selectedImage).addOnFailureListener(new OnFailureListener(){
+        ref.putBytes(data).addOnFailureListener(new OnFailureListener(){
             @Override
             public void onFailure(@NonNull Exception e){
                 // Error, Image not uploaded
@@ -491,8 +496,6 @@ public class EventListUpdateActivity extends AppCompatActivity{
                         hashMap.put("event_Name", event_Name);
                         hashMap.put("event_Location", event_Location);
                         hashMap.put("event_Date", event_Date);
-                        hashMap.put("event_Start", event_Start);
-                        hashMap.put("event_End", event_End);
                         hashMap.put("event_Description", event_Description);
                         hashMap.put("event_Detail", event_Detail);
                         hashMap.put("event_StorageReferenceID", downloadUrl.toString());
@@ -512,8 +515,8 @@ public class EventListUpdateActivity extends AppCompatActivity{
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Events post = dataSnapshot.getValue(Events.class);
                                 System.out.println(post);
-                                Toast.makeText(EventListUpdateActivity.this, "Event Name" + post.Event_Name, Toast.LENGTH_SHORT).show();
-
+                               /* Toast.makeText(EventListUpdateActivity.this, "Event Name" + post.Event_Name, Toast.LENGTH_SHORT).show();
+*/
                             }
 
                             @Override
@@ -529,12 +532,12 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
 
                         image.setImageDrawable(getResources().getDrawable(R.drawable.file_upload_image_border));
-                        et_eventName.setText("");
+         /*               et_eventName.setText("");
                         et_location.setText("");
                         et_date.setText("");
                         et_eventDescription.setText("");
                         et_eventDetail.setText("");
-
+*/
                         Toast.makeText(EventListUpdateActivity.this, "Form Uploaded", Toast.LENGTH_SHORT).show();
 
                         progressDialog.setCanceledOnTouchOutside(false);

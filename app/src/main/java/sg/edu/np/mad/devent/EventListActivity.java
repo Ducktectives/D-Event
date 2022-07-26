@@ -119,6 +119,7 @@ public class EventListActivity extends AppCompatActivity {
                     for(DataSnapshot ohSnap : snapshot.getChildren()){
                         ohSnap.getRef().removeValue();
 
+
                     }
                     reference.delete();
                     EventListActivity.super.recreate();

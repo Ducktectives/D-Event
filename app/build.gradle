@@ -94,4 +94,5 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
 
     implementation 'com.karumi:dexter:6.0.2'
+    implementation 'com.github.yesidlazaro:GmailBackground:1.2.0'
 }
