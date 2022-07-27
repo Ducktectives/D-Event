@@ -18,6 +18,9 @@
         android:theme="@style/Theme.DEvent"
         tools:targetApi="31">
         <activity
+            android:name=".BookingSummary"
+            android:exported="false" />
+        <activity
             android:name=".change_password"
             android:exported="false"
             android:label="@string/title_activity_change_password"
