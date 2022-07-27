@@ -14,6 +14,7 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +40,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -68,7 +71,7 @@ import java.util.Locale;
 
 public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCallback {
     TextView eventOrg;
-    String eventOrganizerEmail;
+    String eventOrganizerUID;
     String imageLink;
     String userEmail;
     String eventID;
@@ -78,7 +81,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
 
     List<Events> eventList;
 
-    boolean PermisionGranted;
+    FirebaseUser user;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -106,6 +109,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         TextView eventDateMonth = findViewById(R.id.EventMonth);
         TextView eventDateDay = findViewById(R.id.EventDate);
         FloatingActionButton bookmark = findViewById(R.id.BookmarkButton);
+        TextView eventTime = findViewById(R.id.timing);
 
 
         //Goes through the eventList to find the correct event
@@ -149,15 +153,15 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
 
 
                 //Set the information - Event Organizer
-                eventOrganizerEmail = ev.getEvent_UserID(); //get
-                if (eventOrganizerEmail == null){
+                eventOrganizerUID = ev.getEvent_UserID(); //get
+                if (eventOrganizerUID == null){
                     eventOrg.setText("No user.");
                 }
                 else {
                     //search for the user with the same email
                     FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
                     DatabaseReference Ref2 = database.getReference("Users");
-                    Ref2.child(eventOrganizerEmail.replace(".","").toLowerCase()).get()
+                    Ref2.child(eventOrganizerUID).get()
                             .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -175,12 +179,15 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
 
                 //for image
                 //For event banner/image
-                imageLink = ev.getEvent_StorageReferenceID();
+                //imageLink = ev.getEvent_StorageReferenceID();  //previous imageLink for ASG1
+                user = FirebaseAuth.getInstance().getCurrentUser();
 
                 //set reference point for Firebase Storage
                 StorageReference firebaseStorage= FirebaseStorage.getInstance().getReference("images/" + imageLink);
-
+/*
                 try {
+
+
                     File localfile = File.createTempFile("image",".jpg");
                     firebaseStorage.getFile(localfile)
                             .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -200,7 +207,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
 
                 } catch (IOException e) {
 
-                }
+                }*/
 
                 //for date of event
                 String eventDate = ev.getEvent_Date();
@@ -239,6 +246,10 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
 
                 }
 
+                //for timing of event
+                String finalTime = "Timing: " + ev.Event_StartTime + " - " +ev.Event_EndTime;
+                eventTime.setText(finalTime);
+
             }
         }
 
@@ -249,7 +260,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onClick(View view) {
                 Intent profile = new Intent(EventDetailsPage.this, profile_page.class);
-               profile.putExtra("EventOrganizer", eventOrganizerEmail);
+               profile.putExtra("EventOrganizer", eventOrganizerUID);
               startActivity(profile);
 
            }
@@ -348,23 +359,29 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
-                //code here
-                //add a marker on the google map
-                MarkerOptions marker1 = new MarkerOptions();
-                marker1.position(new LatLng(eventLat,eventLong));
-                marker1.title(eventNamedIs);
-                googleMap.addMarker(marker1);
+                try {
+                    //add a marker on the google map
+                    MarkerOptions marker1 = new MarkerOptions();
+                    if (eventLat != null && eventLong != null) {
+                        marker1.position(new LatLng(eventLat, eventLong));
+                        marker1.title(eventNamedIs);
+                        googleMap.addMarker(marker1);
+                    }
 
-                //pan the focus of the google maps pin to the center
-                LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                builder.include(marker1.getPosition());
-                LatLngBounds markerLoc = builder.build();
-                googleMap.setLatLngBoundsForCameraTarget(markerLoc);
+                    //pan the focus of the google maps pin to the center
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                    builder.include(marker1.getPosition());
+                    LatLngBounds markerLoc = builder.build();
+                    googleMap.setLatLngBoundsForCameraTarget(markerLoc);
 
-                //add zoom controls
-                googleMap.getUiSettings().setZoomControlsEnabled(true);
-                googleMap.getUiSettings().setZoomGesturesEnabled(true);
-                googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
+                    //add zoom controls
+                    googleMap.getUiSettings().setZoomControlsEnabled(true);
+                    googleMap.getUiSettings().setZoomGesturesEnabled(true);
+
+                }
+                catch (Exception e){
+
+                }
             }
         });
     }

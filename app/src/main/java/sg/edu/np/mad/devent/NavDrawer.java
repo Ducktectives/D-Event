@@ -81,6 +81,9 @@ public class NavDrawer extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
             DatabaseReference Ref = database.getReference("Users");
 
+
+
+
             Ref.equalTo(getuserprofileId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
