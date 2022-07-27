@@ -58,6 +58,8 @@ public class UserBooking extends AppCompatActivity {
     String eventName;
     List<Events> eventList;
     String eventDate;
+    String username;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +86,7 @@ public class UserBooking extends AppCompatActivity {
         // Assign the texts, buttons and images to a variable to be called
         ImageView eventimage = (ImageView)findViewById(R.id.eventimage);
         Button confirmbooking = (Button)findViewById(R.id.confirmbooking);
-        EditText userinputname = (EditText)findViewById(R.id.UserBookingName);
+        EditText userinputname = (EditText) findViewById(R.id.UserBookingName);
         EditText userinputemail = (EditText)findViewById(R.id.UserBookingEmail);
         EditText userinputcontact = (EditText)findViewById(R.id.UserBookingPhone);
         TextView userinputpax = (TextView) findViewById(R.id.TicketCounter);
@@ -138,33 +140,32 @@ public class UserBooking extends AppCompatActivity {
         DatabaseReference Ref = database.getReference("Users");
 
         //Using get to get info from database once, rather than setting an event listener
-        Ref.equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        // Getting the values required to authenticate the user
+        Ref.child(userID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    // Getting the values required to authenticate the user
-                    Ref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            if (!task.isSuccessful()) {
-                                Log.e("firebase", "Error getting data. Please reload.", task.getException());
-                            }
-                            else {
-                                Log.d("firebase", String.valueOf(task.getResult().child("username").getValue()));
-                                Integer contactnum = task.getResult().child("contactnum").getValue(Integer.class);
-                                String username = task.getResult().child("username").getValue(String.class);
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data. Please reload.", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().child("contactnum").getValue()));
+                    String contactnum = String.valueOf(task.getResult().child("contactnum").getValue());
+                    username = String.valueOf(task.getResult().child("username").getValue());
 
-                                userinputname.setText(username);
-                                userinputemail.setText(userEmail);
-                                userinputcontact.setText(contactnum.toString());
-                            }
+                    userinputname.post(new Runnable(){
+                        @Override
+                        public void run() {
+                            userinputname.setText(username);
+                        }
+                    });
+                    userinputemail.setText(userEmail);
+                    userinputcontact.post(new Runnable(){
+                        @Override
+                        public void run() {
+                            userinputcontact.setText(contactnum);
                         }
                     });
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
 
