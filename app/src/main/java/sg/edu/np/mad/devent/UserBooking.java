@@ -61,6 +61,8 @@ public class UserBooking extends AppCompatActivity {
     String username;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -293,8 +295,13 @@ public class UserBooking extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                                         Integer numberChild = Math.toIntExact(task.getResult().getChildrenCount());
-                                        Integer storeID = numberChild +1 ;
-                                        user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
+                                        Integer storeID = numberChild + 1 ;
+
+//                                        Hao Zhong's change to use UUID upon booking
+//                                        user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
+                                        user.child(userID).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
+//                                          end change
+
 
                                         //Pass intent into the Profile Page
                                         Intent profileData = new Intent(UserBooking.this,BookingSummary.class);
