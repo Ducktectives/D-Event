@@ -180,19 +180,16 @@ public class NavDrawer extends AppCompatActivity {
                     case R.id.nav_settings:
                         Intent settingAct = new Intent(NavDrawer.this, Settings.class);
                         settingAct.putExtra("Email", getemailofuser);
-                        settingAct.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(settingAct);
 
                         break;
                     case R.id.nav_AddEvent:
                         Intent eventForm = new Intent(NavDrawer.this, EventFormActivity.class);
-                        eventForm.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(eventForm);
 
                         break;
                     case R.id.nav_eventList:
                         Intent eventList = new Intent(NavDrawer.this, EventListActivity.class);
-                        eventList.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(eventList);
 
                         break;
@@ -290,7 +287,6 @@ public class NavDrawer extends AppCompatActivity {
                 i2.putExtra("Username_forprofile", getusernameofuser);
                 i2.putExtra("Email", getemailofuser);
                 i2.putExtra("profile_id_forprofile", getuserprofileId);
-                i2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i2);
             }
         });

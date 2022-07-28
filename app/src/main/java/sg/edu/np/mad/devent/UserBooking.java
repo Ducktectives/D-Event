@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.annotation.NonNullApi;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -172,28 +173,10 @@ public class UserBooking extends AppCompatActivity {
         });
 
         // Get the event image
-        //set reference point for Firebase Storage
-        StorageReference firebaseStorage= FirebaseStorage.getInstance().getReference("images/" + imageLinkfromEventDetails);
 
         try {
-            File localfile = File.createTempFile("image",".jpg");
-            firebaseStorage.getFile(localfile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            Bitmap bitmapImage = BitmapFactory.decodeFile(localfile.getAbsolutePath());
-                            eventimage.setImageBitmap(bitmapImage);
-
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            eventimage.setImageResource(R.drawable.ducketive);
-                        }
-                    });
-
-        } catch (IOException e) {
+            Glide.with(UserBooking.this).load(imageLinkfromEventDetails).into(eventimage);
+        } catch (Exception e) {
 
         }
 
@@ -310,19 +293,56 @@ public class UserBooking extends AppCompatActivity {
 //                                          end change
 
 
-                                        //Pass intent into the Profile Page
-                                        Intent profileData = new Intent(UserBooking.this,BookingSummary.class);
-                                        Bundle profileDatas = new Bundle();
-                                        profileDatas.putString("EventID",eventid);
-                                        profileDatas.putString("Email",userEmail);
-                                        profileDatas.putString("Name",bookingname);
-                                        profileDatas.putString("UserEmail",bookingemail);
-                                        profileDatas.putInt("ContactNum",finalbookingnumber);
-                                        profileDatas.putInt("NumberofTix",finalbookingpax);
-                                        profileDatas.putString("EventName",eventName);
-                                        profileData.putExtras(profileDatas);
-                                        profileData.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(profileData);
+                                        //check whether ticket price is more than 0
+                                        Ref.child(eventid).get()
+                                                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                                        if (!task.isSuccessful()){
+
+                                                        }
+                                                        else{
+                                                            String stringTicketPrice = String.valueOf(task.getResult().child("event_TicketPrice").getValue());
+                                                            Double TicketPrice = Double.parseDouble(stringTicketPrice);
+
+                                                            if (TicketPrice > 0){
+                                                                Intent payment = new Intent(UserBooking.this,PaymentPage.class);
+                                                                Bundle paymentDetails = new Bundle();
+                                                                paymentDetails.putString("NoTix", "" +finalbookingpax);
+                                                                paymentDetails.putString("TixPrice","" + TicketPrice);
+                                                                paymentDetails.putString("EventName",eventName);
+                                                               //extras stuff
+                                                                paymentDetails.putString("Name",bookingname);
+                                                                paymentDetails.putString("UserEmail",bookingemail);
+                                                                paymentDetails.putString("ContactNum","" + finalbookingnumber);
+                                                                paymentDetails.putString("EventID",eventid);
+                                                                paymentDetails.putString("Email",userEmail);
+                                                                paymentDetails.putString("EventImage",imageLinkfromEventDetails);
+                                                                payment.putExtras(paymentDetails);
+                                                                startActivity(payment);
+                                                                payment.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                            }
+                                                            else {
+                                                                //Pass intent into the Profile Page - carrot
+                                                                //Pass intent into the Profile Page
+                                                                Intent profileData = new Intent(UserBooking.this,BookingSummary.class);
+                                                                Bundle profileDatas = new Bundle();
+                                                                profileDatas.putString("EventID",eventid);
+                                                                profileDatas.putString("Email",userEmail);
+                                                                profileDatas.putString("Name",bookingname);
+                                                                profileDatas.putString("UserEmail",bookingemail);
+                                                                profileDatas.putInt("ContactNum",finalbookingnumber);
+                                                                profileDatas.putInt("NumberofTix",finalbookingpax);
+                                                                profileDatas.putString("EventName",eventName);
+                                                                profileDatas.putString("EventImage",imageLinkfromEventDetails);
+                                                                profileData.putExtras(profileDatas);
+                                                                startActivity(profileData);
+                                                                finish();
+                                                            }
+
+                                                        }
+                                                    }
+                                                });
                                     }
                                 });
 

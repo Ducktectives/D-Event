@@ -14,6 +14,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,16 +26,25 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SplashScreen extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
+    private ProgressBar progressbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        progressbar = (ProgressBar)findViewById(R.id.progressBar);
 
-        ProgressBar progressbar = (ProgressBar)findViewById(R.id.progressBar);
+        progressbar.setProgress(33);
 
-        progressbar.setProgress(25);
 
-        progressbar.setProgress(50);
+        progressbar.setProgress(66);
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+
+
+        /*
         SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
 
         String savedemail = sharedPreferences.getString("Email", "");
@@ -49,6 +61,10 @@ public class SplashScreen extends AppCompatActivity {
             progressbar.setProgress(75);
             FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
             DatabaseReference Ref = database.getReference("Users");
+
+            firebase.auth.Auth.Persistence.LOCAL;
+
+
 
             //Using get to get info from database once, rather than setting an event listener
             Ref.orderByChild("email").equalTo(savedemail.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -78,6 +94,7 @@ public class SplashScreen extends AppCompatActivity {
                                         login.putExtra("profile_id", profileid);
                                         login.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(login);
+                                        finish();
                                     }
                                 }
                             }
@@ -88,6 +105,7 @@ public class SplashScreen extends AppCompatActivity {
                         i2.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         progressbar.setProgress(100);
                         startActivity(i2);
+                        finish();
                     }
                 }
 
@@ -97,8 +115,33 @@ public class SplashScreen extends AppCompatActivity {
                     i3.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     progressbar.setProgress(100);
                     startActivity(i3);
+                    finish();
                 }
             });
+
+        }
+
+         */
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent login = new Intent(SplashScreen.this, NavDrawer.class);
+            login.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            progressbar.setProgress(100);
+            startActivity(login);
+            finish();
+        }
+        else {
+            Intent i2 = new Intent(SplashScreen.this, LoginActivity.class);
+            i2.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            progressbar.setProgress(100);
+            startActivity(i2);
+            finish();
         }
     }
 }

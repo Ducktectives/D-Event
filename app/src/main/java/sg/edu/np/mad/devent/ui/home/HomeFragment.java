@@ -200,6 +200,7 @@ public class HomeFragment extends Fragment {
                 String eventStorageID = snapshot.child("event_StorageReferenceID").getValue(String.class);
                 String eventStartTime = snapshot.child("event_StartTime").getValue(String.class);
                 String eventEndTime = snapshot.child("event_EndTime").getValue(String.class);
+                Double eventTicketPrice = snapshot.child("event_TicketPrice").getValue(Double.class);
                 List<String> eventTypes = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.child("eventTypes").getChildren()) {
                     eventTypes.add(dataSnapshot.getValue(String.class));
@@ -211,7 +212,8 @@ public class HomeFragment extends Fragment {
                 if (eventsIDList.contains(eventID)) return;
 
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,eventDetail, eventStartTime, eventEndTime,
-                         eventUserID, eventStorageID, eventBooked, eventTypes);
+                         eventUserID, eventStorageID, eventBooked,eventTicketPrice, eventTypes);
+
                 eventsIDList.add(eventID);
                 eventsList.add(event);
 

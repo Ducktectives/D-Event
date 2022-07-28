@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -109,6 +110,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         TextView eventDateMonth = findViewById(R.id.EventMonth);
         TextView eventDateDay = findViewById(R.id.EventDate);
         FloatingActionButton bookmark = findViewById(R.id.BookmarkButton);
+        bookmark.setVisibility(View.GONE);
         TextView eventTime = findViewById(R.id.timing);
 
 
@@ -179,35 +181,18 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
 
                 //for image
                 //For event banner/image
-                //imageLink = ev.getEvent_StorageReferenceID();  //previous imageLink for ASG1
+                imageLink = ev.getEvent_StorageReferenceID();
                 user = FirebaseAuth.getInstance().getCurrentUser();
 
-                //set reference point for Firebase Storage
-                StorageReference firebaseStorage= FirebaseStorage.getInstance().getReference("images/" + imageLink);
-/*
-                try {
+                try{
+                    Glide.with(EventDetailsPage.this).load(imageLink).into(eventPicture);
+
+                }
+                catch (Exception ex){
+
+                }
 
 
-                    File localfile = File.createTempFile("image",".jpg");
-                    firebaseStorage.getFile(localfile)
-                            .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                    Bitmap bitmapImage = BitmapFactory.decodeFile(localfile.getAbsolutePath());
-                                    eventPicture.setImageBitmap(bitmapImage);
-
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    eventPicture.setVisibility(View.INVISIBLE);
-                                }
-                            });
-
-                } catch (IOException e) {
-
-                }*/
 
                 //for date of event
                 String eventDate = ev.getEvent_Date();
@@ -278,7 +263,11 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                 bookingInfo.putString("User_Email",userEmail);
                 bookingInfo.putSerializable("EventList",(Serializable) eventList);
                 bookingInfo.putString("Event", eventID);
+                bookingInfo.putString("EventName",eventNamedIs);
+                bookingInfo.putString("EventPicture",imageLink);
                 book.putExtras(bookingInfo);
+                startActivity(book);
+                book.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 /*
                 // Code below is used to set up notification for the user on the day of the event
                 Toast.makeText(EventDetailsPage.this,"Reminder has been set!", Toast.LENGTH_SHORT).show();
@@ -293,8 +282,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                 alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtButtonClick + tenSeconds, pendingIntent);
 
                  */
-                book.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(book);
+
             }
         });
 
