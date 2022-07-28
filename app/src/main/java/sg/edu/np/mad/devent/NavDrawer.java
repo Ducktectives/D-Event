@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,9 +32,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import sg.edu.np.mad.devent.databinding.ActivityNavDrawerBinding;
 import sg.edu.np.mad.devent.databinding.FragmentGalleryBinding;
+import sg.edu.np.mad.devent.ui.home.HomeFragment;
+import sg.edu.np.mad.devent.ui.home.HomeGridAdapter;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.database.DataSnapshot;
