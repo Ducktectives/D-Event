@@ -97,4 +97,8 @@ dependencies {
 
     implementation 'com.karumi:dexter:6.0.2'
     implementation 'com.github.yesidlazaro:GmailBackground:1.2.0'
+
+    implementation 'com.facebook.android:facebook-login:latest.release'
+    implementation 'com.jjoe64:graphview:4.2.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

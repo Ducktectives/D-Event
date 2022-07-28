@@ -285,8 +285,15 @@ public class UserBooking extends AppCompatActivity {
                                 userbooking.Email = bookingemail;
                                 userbooking.Contact = finalbookingnumber;
                                 userbooking.Pax = finalbookingpax;
+
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                Date today = Calendar.getInstance().getTime();
+                                String todayString = sdf.format(today);
+
+
                                 // Create subfolder in the event and name the subfolder booking and create another subfolder within with the booking email as the key to store the record
                                 book.child(eventid).child(bookingemail.toLowerCase().replace(".", "")).setValue(userbooking);
+                                book.child(eventid).child(bookingemail.toLowerCase().replace(".","")).child("DayOrdered").setValue(todayString);
                                 // Let user know that Booking is successful
                                 Toast.makeText(getApplicationContext(), "Booking Made Successfully", Toast.LENGTH_LONG).show();
 

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/waves"
+    tools:context=".Statistics">
+
+    <LinearLayout
+        android:id="@+id/Stats1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+        <TextView
+            android:id="@+id/TextNumberOfEvents"
+            android:layout_width="53dp"
+            android:layout_height="93dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="Number of events held: "
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/NoNumberOfEvents"
+            android:layout_width="0dp"
+            android:layout_height="93dp"
+            android:layout_weight="1"
+            android:gravity="fill"
+            android:text="0"
+            android:textSize="30dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/TextNumberOfEvents" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Stats2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        app:layout_constraintStart_toStartOf="@id/Stats1"
+        app:layout_constraintTop_toBottomOf="@+id/Stats1">
+
+        <TextView
+            android:id="@+id/TextNumberOfTickets"
+            android:layout_width="53dp"
+            android:layout_height="93dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="Number of tickets sold: "
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/NoNumberOfTickets"
+            android:layout_width="0dp"
+            android:layout_height="93dp"
+            android:layout_weight="1"
+            android:gravity="fill"
+            android:text="0"
+            android:textSize="30dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/TextNumberOfEvents" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="478dp"
+        android:layout_height="547dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Stats2">
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/statsgraph"
+            android:background="@color/fui_transparent"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
