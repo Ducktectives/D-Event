@@ -191,6 +191,14 @@ public class NavDrawer extends AppCompatActivity {
                         startActivity(eventList);
 
                         break;
+
+                    case R.id.nav_stats:
+                        Intent stats = new Intent(NavDrawer.this,Statistics.class);
+                        stats.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(stats);
+
+                        break;
+
                 }
                 return true;
             }

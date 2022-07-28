@@ -88,9 +88,11 @@ public class ProfileAdapter extends BaseAdapter {
 
         for(Events event: EventsList) {
             refID = event.getEvent_StorageReferenceID();
+            Log.d("EventID","" + event.getEvent_ID());
             // Set reference point for firebase storage
             try {
                 firebaseStorage = FirebaseStorage.getInstance().getReference("images/" + refID.trim());
+                firebaseStorage = FirebaseStorage.getInstance().getReferenceFromUrl(refID.trim());
                 Log.d("EventLink", "images/" + refID.trim());
                 // Need to trim because for some reason a space is added when inputted the events
                 // I took 2 hours to find that out.
@@ -158,8 +160,7 @@ public class ProfileAdapter extends BaseAdapter {
                 imageView.setImageDrawable(DrawableList.get(position));
             }
             catch(IndexOutOfBoundsException ex){
-                Log.d("woops","xd");
-                Log.d("woops 2","" + DrawableList.size() + " "  + position);
+                Log.d("woops","" + DrawableList.size() + " "  + position);
                 return imageView;
             }
         }

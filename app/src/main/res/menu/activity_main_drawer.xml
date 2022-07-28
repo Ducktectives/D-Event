@@ -29,6 +29,11 @@
             android:icon="@drawable/own_item"
             android:textAllCaps="false" />
         <item
+            android:id="@+id/nav_stats"
+            android:icon="@drawable/statistics"
+            android:title="Statistics"
+            />
+        <item
             android:id="@+id/nav_signout"
             android:icon="?attr/actionModeCloseDrawable"
             android:title="Sign out" />
