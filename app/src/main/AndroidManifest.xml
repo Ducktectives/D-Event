@@ -33,6 +33,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
 
         </activity>
@@ -57,6 +58,9 @@
 
         <activity
             android:name=".EventDetailsPage"
+            android:exported="false" />
+        <activity
+            android:name=".PaymentPage"
             android:exported="false" />
         <activity
             android:name=".profile_page"
@@ -96,6 +100,14 @@
         <activity android:name=".EventListActivity">
 
         </activity>
+        //for paypal
+        <service android:name="com.paypal.android.sdk.payments.PayPalService"
+            android:exported="false"/>
+        <activity android:name="io.card.payment.DataEntryActivity"/>
+        <activity android:name="com.paypal.android.sdk.payments.PaymentActivity"/>
+        <activity android:name="com.paypal.android.sdk.payments.LoginActivity"/>
+        <activity android:name="com.paypal.android.sdk.payments.PaymentMethodActivity"/>
+        <activity android:name="com.paypal.android.sdk.payments.PaymentConfirmActivity"/>
 
         //for google maps
         <meta-data
@@ -105,6 +117,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAkXSwH8YVEeSyYwH4XNDv1cTQOXk3zBe8" />
+
     </application>
 
 </manifest>

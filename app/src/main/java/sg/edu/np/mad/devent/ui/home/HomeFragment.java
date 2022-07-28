@@ -77,12 +77,13 @@ public class HomeFragment extends Fragment {
                 String eventStorageID = snapshot.child("event_StorageReferenceID").getValue(String.class);
                 String eventStartTime = snapshot.child("event_StartTime").getValue(String.class);
                 String eventEndTime = snapshot.child("event_EndTime").getValue(String.class);
+                Double eventTicketPrice = snapshot.child("event_TicketPrice").getValue(Double.class);
 
                 // Meant to prevent duplication of data display in gridAdapter
                 if (eventsIDList.contains(eventID)) return;
 
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,eventDetail, eventStartTime, eventEndTime,
-                         eventUserID, eventStorageID, eventBooked);
+                         eventUserID, eventStorageID, eventBooked,eventTicketPrice);
                 eventsIDList.add(eventID);
                 eventsList.add(event);
 

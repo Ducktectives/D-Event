@@ -32,10 +32,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -128,7 +126,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
         et_location = (EditText) findViewById(R.id.txt_event_form_location);
         et_date = (EditText) findViewById(R.id.txt_Date);
         et_eventDescription = (EditText) findViewById(R.id.txt_Event_Description);
-        et_eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
+        et_eventDetail = (EditText) findViewById(R.id.txt_Event_Ticket_Price);
 
         et_eventStartTime = (EditText) findViewById(R.id.txt_event_StartTime);
         et_eventStopTime = (EditText) findViewById(R.id.txt_event_EndTime);

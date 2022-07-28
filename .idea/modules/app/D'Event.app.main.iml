@@ -205,5 +205,7 @@
     <orderEntry type="library" name="Gradle: com.firebaseui:firebase-ui-storage:7.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.karumi:dexter:6.0.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.yesidlazaro:GmailBackground:1.2.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.paypal.sdk:paypal-android-sdk:2.16.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: io.card:android-sdk:5.5.1@aar" level="project" />
   </component>
 </module>

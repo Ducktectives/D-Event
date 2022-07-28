@@ -285,7 +285,7 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="18dp"
-                android:hint="ENTER DESCRIPTION"
+                android:hint="Enter Description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/event_EndTime">
@@ -305,13 +305,33 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="18dp"
-                android:hint="ENTER MISCELLANEOUS"
+                android:hint="Enter Miscellaneous Details"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/event_form_description">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txt_Event_Details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/event_form_Ticket_Price"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="18dp"
+                android:hint="Enter Ticket Price in SGD"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/event_form_details">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_Event_Ticket_Price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -328,9 +348,9 @@
                 android:clickable="true"
                 android:drawableEnd="@drawable/file_upload_folder"
                 android:drawablePadding="5dp"
+                android:fontFamily="@font/zcool"
                 android:gravity="center"
                 android:minHeight="48dp"
-                android:fontFamily="@font/zcool"
                 android:onClick="submit_form"
                 android:text="Submit form"
                 android:textColor="@color/white"
@@ -338,7 +358,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/event_form_details" />
+                app:layout_constraintTop_toBottomOf="@+id/event_form_Ticket_Price" />
 
 
             <ProgressBar

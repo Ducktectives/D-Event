@@ -14,9 +14,11 @@ import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +48,7 @@ public class BookingSummary extends AppCompatActivity {
         TextView UserEmail = (TextView)findViewById(R.id.ConfirmationEnteredEmail);
         TextView ContactNum = (TextView)findViewById(R.id.ConfirmationEnteredContact);
         TextView NumofTix = (TextView)findViewById(R.id.ConfirmationEnteredTickets);
+        ImageView eventPicture = (ImageView)findViewById(R.id.bookingSummaryView);
 
         Button Close = (Button)findViewById(R.id.ConfirmationClose);
         Button AddtoCalender = (Button)findViewById(R.id.BookingAddCalander);
@@ -59,6 +62,16 @@ public class BookingSummary extends AppCompatActivity {
         Integer contactNoFromBundle = autofill.getInt("ContactNum");
         Integer numberOfTixFromBundle = autofill.getInt("NumberofTix");
         String eventName = autofill.getString("EventName");
+        String imageLink = autofill.getString("EventImage");
+
+        // Set the image of the event
+        try {
+            Glide.with(BookingSummary.this).load(imageLink).into(eventPicture);
+        }
+        catch (Exception e){
+
+        }
+
         EventName.setText(eventName);
         Name.setText(nameFromBundle);
         UserEmail.setText(userEmailFromBundle);
