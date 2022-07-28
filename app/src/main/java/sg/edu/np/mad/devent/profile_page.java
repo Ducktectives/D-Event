@@ -126,16 +126,19 @@ public class profile_page extends AppCompatActivity {
                 String eventStorageID = snapshot.child("event_StorageReferenceID").getValue(String.class);
                 String eventStartTime = snapshot.child("event_StartTime").getValue(String.class);
                 String eventEndTime = snapshot.child("event_EndTime").getValue(String.class);
+                Double eventTicketPrice = snapshot.child("event_TicketPrice").getValue(Double.class);
+                List<String> eventTypes = new ArrayList<>();
+
+                for (DataSnapshot dataSnapshot : snapshot.child("eventTypes").getChildren()) {
+                    eventTypes.add(dataSnapshot.getValue(String.class));
+                };
 
                 // Meant to prevent duplication of data display in gridAdapter
                 if (eventsIDList.contains(eventID)) return;
 
-                List<String> eventType = Arrays.asList(eventDetail.replaceAll("\\s+","").split(", "));
-                // Removes all whitespaces and non-visible characters, (\n, tab) and splits them into a list
-
-
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
-                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked);
+                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked, eventTicketPrice,eventTypes);
+
 
                 // Checking if past event or upcoming event
                 Date date = null;

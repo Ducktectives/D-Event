@@ -88,15 +88,19 @@ public class Statistics extends AppCompatActivity {
                 String eventStartTime = snapshot.child("event_StartTime").getValue(String.class);
                 String eventEndTime = snapshot.child("event_EndTime").getValue(String.class);
 
+
+                List<String> eventTypes = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.child("eventTypes").getChildren()) {
+                    eventTypes.add(dataSnapshot.getValue(String.class));
+                };
+                
                 // Meant to prevent duplication of data display in gridAdapter
                 if (eventsIDList.contains(eventID)) return;
 
-                List<String> eventType = Arrays.asList(eventDetail.replaceAll("\\s+","").split(", "));
-                // Removes all whitespaces and non-visible characters, (\n, tab) and splits them into a list
 
 
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
-                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked);
+                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked, eventTypes);
 
                 if(eventUserID == userID){
                     createdEvents.add(event);
@@ -134,6 +138,7 @@ public class Statistics extends AppCompatActivity {
         Date today = new Date();
         Calendar lastWeekCal = toCalendar(lastWeek);
         Calendar todayCal = toCalendar(today);
+//         Get last weeks date and todays date
 
         // Create list with all the dates in between
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -152,7 +157,7 @@ public class Statistics extends AppCompatActivity {
 //            }
         }
 
-//         Create list for all the tickets
+        // Create list for all the tickets
         dayDifference = today.getTime()-lastWeek.getTime();
         dayDifference = TimeUnit.DAYS.convert(dayDifference,TimeUnit.MILLISECONDS); // why did i do this
         List<Integer> paxPerDay = new ArrayList<>(7);

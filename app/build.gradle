@@ -95,6 +95,10 @@ dependencies {
     implementation 'com.karumi:dexter:6.0.2'
     implementation 'com.github.yesidlazaro:GmailBackground:1.2.0'
 
+    //no more easypayupi, using paypal sandbox
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
+
+    //statistics stuff
     implementation 'com.facebook.android:facebook-login:latest.release'
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 }
