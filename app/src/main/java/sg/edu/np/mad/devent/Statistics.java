@@ -37,10 +37,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Statistics extends AppCompatActivity {
 
-    TextView noOfEvents = findViewById(R.id.NoNumberOfEvents);
-    TextView noOfTickets = findViewById(R.id.NoNumberOfTickets);
-    BarChart barChart;
-
     // Firebase stuff
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
     DatabaseReference event_path = database.getReference("Event");
@@ -64,6 +60,10 @@ public class Statistics extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+
+        TextView noOfEvents = findViewById(R.id.NoNumberOfEvents);
+        TextView noOfTickets = findViewById(R.id.NoNumberOfTickets);
+        BarChart barChart;
 
 
         // Looking through all events

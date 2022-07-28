@@ -92,8 +92,6 @@ public class Settings extends AppCompatActivity {
                 }
                 else{
                     username = String.valueOf(task.getResult().child("username").getValue());
-                    Toast.makeText(Settings.this, "Username : " + username, Toast.LENGTH_LONG).show();
-
                 }
             }
         });

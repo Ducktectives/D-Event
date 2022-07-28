@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent i1 = new Intent(LoginActivity.this, NavDrawer.class);
                             i1.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
                             startActivity(i1);
+                            finish();
                         }
                         else{
                             errormsg.setText("Failed to login! Please check your credentials!");
