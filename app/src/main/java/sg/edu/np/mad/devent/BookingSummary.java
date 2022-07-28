@@ -80,10 +80,11 @@ public class BookingSummary extends AppCompatActivity {
         }
 
         EventName.setText(eventName);
-        Name.setText(nameFromBundle);
-        UserEmail.setText(userEmailFromBundle);
-        ContactNum.setText(contactNoFromBundle.toString());
-        NumofTix.setText(numberOfTixFromBundle.toString());
+        Name.setText("Name : " + nameFromBundle);
+        UserEmail.setText("Email : " + userEmailFromBundle);
+        ContactNum.setText("Contact Number : " + contactNoFromBundle.toString());
+        NumofTix.setText("Tickets Booked : " + numberOfTixFromBundle.toString());
+
 
         // End the activity and go back to the profile page
         Close.setOnClickListener(new View.OnClickListener() {
