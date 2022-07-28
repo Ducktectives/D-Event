@@ -101,6 +101,8 @@ dependencies {
     //no more easypayupi, using paypal sandbox
     implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
 
-
-
+    //statistics stuff
+    implementation 'com.facebook.android:facebook-login:latest.release'
+    implementation 'com.jjoe64:graphview:4.2.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -84,9 +87,12 @@ public class profile_page extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
     DatabaseReference event_path = database.getReference("Event");
     DatabaseReference user_path = database.getReference("Users");
+    DatabaseReference bookings_path = database.getReference("Booking");
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +107,7 @@ public class profile_page extends AppCompatActivity {
         v.requestFocus();
         gridView.setFocusable(false);
 
+//        bookings_path.orderByChild()
 
 
         user_id_unique = getIntent().getStringExtra("Email");
@@ -143,10 +150,13 @@ public class profile_page extends AppCompatActivity {
                 if(date.after(today)){
                     eventsIDList.add(eventID);
                     DBevents.add(event);
+                    Log.d("EventCount","" + DBevents.size());
+                    Log.d("EventCount2", "" + event.getEvent_StorageReferenceID());
                 }
                 else{
                     pastEventsIDList.add(eventID);
                     pastDBevents.add(event);
+                    Log.d("PastEventCount","" + pastDBevents.size());
                 }
             }
 
@@ -236,6 +246,8 @@ public class profile_page extends AppCompatActivity {
                 }
 
 
+
+
                 // Setting past and upcoming events
                 // Idk if to change this to Fragment or not
                 // May be laggy when changing or my emulator is garbage
@@ -251,6 +263,7 @@ public class profile_page extends AppCompatActivity {
                     public void onClick(View v) {
                         gridView.setAdapter(new ProfileAdapter(profile_page.this,DBevents, eventsBookedList.size()));
                         Log.d("Clicked","click");
+                        Log.d("Clicked", "" + DBevents.size());
                     }
                 });
 

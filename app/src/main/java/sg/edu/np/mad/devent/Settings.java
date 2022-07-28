@@ -22,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -111,7 +113,7 @@ public class Settings extends AppCompatActivity {
         // Set this to true if you want back button on the actionbar
         // Intents dont send over when you press back on the action bar for some raeason
         // so im stuck
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
 
 
@@ -310,7 +312,7 @@ public class Settings extends AppCompatActivity {
                             public void afterTextChanged(Editable editable) {
                                 new_name[0] = editText.getText().toString();
                                 if (new_name[0] != null){
-                                    s.user_path.child(new_user_id_unique).child("username").setValue(new_name[0]);
+                                    s.user_path.child(userID).child("username").setValue(new_name[0]);
                                 }
                             }
                         });
