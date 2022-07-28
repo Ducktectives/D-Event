@@ -320,7 +320,7 @@ public class UserBooking extends AppCompatActivity {
                                                                 paymentDetails.putString("EventImage",imageLinkfromEventDetails);
                                                                 payment.putExtras(paymentDetails);
                                                                 startActivity(payment);
-                                                                payment.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                finish(); //should not go back
                                                             }
                                                             else {
                                                                 //Pass intent into the Profile Page - carrot
@@ -337,7 +337,7 @@ public class UserBooking extends AppCompatActivity {
                                                                 profileDatas.putString("EventImage",imageLinkfromEventDetails);
                                                                 profileData.putExtras(profileDatas);
                                                                 startActivity(profileData);
-                                                                finish();
+                                                                finish(); //should not go back
                                                             }
 
                                                         }
