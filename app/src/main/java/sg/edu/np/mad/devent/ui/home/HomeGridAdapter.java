@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -124,37 +125,45 @@ public class HomeGridAdapter extends BaseAdapter implements Filterable {
 //        firebaseStorage = FirebaseStorage.getInstance();
 //        reference = FirebaseStorage firebaseStorage.getReferenceFromUrl(adapter.getItem(position).Event_StorageReferenceID);
 
+
+//        try {
+//            File localfile = File.createTempFile("image",".png");
+//            firebaseStorage.getFile(localfile)
+//                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                            Bitmap bitmapImage = BitmapFactory.decodeFile(localfile.getAbsolutePath());
+//                            gridImage.setImageBitmap(bitmapImage);
+//
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            // gridImage.setImageResource(R.drawable.no_event_thumbnail);
+//                        }
+//                    });
+//            // Reference to an image file in Cloud Storage
+////            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images");
+////
+////            Toast.makeText(context, "Image ID " + storageReference.getDownloadUrl(), Toast.LENGTH_LONG).show();
+////
+////
+////            // Download directly from StorageReference using Glide
+////            // (See MyAppGlideModule for Loader registration)
+////                        Glide.with(context)
+////                                .load(storageReference)
+////                                .into(gridImage);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
         try {
-            File localfile = File.createTempFile("image",".png");
-            firebaseStorage.getFile(localfile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            Bitmap bitmapImage = BitmapFactory.decodeFile(localfile.getAbsolutePath());
-                            gridImage.setImageBitmap(bitmapImage);
+            Glide.with(context).load(imgLink).into(gridImage);
+        }
+        catch (Exception e) {
 
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // gridImage.setImageResource(R.drawable.no_event_thumbnail);
-                        }
-                    });
-            // Reference to an image file in Cloud Storage
-//            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images");
-//
-//            Toast.makeText(context, "Image ID " + storageReference.getDownloadUrl(), Toast.LENGTH_LONG).show();
-//
-//
-//            // Download directly from StorageReference using Glide
-//            // (See MyAppGlideModule for Loader registration)
-//                        Glide.with(context)
-//                                .load(storageReference)
-//                                .into(gridImage);
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         // imageView.setImageResource(Integer.parseInt(filteredEventsList.get(i)));

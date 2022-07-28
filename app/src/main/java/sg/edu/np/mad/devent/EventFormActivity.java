@@ -11,9 +11,12 @@ import androidx.core.app.ActivityCompat;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -27,11 +30,13 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -59,6 +64,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -75,12 +81,14 @@ public class EventFormActivity extends AppCompatActivity{
     //  Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked)
     Uri selectedImage; // event_Picture
     EditText et_date, et_location, et_eventDescription, et_eventName, et_eventDetail, et_eventStartTime, et_eventStopTime; // event_Date, event_Location, event_Description
+    TextView tvEventTypeError;
 
     private int _day, _month, _birthYear;
 
     // Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, boolean bookmarked)
     // Declaring the variables to upload the values to firebase
     private String event_ID, event_Name, event_Location, event_Date, event_Description, userID, storageReference_ID, event_Detail, download_ImageUrl, event_StartTime, event_StopTime;
+    List<String> eventTypes = new ArrayList<>();
     private Boolean bookmarked;
 
     private FirebaseUser user;
@@ -117,6 +125,7 @@ public class EventFormActivity extends AppCompatActivity{
         et_eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
         et_eventStartTime = (EditText) findViewById(R.id.txt_event_StartTime);
         et_eventStopTime = (EditText) findViewById(R.id.txt_event_EndTime);
+        tvEventTypeError = (TextView) findViewById(R.id.event_form_eventTypeTitle);
 
 
 
@@ -142,8 +151,6 @@ public class EventFormActivity extends AppCompatActivity{
         firebaseStorage.getMaxUploadRetryTimeMillis();
 
 
-        Toast.makeText(this, "User ID : " + userID.toString(), Toast.LENGTH_SHORT).show();
-
 
         Geocoder geocoder = new Geocoder(EventFormActivity.this, Locale.getDefault());
 
@@ -168,6 +175,8 @@ public class EventFormActivity extends AppCompatActivity{
                 datePickerDialog.show();
             }
         });
+
+
 
         retrieveAddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,8 +205,81 @@ public class EventFormActivity extends AppCompatActivity{
             }
         });
 
+        // Initialise Variables for selecting Start and End Time
+        final int[] startHour = new int[1];
+        final int[] startMinute = new int[1];
+        final int[] endHour = new int[1];
+        final int[] endMinute = new int[1];
 
+        et_eventStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        EventFormActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourofday, int minofday) {
+                                startHour[0] = hourofday;
+                                startMinute[0] = minofday;
+                                String time = startHour[0] + ":" + startMinute[0];
+                                SimpleDateFormat f24hr = new SimpleDateFormat(
+                                        "HH:mm"
+                                );
+                                try {
+                                    Date date = f24hr.parse(time);
+                                    SimpleDateFormat f12hr = new SimpleDateFormat(
+                                            "HH:mm aa"
+                                    );
 
+                                    et_eventStartTime.setText(f12hr.format(date));
+                                }
+                                catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, 12, 0, false
+                );
+
+                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                timePickerDialog.updateTime(startHour[0], startMinute[0]);
+                timePickerDialog.show();
+            }
+        });
+
+        et_eventStopTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        EventFormActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourofday, int minofday) {
+                                endHour[0] = hourofday;
+                                endMinute[0] = minofday;
+                                String time = endHour[0] + ":" + endMinute[0];
+                                SimpleDateFormat f24hr = new SimpleDateFormat(
+                                        "HH:mm"
+                                );
+                                try {
+                                    Date date = f24hr.parse(time);
+                                    SimpleDateFormat f12hr = new SimpleDateFormat(
+                                            "HH:mm aa"
+                                    );
+
+                                    et_eventStopTime.setText(f12hr.format(date));
+                                }
+                                catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, 12, 0, false
+                );
+
+                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                timePickerDialog.updateTime(endHour[0], endMinute[0]);
+                timePickerDialog.show();
+            }
+        });
 
     }
 
@@ -221,10 +303,28 @@ public class EventFormActivity extends AppCompatActivity{
     }
 
     public void submit_form(View view){
-
         uploadForm();
+    }
 
+    /*
+    CheckBox sportsCheck = findViewById(R.id.sportsCheckbox);
+    CheckBox gamingCheck = findViewById(R.id.gamingCheckbox);
+    CheckBox animeCheck = findViewById(R.id.animeCheckbox);
+    CheckBox musicCheck = findViewById(R.id.musicCheckbox);
+    CheckBox educationCheck = findViewById(R.id.educationCheckbox);
+    CheckBox animalsCheck = findViewById(R.id.animalsCheckbox);
 
+     */
+
+    // Method for checking which eventType checkboxes are selected
+    public void checkBoxes(View view){
+        CheckBox checkBox = (CheckBox) view;
+        if (checkBox.isChecked()){
+            eventTypes.add(checkBox.getText().toString());
+        }
+        else {
+            eventTypes.remove(checkBox.getText().toString());
+        }
     }
 
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
@@ -284,7 +384,7 @@ public class EventFormActivity extends AppCompatActivity{
     private void updateDateTxt(){
         et_date.setText(new StringBuilder()
                 // Month is 0 based so add 1
-                .append(_day).append("/").append(_month + 1).append("/").append(_birthYear).append(" "));
+                .append(_day).append("/").append(_month + 1).append("/").append(_birthYear));
 
     }
 
@@ -344,6 +444,11 @@ public class EventFormActivity extends AppCompatActivity{
             et_eventStopTime.requestFocus();
             return;
         }
+        if (eventTypes.size() == 0){
+            tvEventTypeError.setError("This field is required");
+            tvEventTypeError.requestFocus();
+            return;
+        }
 
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
@@ -400,7 +505,9 @@ public class EventFormActivity extends AppCompatActivity{
                     @Override
                     public void onSuccess(Uri uri) {
                         Uri downloadUrl = uri;
-                        Events event = new Events( event_ID,  event_Name,  event_Location,  event_Date,  event_Description,  event_Detail,  event_StartTime, event_StopTime, userID, downloadUrl.toString(),  bookmarked);
+                        Events event = new Events( event_ID, event_Name, event_Location, event_Date,
+                                event_Description, event_Detail, event_StartTime, event_StopTime,
+                                userID, downloadUrl.toString(),  bookmarked, eventTypes);
 
 
                         progressDialog.show();
@@ -496,7 +603,8 @@ public class EventFormActivity extends AppCompatActivity{
 //                }
 //        );
 
-
+        Intent submitform = new Intent(EventFormActivity.this, NavDrawer.class);
+        startActivity(submitform);
 
     }
 

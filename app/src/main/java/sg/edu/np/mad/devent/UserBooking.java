@@ -61,6 +61,8 @@ public class UserBooking extends AppCompatActivity {
     String username;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -283,8 +285,15 @@ public class UserBooking extends AppCompatActivity {
                                 userbooking.Email = bookingemail;
                                 userbooking.Contact = finalbookingnumber;
                                 userbooking.Pax = finalbookingpax;
+
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                Date today = Calendar.getInstance().getTime();
+                                String todayString = sdf.format(today);
+
+
                                 // Create subfolder in the event and name the subfolder booking and create another subfolder within with the booking email as the key to store the record
                                 book.child(eventid).child(bookingemail.toLowerCase().replace(".", "")).setValue(userbooking);
+                                book.child(eventid).child(bookingemail.toLowerCase().replace(".","")).child("DayOrdered").setValue(todayString);
                                 // Let user know that Booking is successful
                                 Toast.makeText(getApplicationContext(), "Booking Made Successfully", Toast.LENGTH_LONG).show();
 
@@ -293,8 +302,13 @@ public class UserBooking extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                                         Integer numberChild = Math.toIntExact(task.getResult().getChildrenCount());
-                                        Integer storeID = numberChild +1 ;
-                                        user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
+                                        Integer storeID = numberChild + 1 ;
+
+//                                        Hao Zhong's change to use UUID upon booking
+//                                        user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
+                                        user.child(userID).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
+//                                          end change
+
 
                                         //Pass intent into the Profile Page
                                         Intent profileData = new Intent(UserBooking.this,BookingSummary.class);
@@ -307,8 +321,8 @@ public class UserBooking extends AppCompatActivity {
                                         profileDatas.putInt("NumberofTix",finalbookingpax);
                                         profileDatas.putString("EventName",eventName);
                                         profileData.putExtras(profileDatas);
-                                        profileData.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(profileData);
+                                        finish();
                                     }
                                 });
 
@@ -335,7 +349,7 @@ public class UserBooking extends AppCompatActivity {
                             notifyIntent, 0);
 
                     long timeAtButtonClick = System.currentTimeMillis();
-                    long seconds = 5000; // 10 seconds,
+                    long seconds = 10000; // 10 seconds,
                     AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                     alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtButtonClick + seconds, pendingIntent);
 

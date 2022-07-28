@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.paging:paging-rxjava3:3.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/759ee625f9c117555013643171e1c4a2/transformed/paging-rxjava3-3.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/759ee625f9c117555013643171e1c4a2/transformed/paging-rxjava3-3.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/759ee625f9c117555013643171e1c4a2/transformed/paging-rxjava3-3.0.0/AndroidManifest.xml" />
       <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/b4040228cd94c72456d507d54f806dfa/transformed/jetified-paging-rxjava3-3.0.0/res" />
       <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/b4040228cd94c72456d507d54f806dfa/transformed/jetified-paging-rxjava3-3.0.0/AndroidManifest.xml" />
       <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/b4040228cd94c72456d507d54f806dfa/transformed/jetified-paging-rxjava3-3.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b4040228cd94c72456d507d54f806dfa/transformed/jetified-paging-rxjava3-3.0.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/b4040228cd94c72456d507d54f806dfa/transformed/jetified-paging-rxjava3-3.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b4040228cd94c72456d507d54f806dfa/transformed/jetified-paging-rxjava3-3.0.0/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

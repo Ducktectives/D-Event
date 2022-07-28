@@ -102,7 +102,7 @@ public class Event_List_Adapter extends FirebaseRecyclerAdapter<Events, Event_Li
     // view (here "person.xml")
     class eventViewHolder extends RecyclerView.ViewHolder
     {
-        TextView firstname, lastname, age;
+        TextView firstname, lastname, age, time;
         CardView cardView;
 
         // new 18/07
@@ -114,6 +114,7 @@ public class Event_List_Adapter extends FirebaseRecyclerAdapter<Events, Event_Li
             firstname = itemView.findViewById(R.id.firstname);
             lastname = itemView.findViewById(R.id.lastname);
             age = itemView.findViewById(R.id.age);
+            time = itemView.findViewById(R.id.eventlistprofilereventtime);
 
             // new 18/07
             buttonViewOption = (TextView) itemView.findViewById(R.id.textViewOptions);

@@ -8,6 +8,11 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+    <uses-permission-sdk-23 android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission-sdk-23 android:name="android.permission.WRITE_CALENDAR"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -18,8 +23,17 @@
         android:theme="@style/Theme.DEvent"
         tools:targetApi="31">
         <activity
-            android:name=".BookingSummary"
+            android:name=".Statistics"
             android:exported="false" />
+        <activity
+            android:name=".BookingSummary"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.INSERT" />
+                <data android:mimeType="vnd.android.cursor.dir/event" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".change_password"
             android:exported="false"
@@ -28,13 +42,11 @@
         <activity
             android:name=".SplashScreen"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".UserBooking"
@@ -45,23 +57,21 @@
         <activity
             android:name=".Settings"
             android:exported="false"
-            android:label="@string/title_activity_settings" />
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".NavDrawer" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".RegistrationActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
-
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".EventDetailsPage"
             android:exported="false" />
         <activity
             android:name=".profile_page"
             android:exported="false" />
-
         <activity
             android:name=".EditDescription"
             android:exported="false" />
@@ -72,13 +82,12 @@
             android:theme="@style/Theme.DEvent.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".EventFormActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan">
+
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -87,21 +96,14 @@
             </intent-filter>
             -->
         </activity>
-
         <activity
             android:name=".EventListUpdateActivity"
-            android:exported="true">
+            android:exported="true"></activity>
+        <activity android:name=".EventListActivity"></activity>
 
-        </activity>
-        <activity android:name=".EventListActivity">
-
-        </activity>
-
-        //for google maps
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAkXSwH8YVEeSyYwH4XNDv1cTQOXk3zBe8" />

@@ -4,11 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -21,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -255,11 +259,83 @@ public class EventListUpdateActivity extends AppCompatActivity{
             }
         });
 
+        // Initialise Variables for selecting Start and End Time
+        final int[] startHour = new int[1];
+        final int[] startMinute = new int[1];
+        final int[] endHour = new int[1];
+        final int[] endMinute = new int[1];
 
+        et_eventStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        EventListUpdateActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourofday, int minofday) {
+                                startHour[0] = hourofday;
+                                startMinute[0] = minofday;
+                                String time = startHour[0] + ":" + startMinute[0];
+                                SimpleDateFormat f24hr = new SimpleDateFormat(
+                                        "HH:mm"
+                                );
+                                try {
+                                    Date date = f24hr.parse(time);
+                                    SimpleDateFormat f12hr = new SimpleDateFormat(
+                                            "HH:mm aa"
+                                    );
 
+                                    et_eventStartTime.setText(f12hr.format(date));
+                                }
+                                catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, 12, 0, false
+                );
+
+                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                timePickerDialog.updateTime(startHour[0], startMinute[0]);
+                timePickerDialog.show();
+            }
+        });
+
+        et_eventStopTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        EventListUpdateActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourofday, int minofday) {
+                                endHour[0] = hourofday;
+                                endMinute[0] = minofday;
+                                String time = endHour[0] + ":" + endMinute[0];
+                                SimpleDateFormat f24hr = new SimpleDateFormat(
+                                        "HH:mm"
+                                );
+                                try {
+                                    Date date = f24hr.parse(time);
+                                    SimpleDateFormat f12hr = new SimpleDateFormat(
+                                            "HH:mm aa"
+                                    );
+
+                                    et_eventStopTime.setText(f12hr.format(date));
+                                }
+                                catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, 12, 0, false
+                );
+
+                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                timePickerDialog.updateTime(endHour[0], endMinute[0]);
+                timePickerDialog.show();
+            }
+        });
 
     }
-
 
     // Method for starting the activity for selecting image from phone storage
     public void pick(View view) {
@@ -279,7 +355,9 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
         uploadForm();
 
-
+        Intent submitform = new Intent(EventListUpdateActivity.this, NavDrawer.class);
+        (EventListUpdateActivity.this).finish();
+        startActivity(submitform);
     }
 
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
@@ -314,7 +392,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
     private void updateDateTxt(){
         et_date.setText(new StringBuilder()
                 // Month is 0 based so add 1
-                .append(_day).append("/").append(_month + 1).append("/").append(_birthYear).append(" "));
+                .append(_day).append("/").append(_month + 1).append("/").append(_birthYear));
 
     }
 
@@ -442,6 +520,8 @@ public class EventListUpdateActivity extends AppCompatActivity{
                         hashMap.put("event_Name", event_Name);
                         hashMap.put("event_Location", event_Location);
                         hashMap.put("event_Date", event_Date);
+                        hashMap.put("event_Start", event_StartTime);
+                        hashMap.put("event_End", event_StopTime);
                         hashMap.put("event_Description", event_Description);
                         hashMap.put("event_Detail", event_Detail);
                         hashMap.put("event_StorageReferenceID", downloadUrl.toString());

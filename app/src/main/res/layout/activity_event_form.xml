@@ -186,6 +186,7 @@
 
             <TextView
                 android:id="@+id/event_form_address"
+                style="@android:style/Widget.EditText"
                 android:layout_width="0dp"
                 android:layout_height="21dp"
                 android:text="Event Address"
@@ -254,7 +255,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txt_event_StartTime"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -273,7 +275,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txt_event_EndTime"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -317,6 +320,69 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
+                android:id="@+id/event_form_eventTypeTitle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:focusable="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:padding="5dp"
+                android:fontFamily="@font/zcool"
+                android:text="Event type tags:"
+                android:textSize="21dp"
+                app:layout_constraintTop_toBottomOf="@id/event_form_details"/>
+
+            <LinearLayout
+                android:id="@+id/event_form_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteY="311dp"
+                app:layout_constraintTop_toBottomOf="@id/event_form_eventTypeTitle"
+                >
+
+                <CheckBox
+                    android:id="@+id/sportsCheckbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="checkBoxes"
+                    android:text="Sports" />
+
+                <CheckBox
+                    android:id="@+id/gamingCheckbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="checkBoxes"
+                    android:text="Gaming" />
+                <CheckBox
+                    android:id="@+id/animeCheckbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="checkBoxes"
+                    android:text="Anime" />
+                <CheckBox
+                    android:id="@+id/musicCheckbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="checkBoxes"
+                    android:text="Music" />
+                <CheckBox
+                    android:id="@+id/educationCheckbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="checkBoxes"
+                    android:text="Education" />
+                <CheckBox
+                    android:id="@+id/animalsCheckbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="checkBoxes"
+                    android:text="Animals" />
+            </LinearLayout>
+
+            <TextView
                 android:id="@+id/btn_submit_form"
                 android:layout_width="265dp"
                 android:layout_height="48dp"
@@ -338,7 +404,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/event_form_details" />
+                app:layout_constraintTop_toBottomOf="@+id/event_form_type" />
 
 
             <ProgressBar
