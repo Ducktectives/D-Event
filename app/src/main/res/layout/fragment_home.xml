@@ -6,22 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <!--
     <HorizontalScrollView
         android:id="@+id/horizontalFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
         android:fillViewport="true"
         android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@+id/gridView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="?attr/actionBarSize">
-
+        app:layout_constraintStart_toStartOf="parent">
         <LinearLayout
+            android:id="@+id/scrollLinear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
             android:orientation="horizontal">
 
             <Button
@@ -80,16 +78,15 @@
         </LinearLayout>
 
     </HorizontalScrollView>
-    -->
 
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginTop="104dp"
         android:background="#FADCD9"
         android:numColumns="1"
-        android:verticalSpacing="24dp">
-    </GridView>
+        android:verticalSpacing="24dp"
+        app:layout_constraintTop_toBottomOf="@id/horizontalFilter"></GridView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

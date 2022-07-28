@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SearchView;
 
@@ -46,6 +47,9 @@ public class HomeFragment extends Fragment {
     static List<Events> eventsList = new ArrayList<>();
     static List<String> eventsIDList = new ArrayList<>();
     HomeGridAdapter gridAdapter;
+    Button sportsFilter, gamingFilter, animeFilter, musicFilter, educationFilter, animalsFilter;
+    GridView gridView;
+    boolean flag = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,15 +58,133 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final GridView gridView = binding.gridView;
+        gridView = binding.gridView;
+        sportsFilter = binding.SportsFilter;
+        gamingFilter = binding.GamingFilter;
+        animeFilter = binding.AnimeFilter;
+        musicFilter = binding.MusicFilter;
+        educationFilter = binding.EducationFilter;
+        animalsFilter = binding.AnimalsFilter;
+
+
+        sportsFilter.setOnClickListener(new View.OnClickListener() {
+            boolean flag = false;
+            @Override
+            public void onClick(View view) {
+                flag = !flag;
+                if (flag) {
+                    List<Events> filterEvents = new ArrayList<>();
+                    for (Events event:eventsList) {
+                        if (event.getEventTypes().contains("Sports")) {
+                            filterEvents.add(event);
+                        }
+                    }
+                    gridAdapter = new HomeGridAdapter(container.getContext(), filterEvents);
+                }
+                else { gridAdapter = new HomeGridAdapter(container.getContext(),eventsList); }
+                gridView.setAdapter(gridAdapter);
+            }
+        });
+
+        gamingFilter.setOnClickListener(new View.OnClickListener() {
+            boolean flag = false;
+            @Override
+            public void onClick(View view) {
+                flag = !flag;
+                if (flag) {
+                    List<Events> filterEvents = new ArrayList<>();
+                    for (Events event:eventsList) {
+                        if (event.getEventTypes().contains("Gaming")) {
+                            filterEvents.add(event);
+                        }
+                    }
+                    gridAdapter = new HomeGridAdapter(container.getContext(), filterEvents);
+                }
+                else { gridAdapter = new HomeGridAdapter(container.getContext(),eventsList); }
+                gridView.setAdapter(gridAdapter);
+            }
+        });
+
+        animeFilter.setOnClickListener(new View.OnClickListener() {
+            boolean flag = false;
+            @Override
+            public void onClick(View view) {
+                flag = !flag;
+                if (flag) {
+                    List<Events> filterEvents = new ArrayList<>();
+                    for (Events event:eventsList) {
+                        if (event.getEventTypes().contains("Anime")) {
+                            filterEvents.add(event);
+                        }
+                    }
+                    gridAdapter = new HomeGridAdapter(container.getContext(), filterEvents);
+                }
+                else { gridAdapter = new HomeGridAdapter(container.getContext(),eventsList); }
+                gridView.setAdapter(gridAdapter);
+            }
+        });
+
+        musicFilter.setOnClickListener(new View.OnClickListener() {
+            boolean flag = false;
+            @Override
+            public void onClick(View view) {
+                flag = !flag;
+                if (flag) {
+                    List<Events> filterEvents = new ArrayList<>();
+                    for (Events event:eventsList) {
+                        if (event.getEventTypes().contains("Music")) {
+                            filterEvents.add(event);
+                        }
+                    }
+                    gridAdapter = new HomeGridAdapter(container.getContext(), filterEvents);
+                }
+                else { gridAdapter = new HomeGridAdapter(container.getContext(),eventsList); }
+                gridView.setAdapter(gridAdapter);
+            }
+        });
+
+        educationFilter.setOnClickListener(new View.OnClickListener() {
+            boolean flag = false;
+            @Override
+            public void onClick(View view) {
+                flag = !flag;
+                if (flag) {
+                    List<Events> filterEvents = new ArrayList<>();
+                    for (Events event:eventsList) {
+                        if (event.getEventTypes().contains("Education")) {
+                            filterEvents.add(event);
+                        }
+                    }
+                    gridAdapter = new HomeGridAdapter(container.getContext(), filterEvents);
+                }
+                else { gridAdapter = new HomeGridAdapter(container.getContext(),eventsList); }
+                gridView.setAdapter(gridAdapter);
+            }
+        });
+
+        animalsFilter.setOnClickListener(new View.OnClickListener() {
+            boolean flag = false;
+            @Override
+            public void onClick(View view) {
+                flag = !flag;
+                if (flag) {
+                    List<Events> filterEvents = new ArrayList<>();
+                    for (Events event:eventsList) {
+                        if (event.getEventTypes().contains("Animals")) {
+                            filterEvents.add(event);
+                        }
+                    }
+                    gridAdapter = new HomeGridAdapter(container.getContext(), filterEvents);
+                }
+                else { gridAdapter = new HomeGridAdapter(container.getContext(),eventsList); }
+                gridView.setAdapter(gridAdapter);
+            }
+        });
+
 
         //For firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
         DatabaseReference Ref = database.getReference("Event");
-
-        // List of events (Replaced with actual data retrieved from firebase)
-        int[] imageList = {R.drawable.a1,R.drawable.a2,R.drawable.a3, R.drawable.a4, R.drawable.me,
-                R.drawable.kirby_drawing};
 
         Ref.orderByChild("event_ID").addChildEventListener(new ChildEventListener() {
             @Override
@@ -164,5 +286,4 @@ public class HomeFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
