@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -59,6 +60,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -75,12 +77,14 @@ public class EventFormActivity extends AppCompatActivity{
     //  Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked)
     Uri selectedImage; // event_Picture
     EditText et_date, et_location, et_eventDescription, et_eventName, et_eventDetail, et_eventStartTime, et_eventStopTime; // event_Date, event_Location, event_Description
+    TextView tvEventTypeError;
 
     private int _day, _month, _birthYear;
 
     // Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, boolean bookmarked)
     // Declaring the variables to upload the values to firebase
     private String event_ID, event_Name, event_Location, event_Date, event_Description, userID, storageReference_ID, event_Detail, download_ImageUrl, event_StartTime, event_StopTime;
+    List<String> eventTypes = new ArrayList<>();
     private Boolean bookmarked;
 
     private FirebaseUser user;
@@ -117,6 +121,7 @@ public class EventFormActivity extends AppCompatActivity{
         et_eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
         et_eventStartTime = (EditText) findViewById(R.id.txt_event_StartTime);
         et_eventStopTime = (EditText) findViewById(R.id.txt_event_EndTime);
+        tvEventTypeError = (TextView) findViewById(R.id.event_form_eventTypeTitle);
 
 
 
@@ -221,10 +226,28 @@ public class EventFormActivity extends AppCompatActivity{
     }
 
     public void submit_form(View view){
-
         uploadForm();
+    }
 
+    /*
+    CheckBox sportsCheck = findViewById(R.id.sportsCheckbox);
+    CheckBox gamingCheck = findViewById(R.id.gamingCheckbox);
+    CheckBox animeCheck = findViewById(R.id.animeCheckbox);
+    CheckBox musicCheck = findViewById(R.id.musicCheckbox);
+    CheckBox educationCheck = findViewById(R.id.educationCheckbox);
+    CheckBox animalsCheck = findViewById(R.id.animalsCheckbox);
 
+     */
+
+    // Method for checking which eventType checkboxes are selected
+    public void checkBoxes(View view){
+        CheckBox checkBox = (CheckBox) view;
+        if (checkBox.isChecked()){
+            eventTypes.add(checkBox.getText().toString());
+        }
+        else {
+            eventTypes.remove(checkBox.getText().toString());
+        }
     }
 
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
@@ -344,6 +367,11 @@ public class EventFormActivity extends AppCompatActivity{
             et_eventStopTime.requestFocus();
             return;
         }
+        if (eventTypes.size() == 0){
+            tvEventTypeError.setError("This field is required");
+            tvEventTypeError.requestFocus();
+            return;
+        }
 
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
@@ -400,7 +428,9 @@ public class EventFormActivity extends AppCompatActivity{
                     @Override
                     public void onSuccess(Uri uri) {
                         Uri downloadUrl = uri;
-                        Events event = new Events( event_ID,  event_Name,  event_Location,  event_Date,  event_Description,  event_Detail,  event_StartTime, event_StopTime, userID, downloadUrl.toString(),  bookmarked);
+                        Events event = new Events( event_ID, event_Name, event_Location, event_Date,
+                                event_Description, event_Detail, event_StartTime, event_StopTime,
+                                userID, downloadUrl.toString(),  bookmarked, eventTypes);
 
 
                         progressDialog.show();

@@ -335,7 +335,7 @@ public class UserBooking extends AppCompatActivity {
                             notifyIntent, 0);
 
                     long timeAtButtonClick = System.currentTimeMillis();
-                    long seconds = 5000; // 10 seconds,
+                    long seconds = 10000; // 10 seconds,
                     AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                     alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtButtonClick + seconds, pendingIntent);
 
