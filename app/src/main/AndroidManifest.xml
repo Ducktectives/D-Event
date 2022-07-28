@@ -126,6 +126,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAkXSwH8YVEeSyYwH4XNDv1cTQOXk3zBe8" />
 
+        <receiver android:name=".NotifyService"/>
+
     </application>
 
 </manifest>

@@ -363,14 +363,14 @@ public class UserBooking extends AppCompatActivity {
                     // Code below is used to set up notification for the user on the day of the event
                     Toast.makeText(UserBooking.this,"Reminder has been set!", Toast.LENGTH_LONG).show();
                     Intent notifyIntent = new Intent(UserBooking.this, NotifyService.class);
-                    notifyIntent.putExtra("eventDate", eventDate);
-                    notifyIntent.putExtra("eventName", eventName);
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(UserBooking.this, 0,
                             notifyIntent, 0);
 
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
                     long timeAtButtonClick = System.currentTimeMillis();
                     long seconds = 10000; // 10 seconds,
-                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    
                     alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtButtonClick + seconds, pendingIntent);
 
                 }
