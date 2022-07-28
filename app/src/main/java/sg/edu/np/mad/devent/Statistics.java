@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -37,8 +38,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Statistics extends AppCompatActivity {
 
-    TextView noOfEvents = findViewById(R.id.NoNumberOfEvents);
-    TextView noOfTickets = findViewById(R.id.NoNumberOfTickets);
+    TextView noOfEvents;
+    TextView noOfTickets;
+
     BarChart barChart;
 
     // Firebase stuff
@@ -64,6 +66,9 @@ public class Statistics extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+
+        noOfEvents =  findViewById(R.id.NoNumberOfEvents);
+        noOfTickets = findViewById(R.id.NoNumberOfTickets);
 
 
         // Looking through all events
@@ -120,23 +125,34 @@ public class Statistics extends AppCompatActivity {
             }
         });
 
-        // Looking through all bookings that user has created
-        // Find number of tickets sold from all events
+//         Looking through all bookings that user has created
+//         Find number of tickets sold from all events
 
-        // Get last weeks date and todays date
+//         Get last weeks date and todays date
         long DAY_IN_MS = 1000 * 60 * 60 * 24;
         Date lastWeek = new Date(System.currentTimeMillis() - (7 * DAY_IN_MS));
         Date today = new Date();
+        Calendar lastWeekCal = toCalendar(lastWeek);
+        Calendar todayCal = toCalendar(today);
 
         // Create list with all the dates in between
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        List<Date> dates = new ArrayList<>();
-        while(!lastWeek.after(today)){
-            dates.add(lastWeek);
-            toCalendar(lastWeek).add(Calendar.DATE,1);
+        ArrayList<String> dates = new ArrayList<>();
+        while(!lastWeekCal.after(todayCal)){
+            // adding this if statement breaks it for some reason
+//            if(!lastWeekCal.equals(todayCal)){
+                try {
+                    Log.d("lastweek","" + sdf.parse(sdf.format(lastWeekCal.getTime())));
+                    Log.d("lastweek2","" + (sdf.format(lastWeekCal.getTime())));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                dates.add(sdf.format(lastWeekCal.getTime()));
+                lastWeekCal.add(Calendar.DATE,1);
+//            }
         }
 
-        // Create list for all the tickets
+//         Create list for all the tickets
         dayDifference = today.getTime()-lastWeek.getTime();
         dayDifference = TimeUnit.DAYS.convert(dayDifference,TimeUnit.MILLISECONDS); // why did i do this
         List<Integer> paxPerDay = new ArrayList<>(7);
@@ -181,8 +197,8 @@ public class Statistics extends AppCompatActivity {
             });
         }
 
-        noOfEvents.setText(eventsIDList.size());
-        noOfTickets.setText(totalPax);
+        noOfEvents.setText(String.valueOf(eventsIDList.size()));
+        noOfTickets.setText(String.valueOf(totalPax));
 
         barChart = (BarChart) findViewById(R.id.statsgraph);
         ArrayList<BarEntry> barEntries = new ArrayList<>();
@@ -191,7 +207,7 @@ public class Statistics extends AppCompatActivity {
         }
         BarDataSet barDataSet = new BarDataSet(barEntries, "Tickets sold");
 
-        BarData theData = new BarData((IBarDataSet) dates,barDataSet);
+        BarData theData = new BarData(dates,barDataSet);
         barChart.setData(theData);
 
         barChart.setDragEnabled(true);
