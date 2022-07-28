@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +32,31 @@ public class change_password extends AppCompatActivity {
         Button cancel = findViewById(R.id.cancelchange);
         EditText first = (EditText) findViewById(R.id.enternewpass);
         EditText second = (EditText) findViewById(R.id.confirmnewpass);
+        
+        String firstpass = first.getText().toString().trim();
+        String secondpass = second.getText().toString().trim();
+
+        FirebaseAuth mauth = FirebaseAuth.getInstance();
+        FirebaseUser user = mauth.getCurrentUser();
+
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (firstpass.equals(secondpass)){
+                    user.updatePassword(firstpass);
+                }
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
+        /*
         final Integer[] saltvalue = {0};
 
         user_id_unique = getIntent().getStringExtra("Email");
@@ -86,7 +113,7 @@ public class change_password extends AppCompatActivity {
             }
         });
 
-
+    */
     }
 
 }

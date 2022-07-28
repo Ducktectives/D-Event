@@ -72,7 +72,6 @@ public class Settings extends AppCompatActivity {
         // have a ref to the realtime database
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = user.getUid();
-        Toast.makeText(this, "User ID : " + userID, Toast.LENGTH_LONG).show();
 
 
         Intent setting = getIntent();

@@ -1,13 +1,21 @@
 package sg.edu.np.mad.devent;
 
 
+import android.Manifest;
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,10 +34,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,11 +48,26 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 
+import org.w3c.dom.Text;
+
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -144,7 +170,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if (!task.isSuccessful()){
-                                        Toast.makeText(EventDetailsPage.this,"No such user exists.", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(EventDetailsPage.this,"No such user exists.", Toast.LENGTH_SHORT).show();
                                     }
                                     else{
                                         String username = String.valueOf(task.getResult().child("username").getValue());
@@ -234,6 +260,47 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         bookEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                DatabaseReference Ref = database.getReference("Users");
+                Ref.child(user.getUid()).child("event_booked").equalTo(eventID).get()
+                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (!task.isSuccessful()){
+                                    //if the task is unsucessful
+                                    Intent book = new Intent(EventDetailsPage.this,UserBooking.class);
+                                    Bundle bookingInfo = new Bundle();
+                                    bookingInfo.putString("EventPicture",imageLink);
+                                    bookingInfo.putString("User_Email",userEmail);
+                                    bookingInfo.putSerializable("EventList",(Serializable) eventList);
+                                    bookingInfo.putString("Event", eventID);
+                                    book.putExtras(bookingInfo);
+                                    book.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(book);
+                                }
+                                else{
+                                    //get event booking confirmation page
+                                    Booking bookinginfo = new Booking();
+
+                                    Intent BookingSummaryBundle = new Intent(EventDetailsPage.this, BookingSummary.class);
+                                    Bundle BookingSummary = new Bundle();
+                                    BookingSummary.putString("EventID",eventID);
+                                    BookingSummary.putString("Email",userEmail);
+                                    BookingSummary.putString("Name",bookinginfo.Name);
+                                    BookingSummary.putString("UserEmail",bookinginfo.Email);
+                                    BookingSummary.putInt("ContactNum",bookinginfo.Contact);
+                                    BookingSummary.putInt("NumberofTix",bookinginfo.Pax);
+                                    BookingSummary.putString("EventName",eventNamedIs);
+                                    BookingSummaryBundle.putExtras(BookingSummary);
+                                    startActivity(BookingSummaryBundle);
+                                    finish();
+                                }
+                            }
+                        });
+
+
+                /*
                 Intent book = new Intent(EventDetailsPage.this,UserBooking.class);
                 Bundle bookingInfo = new Bundle();
                 bookingInfo.putString("EventPicture",imageLink);
@@ -366,9 +433,4 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             notificationManager.createNotificationChannel(channel);
         }
     }
-
-
-
-
-
 }

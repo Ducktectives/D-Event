@@ -18,14 +18,14 @@ public class Profile implements Serializable {
     String Email;
     int Contactnum;
     int Eventsattended;
-    int Saltvalue;
-    String Hashedpassword;
+    //int Saltvalue;
+    //String Hashedpassword;
     Bitmap profpic;
 
 
     public Profile() {}
 
-    public Profile(String username, String title, String email,Integer contact, String password){
+    public Profile(String username, String title, String email,Integer contact){
         Username = username;
         Title = title;
         Contactnum = contact;
@@ -37,6 +37,7 @@ public class Profile implements Serializable {
         }
 
 
+        /*
         // Creating Salt Values
         Random rand = new Random();
         int lowerbound = 10000;
@@ -53,53 +54,55 @@ public class Profile implements Serializable {
         // Hashing the Salted password
         try
         {
-            /* MessageDigest instance for MD5. */
+            // MessageDigest instance for MD5.
             MessageDigest m = MessageDigest.getInstance("MD5");
 
-            /* Add plain-text password bytes to digest using MD5 update() method. */
+            // Add plain-text password bytes to digest using MD5 update() method.
             m.update(Saltpassword.getBytes());
 
-            /* Convert the hash value into bytes */
+            // Convert the hash value into bytes
             byte[] bytes = m.digest();
 
-            /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */
+            // The bytes array has bytes in decimal form. Converting it into hexadecimal format.
             StringBuilder s = new StringBuilder();
             for (int i=0; i< bytes.length ;i++)
             {
                 s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
 
-            /* Complete hashed password in hexadecimal format */
+            // Complete hashed password in hexadecimal format
             Hashedpassword = s.toString();
         }
         catch (NoSuchAlgorithmException e)
         {
             e.printStackTrace();
         }
+         */
     }
 
+    /*
     // Hash the Password
     public static String HashPassword(int saltvalue, String pass){
         try
         {
             String Saltpassword = saltvalue + pass;
-            /* MessageDigest instance for MD5. */
+            //MessageDigest instance for MD5.
             MessageDigest m = MessageDigest.getInstance("MD5");
 
-            /* Add plain-text password bytes to digest using MD5 update() method. */
+            //Add plain-text password bytes to digest using MD5 update() method.
             m.update(Saltpassword.getBytes());
 
-            /* Convert the hash value into bytes */
+            // Convert the hash value into bytes
             byte[] bytes = m.digest();
 
-            /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */
+            // The bytes array has bytes in decimal form. Converting it into hexadecimal format.
             StringBuilder s = new StringBuilder();
             for (int i=0; i< bytes.length ;i++)
             {
                 s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
 
-            /* Complete hashed password in hexadecimal format */
+            // Complete hashed password in hexadecimal format
             return s.toString();
         }
         catch (NoSuchAlgorithmException e)
@@ -108,6 +111,10 @@ public class Profile implements Serializable {
             return null;
         }
     }
+    */
+
+
+    /*
 
     // Check the password if it is equal
     public boolean CheckPassword(String hashedpassword, String Userhashedpass){
@@ -119,6 +126,7 @@ public class Profile implements Serializable {
         }
     }
 
+    */
 
     public String getUsername() {
         return Username;
@@ -160,6 +168,7 @@ public class Profile implements Serializable {
         Eventsattended = eventsattended;
     }
 
+    /*
     public int getSaltvalue() {
         return Saltvalue;
     }
@@ -175,6 +184,7 @@ public class Profile implements Serializable {
     public void setHashedpassword(String hashedpassword) {
         Hashedpassword = hashedpassword;
     }
+    */
 
     public Bitmap getProfpic() {
         return profpic;

@@ -275,8 +275,8 @@ public class UserBooking extends AppCompatActivity {
 
 
                                 // Create subfolder in the event and name the subfolder booking and create another subfolder within with the booking email as the key to store the record
-                                book.child(eventid).child(bookingemail.toLowerCase().replace(".", "")).setValue(userbooking);
-                                book.child(eventid).child(bookingemail.toLowerCase().replace(".","")).child("DayOrdered").setValue(todayString);
+                                book.child(eventid).child(userID).setValue(userbooking);
+                                book.child(eventid).child(userID).child("DayOrdered").setValue(todayString);
                                 // Let user know that Booking is successful
                                 Toast.makeText(getApplicationContext(), "Booking Made Successfully", Toast.LENGTH_LONG).show();
 
@@ -289,8 +289,11 @@ public class UserBooking extends AppCompatActivity {
 
 //                                        Hao Zhong's change to use UUID upon booking
 //                                        user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
-                                        user.child(userID).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
-//                                          end change
+                                        user.child(userID).child("event_booked").setValue(eventid);
+                                        user.child(userID).child("event_booked").child(eventid).child("Name").setValue(bookingname);
+                                        user.child(userID).child("event_booked").child(eventid).child("Email").setValue(bookingemail);
+                                        user.child(userID).child("event_booked").child(eventid).child("Contact").setValue(finalbookingnumber);
+                                        user.child(userID).child("event_booked").child(eventid).child("Pax").setValue(finalbookingpax);
 
 
                                         //check whether ticket price is more than 0

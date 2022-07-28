@@ -6,89 +6,64 @@
         <entry key="..\:/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_edit_description.xml" value="0.14130434782608695" />
         <entry key="..\:/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_profile_page.xml" value="0.3333333333333333" />
+        <entry key="..\:/AndroidStudioProjects/D-Event/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/D-Event/app/src/main/res/layout/fragment_slideshow.xml" value="0.1796875" />
-        <entry key="..\:/AndroidStudioProjects/D-Event/app/src/main/res/layout/home_grid_item.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/D-Event/app/src/main/res/layout/loginpage.xml" value="0.1796875" />
         <entry key="..\:/AndroidStudioProjects/D-Event/app/src/main/res/layout/nav_header_nav_drawer.xml" value="0.1796875" />
+        <entry key="..\:/AndroidStudioProjects/D-Event/app/src/main/res/xml/root_preferences.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1375" />
-        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout-land/activity_booking_summary.xml" value="0.23345101500441306" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout-land/activity_login.xml" value="0.23345101500441306" />
-        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout-land/activity_registration.xml" value="0.23345101500441306" />
-        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout-land/activity_splash_screen.xml" value="0.17101325352714836" />
-        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout-land/activity_user_booking.xml" value="0.23345101500441306" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout-land/activity_registration.xml" value="0.13852073535699017" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout-land/activity_splash_screen.xml" value="0.23345101500441306" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout-land/activity_user_booking.xml" value="0.13852073535699017" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/accountmenu.xml" value="0.22606837606837607" />
-        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_booking_summary.xml" value="0.2261650277896537" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_change_password.xml" value="0.2261650277896537" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_event_details_page.xml" value="0.1455122393472348" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_event_form.xml" value="0.2261650277896537" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_event_list.xml" value="0.2261650277896537" />
-        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_event_list_item_profile.xml" value="0.1813236627379873" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_event_list_item_profile.xml" value="0.11286874732791792" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_event_list_update.xml" value="0.1813236627379873" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_login.xml" value="0.2261650277896537" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_main.xml" value="0.1453804347826087" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_nav_drawer.xml" value="0.1455122393472348" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_profile_page.xml" value="0.1455122393472348" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_registration.xml" value="0.2261650277896537" />
-        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_splash_screen.xml" value="0.1813236627379873" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_splash_screen.xml" value="0.2261650277896537" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_user_booking.xml" value="0.2261650277896537" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/app_bar_nav_drawer.xml" value="0.1455122393472348" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/content_nav_drawer.xml" value="0.1455122393472348" />
-        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/followedviewholder.xml" value="0.1813236627379873" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/followedviewholder.xml" value="0.1468721668177697" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/fragment_gallery.xml" value="0.1455122393472348" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/fragment_home.xml" value="0.1455122393472348" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/fragment_slideshow.xml" value="0.1455122393472348" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/gallery_grid_item.xml" value="0.1455122393472348" />
-        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/home_grid_item.xml" value="0.1813236627379873" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/home_grid_item.xml" value="0.2231722958529286" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/loginpage.xml" value="0.2261650277896537" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/nav_header_nav_drawer.xml" value="0.1455122393472348" />
-        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/past_events.xml" value="0.1813236627379873" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/past_events.xml" value="0.1455122393472348" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/registerpage.xml" value="0.1453804347826087" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/registrationpage.xml" value="0.22606837606837607" />
-        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/settings_activity.xml" value="0.1813236627379873" />
+        <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/layout/settings_activity.xml" value="0.1455122393472348" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1075" />
         <entry key="..\:/Users/Sherlena Ngui/AndroidStudioProjects/D-Event/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.195" />
-        <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_event_form.xml" value="0.1" />
         <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_nav_drawer.xml" value="0.25" />
-        <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_user_booking.xml" value="0.11398176291793313" />
+        <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/activity_profile_page.xml" value="0.1507537688442211" />
         <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/app_bar_nav_drawer.xml" value="0.2" />
         <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/content_nav_drawer.xml" value="0.25" />
-        <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/followedviewholder.xml" value="0.234375" />
-        <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/fragment_gallery.xml" value="0.2111111111111111" />
-        <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/fragment_home.xml" value="0.13768115942028986" />
+        <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/fragment_gallery.xml" value="0.25" />
+        <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/fragment_slideshow.xml" value="0.25" />
+        <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/home_grid_item.xml" value="0.1" />
         <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/loginpage.xml" value="0.25" />
         <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/layout/nav_header_nav_drawer.xml" value="0.25" />
         <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/menu/activity_main_drawer.xml" value="0.25" />
+        <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/menu/menu_booking_page.xml" value="0.1814814814814815" />
         <entry key="..\:/Users/alfre/AndroidStudioProjects/D-Event/app/src/main/res/menu/nav_drawer.xml" value="0.25" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout-land/activity_event_list.xml" value="0.18738977072310406" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_booking_page.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_change_password.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_edit_description.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_event_form.xml" value="0.165" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_event_list.xml" value="0.2203125" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_event_list_item.xml" value="0.2203125" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_event_list_item_profile.xml" value="0.2203125" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_event_list_update.xml" value="0.2203125" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_main.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_nav_drawer.xml" value="0.10764944275582573" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_profile_page.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_registration.xml" value="0.1" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/content_nav_drawer.xml" value="0.10764944275582573" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/followedviewholder.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/fragment_gallery.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/fragment_home.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/fragment_slideshow.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/home_grid_item.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/past_events.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/menu/event_menu_item.xml" value="0.2203125" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/menu/menu_booking_page.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/menu/nav_drawer.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/fluff/Desktop/NP/SEM 2.1/MAD/Assignment/Duck/app/src/main/res/layout-land/activity_event_details_page.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/fluff/Desktop/NP/SEM 2.1/MAD/Assignment/Duck/app/src/main/res/layout-land/activity_user_booking.xml" value="0.1" />
         <entry key="..\:/Users/fluff/Desktop/NP/SEM 2.1/MAD/Assignment/Duck/app/src/main/res/layout-land/loginpage.xml" value="0.1" />
         <entry key="..\:/Users/fluff/Desktop/NP/SEM 2.1/MAD/Assignment/Duck/app/src/main/res/layout/activity_booking_page.xml" value="0.16354166666666667" />
-        <entry key="..\:/Users/fluff/Desktop/NP/SEM 2.1/MAD/Assignment/Duck/app/src/main/res/layout/activity_booking_summary.xml" value="0.10778985507246377" />
         <entry key="..\:/Users/fluff/Desktop/NP/SEM 2.1/MAD/Assignment/Duck/app/src/main/res/layout/activity_edit_description.xml" value="0.1" />
         <entry key="..\:/Users/fluff/Desktop/NP/SEM 2.1/MAD/Assignment/Duck/app/src/main/res/layout/activity_event_details_page.xml" value="0.6666666666666666" />
         <entry key="..\:/Users/fluff/Desktop/NP/SEM 2.1/MAD/Assignment/Duck/app/src/main/res/layout/activity_event_form.xml" value="0.4" />
