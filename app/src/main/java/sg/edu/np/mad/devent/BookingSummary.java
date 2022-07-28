@@ -94,6 +94,7 @@ public class BookingSummary extends AppCompatActivity {
                 i2.putExtra("Email", Email);
                 i2.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i2);
+                finish(); // should not be able to go back
             }
         });
 

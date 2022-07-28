@@ -1,21 +1,13 @@
 package sg.edu.np.mad.devent;
 
 
-import android.Manifest;
-import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,16 +21,15 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,26 +37,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 
 
-import org.w3c.dom.Text;
-
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -245,8 +221,9 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onClick(View view) {
                 Intent profile = new Intent(EventDetailsPage.this, profile_page.class);
-               profile.putExtra("EventOrganizer", eventOrganizerUID);
-              startActivity(profile);
+                profile.putExtra("EventOrganizer", eventOrganizerUID);
+                startActivity(profile);
+                //no finish because can go back
 
            }
         });
@@ -267,7 +244,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                 bookingInfo.putString("EventPicture",imageLink);
                 book.putExtras(bookingInfo);
                 startActivity(book);
-                book.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //users should be able to go back
                 /*
                 // Code below is used to set up notification for the user on the day of the event
                 Toast.makeText(EventDetailsPage.this,"Reminder has been set!", Toast.LENGTH_SHORT).show();
@@ -360,11 +337,15 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
                     builder.include(marker1.getPosition());
                     LatLngBounds markerLoc = builder.build();
-                    googleMap.setLatLngBoundsForCameraTarget(markerLoc);
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(markerLoc,12);
+                    googleMap.moveCamera(cu);
+                    //googleMap.setLatLngBoundsForCameraTarget(markerLoc);
 
                     //add zoom controls
                     googleMap.getUiSettings().setZoomControlsEnabled(true);
                     googleMap.getUiSettings().setZoomGesturesEnabled(true);
+
+
 
                 }
                 catch (Exception e){
