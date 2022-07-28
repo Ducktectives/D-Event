@@ -126,6 +126,7 @@ public class profile_page extends AppCompatActivity {
                 String eventStorageID = snapshot.child("event_StorageReferenceID").getValue(String.class);
                 String eventStartTime = snapshot.child("event_StartTime").getValue(String.class);
                 String eventEndTime = snapshot.child("event_EndTime").getValue(String.class);
+                Double eventTicketPrice = snapshot.child("event_TicketPrice").getValue(Double.class);
                 List<String> eventTypes = new ArrayList<>();
 
                 for (DataSnapshot dataSnapshot : snapshot.child("eventTypes").getChildren()) {
@@ -136,7 +137,8 @@ public class profile_page extends AppCompatActivity {
                 if (eventsIDList.contains(eventID)) return;
 
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
-                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked, eventTypes);
+                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked, eventTicketPrice,eventTypes);
+
 
                 // Checking if past event or upcoming event
                 Date date = null;

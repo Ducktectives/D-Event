@@ -198,6 +198,8 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.firebaseui:firebase-ui-storage:7.2.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.karumi:dexter:6.0.2@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.yesidlazaro:GmailBackground:1.2.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.paypal.sdk:paypal-android-sdk:2.16.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: io.card:android-sdk:5.5.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.android:facebook-login:14.1.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.android:facebook-core:14.1.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.android:facebook-bolts:14.1.0@aar" level="project" />

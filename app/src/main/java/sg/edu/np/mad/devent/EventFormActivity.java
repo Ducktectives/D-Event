@@ -13,7 +13,6 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -26,6 +25,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -70,6 +75,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EventFormActivity extends AppCompatActivity{
     TextView imgPath, updateAddress, retrieveAddress;
@@ -80,15 +87,15 @@ public class EventFormActivity extends AppCompatActivity{
 
     //  Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked)
     Uri selectedImage; // event_Picture
-    EditText et_date, et_location, et_eventDescription, et_eventName, et_eventDetail, et_eventStartTime, et_eventStopTime; // event_Date, event_Location, event_Description
-    TextView tvEventTypeError;
-
+    EditText et_date, et_location, et_eventDescription, et_eventName, et_eventDetail, et_eventStartTime, et_eventStopTime , et_eventPricing; // event_Date, event_Location, event_Description
+   TextView tvEventTypeError;
     private int _day, _month, _birthYear;
 
     // Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, boolean bookmarked)
     // Declaring the variables to upload the values to firebase
     private String event_ID, event_Name, event_Location, event_Date, event_Description, userID, storageReference_ID, event_Detail, download_ImageUrl, event_StartTime, event_StopTime;
     List<String> eventTypes = new ArrayList<>();
+    private Double event_TicketPrice;
     private Boolean bookmarked;
 
     private FirebaseUser user;
@@ -116,7 +123,7 @@ public class EventFormActivity extends AppCompatActivity{
         imgPath = findViewById(R.id.item_img);
         image = findViewById(R.id.img);
 
-        // Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, boolean bookmarked)
+        // Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, boolean bookmarked, Double event_TicketPrice)
         // EDITTEXT
         et_eventName = (EditText) findViewById(R.id.txt_event_form_name);
         et_location = (EditText) findViewById(R.id.txt_event_form_location);
@@ -125,10 +132,13 @@ public class EventFormActivity extends AppCompatActivity{
         et_eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
         et_eventStartTime = (EditText) findViewById(R.id.txt_event_StartTime);
         et_eventStopTime = (EditText) findViewById(R.id.txt_event_EndTime);
+        et_eventPricing = (EditText) findViewById(R.id.txt_Event_Ticket_Price);
         tvEventTypeError = (TextView) findViewById(R.id.event_form_eventTypeTitle);
 
 
-
+        //set the eventsPricing input keyboard to be numbers only
+        et_eventPricing.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        et_eventPricing.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(5,2)}); //set ticket price -  2f
 
 
         retrieveAddress = (TextView) findViewById(R.id.locate_address);
@@ -175,8 +185,6 @@ public class EventFormActivity extends AppCompatActivity{
                 datePickerDialog.show();
             }
         });
-
-
 
         retrieveAddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -409,6 +417,7 @@ public class EventFormActivity extends AppCompatActivity{
         event_Detail = et_eventDetail.getText().toString();
         event_StartTime = et_eventStartTime.getText().toString();
         event_StopTime = et_eventStopTime.getText().toString();
+        event_TicketPrice = Double.valueOf(et_eventPricing.getText().toString());
 
 
         bookmarked = false;
@@ -442,6 +451,11 @@ public class EventFormActivity extends AppCompatActivity{
         if (event_StopTime.isEmpty()){
             et_eventStopTime.setError("This field is required");
             et_eventStopTime.requestFocus();
+            return;
+        }
+        if (et_eventPricing.getText() == null || et_eventPricing.getText().toString() == ""){
+            et_eventPricing.setError("This field is required");
+            et_eventPricing.requestFocus();
             return;
         }
         if (eventTypes.size() == 0){
@@ -507,7 +521,7 @@ public class EventFormActivity extends AppCompatActivity{
                         Uri downloadUrl = uri;
                         Events event = new Events( event_ID, event_Name, event_Location, event_Date,
                                 event_Description, event_Detail, event_StartTime, event_StopTime,
-                                userID, downloadUrl.toString(),  bookmarked, eventTypes);
+                                userID, downloadUrl.toString(),  bookmarked,  event_TicketPrice, eventTypes);
 
 
                         progressDialog.show();
@@ -521,6 +535,7 @@ public class EventFormActivity extends AppCompatActivity{
                         et_eventDetail.setText("");
                         et_eventStartTime.setText("");
                         et_eventStopTime.setText("");
+                        et_eventPricing.setText(""); //reset
 
                         progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.dismiss();
@@ -572,6 +587,8 @@ public class EventFormActivity extends AppCompatActivity{
                 );
             }
         });
+
+
 
 
 //        Toast.makeText(EventFormActivity.this, "Failed to write to database!" + download_ImageUrl, Toast.LENGTH_LONG).show();
@@ -685,5 +702,22 @@ public class EventFormActivity extends AppCompatActivity{
 
 
 
+}
+
+//Creating the Input Filter to ensure that the Ticket Price does not run past 2dp
+class DecimalDigitsInputFilter implements InputFilter{
+    private Pattern mPattern;
+    DecimalDigitsInputFilter(int digitsBeforePoint,int digitsAfterPoint){
+       mPattern = Pattern.compile("[0-9]{0," + (digitsBeforePoint- 1) + "}+((\\.[0-9]{0," + (digitsAfterPoint - 1) + "})?)||(\\.)?");
+    }
+
+    @Override
+    public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned toBeFiltered, int i2, int i3) {
+        Matcher matchThePattern = mPattern.matcher(toBeFiltered);
+        if (!matchThePattern.matches()){
+            return "";
+        }
+        return null;
+    }
 }
 
