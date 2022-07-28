@@ -111,8 +111,6 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         ImageView eventPicture = findViewById(R.id.eventPicture);
         TextView eventDateMonth = findViewById(R.id.EventMonth);
         TextView eventDateDay = findViewById(R.id.EventDate);
-        FloatingActionButton bookmark = findViewById(R.id.BookmarkButton);
-        bookmark.setVisibility(View.GONE);
         TextView eventTime = findViewById(R.id.timing);
 
 
@@ -338,7 +336,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         supportMapFragment.getMapAsync(this);
 
 
-        //for bookmark
+        /*//for bookmark
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -357,7 +355,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                             }
                         });
             }
-        });
+        });*/
 
 
     }

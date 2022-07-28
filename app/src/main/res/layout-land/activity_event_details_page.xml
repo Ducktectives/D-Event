@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="88dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="88dp"
             android:scrollbars="vertical"
             android:text="Event Description"
             android:textColor="@color/black"
@@ -120,8 +120,8 @@
 
         <TextView
             android:id="@+id/EventLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="238dp"
+            android:layout_height="47dp"
             android:layout_marginStart="87dp"
             android:layout_marginTop="8dp"
             android:scrollbars="vertical"
@@ -162,14 +162,29 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="88dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="88dp"
             android:scrollbars="vertical"
-            android:text="Event Description"
+            android:text="Event Details"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="@+id/Detail"
             app:layout_constraintStart_toStartOf="@+id/Detail"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
+
+        <TextView
+            android:id="@+id/timing"
+            android:layout_width="423dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="88dp"
+            android:scrollbars="vertical"
+            android:text="Timing"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/Detail"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/Detail"
+            app:layout_constraintTop_toBottomOf="@+id/eventDetails" />
 
         <TextView
             android:id="@+id/LocationText"
@@ -203,20 +218,6 @@
             app:layout_constraintEnd_toEndOf="@+id/Detail"
             app:layout_constraintStart_toStartOf="@+id/Detail"
             app:layout_constraintTop_toBottomOf="@+id/fragment" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/BookmarkButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="112dp"
-            android:layout_marginEnd="32dp"
-            android:backgroundTint="#F38484"
-            android:clickable="true"
-            app:layout_constraintEnd_toEndOf="@+id/Detail"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/EventName"
-            app:layout_constraintTop_toTopOf="@+id/Detail"
-            app:srcCompat="@android:drawable/ic_input_get" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
