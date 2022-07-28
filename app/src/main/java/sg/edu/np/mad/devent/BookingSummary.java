@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,10 +55,15 @@ public class BookingSummary extends AppCompatActivity {
         Button Close = (Button)findViewById(R.id.ConfirmationClose);
         Button AddtoCalender = (Button)findViewById(R.id.BookingAddCalander);
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String UserId = user.getUid();
+
+
+
         // Get the intent from the previous activity and setting the values
         Bundle autofill = getIntent().getExtras();
         String eventid = autofill.getString("EventID");
-        String Email = autofill.getString("Email");
+        String Email = user.getEmail();
         String nameFromBundle = autofill.getString("Name");
         String userEmailFromBundle = autofill.getString("UserEmail");
         Integer contactNoFromBundle = autofill.getInt("ContactNum");
@@ -131,30 +138,31 @@ public class BookingSummary extends AppCompatActivity {
                                             String eventdescription = task.getResult().child("event_Description").getValue(String.class);
                                             String eventlocation = task.getResult().child("event_Location").getValue(String.class);
                                             String eventStartTime = task.getResult().child("event_StartTime").getValue(String.class);
-                                            String eventEndTime = task.getResult().child("event_StartTime").getValue(String.class);
+                                            String eventEndTime = task.getResult().child("event_EndTime").getValue(String.class);
                                             String eventdate = task.getResult().child("event_Date").getValue(String.class);
-                                            String [] datedetails = eventdate.split("/");
-                                            String [] timestart = eventStartTime.split(":");
-                                            String [] starttimeofday = timestart[1].split(" ");
-                                            String [] timeend = eventEndTime.split(":");
-                                            String [] endtimeofday = timeend[1].split(" ");
+                                            String [] datedetails = eventdate.trim().split("/");
+                                            String [] timestart = eventStartTime.trim().split(":");
+                                            String [] timestartmin = timestart[1].trim().split(" ");
+                                            String [] timeend = eventEndTime.trim().split(":");
+                                            String [] timeendmin = timeend[1].trim().split(" ");
+
 
                                             long startMillis = 0;
                                             long endMillis = 0;
                                             Calendar beginTime = Calendar.getInstance();
-                                            beginTime.set(Integer.parseInt(datedetails[2]), Integer.parseInt(datedetails[1]), Integer.parseInt(datedetails[0]), Integer.parseInt(timestart[0]), Integer.parseInt(starttimeofday[0]));
+                                            beginTime.set(Integer.parseInt(datedetails[2]), Integer.parseInt(datedetails[1]) - 1, Integer.parseInt(datedetails[0]), Integer.parseInt(timestart[0]), Integer.parseInt(timestartmin[0]));
                                             startMillis = beginTime.getTimeInMillis();
                                             Calendar endTime = Calendar.getInstance();
-                                            endTime.set(Integer.parseInt(datedetails[2]), Integer.parseInt(datedetails[1]), Integer.parseInt(datedetails[0]), Integer.parseInt(timeend[0]), Integer.parseInt(endtimeofday[0]));
+                                            endTime.set(Integer.parseInt(datedetails[2]), Integer.parseInt(datedetails[1]) - 1, Integer.parseInt(datedetails[0]), Integer.parseInt(timeend[0]), Integer.parseInt(timeendmin[0]));
                                             endMillis = endTime.getTimeInMillis();
 
                                             // Assigning the value to put in the Calendar
                                             Intent Calender = new Intent(Intent.ACTION_INSERT);
                                             Calender.setData(CalendarContract.Events.CONTENT_URI);
                                             Calender.putExtra(CalendarContract.Events.TITLE, eventname);
-                                            Calender.putExtra(CalendarContract.Events.ALL_DAY, true);
-                                            Calender.putExtra(CalendarContract.Events.DTSTART, startMillis);
-                                            Calender.putExtra(CalendarContract.Events.DTEND, endMillis);
+                                            //Calender.putExtra(CalendarContract.Events.ALL_DAY, true);
+                                            Calender.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis);
+                                            Calender.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMillis);
                                             //Calender.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, eventStartTime);
                                             //Calender.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, eventEndTime);
                                             Calender.putExtra(CalendarContract.Events.EVENT_LOCATION, eventlocation);
@@ -164,6 +172,7 @@ public class BookingSummary extends AppCompatActivity {
                                             if (Calender.resolveActivity(getPackageManager()) != null){
                                                 Calender.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 startActivity(Calender);
+                                                finish();
                                             }
                                             else {
                                                 Toast.makeText(BookingSummary.this, "There is no application that is able to support this feature", Toast.LENGTH_LONG).show();

@@ -1,15 +1,16 @@
 <component name="libraryTable">
   <library name="Gradle: com.squareup.picasso:picasso:2.71828@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/10c906eec8890b4ca5a7f40fecb70260/transformed/picasso-2.71828/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/10c906eec8890b4ca5a7f40fecb70260/transformed/picasso-2.71828/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/10c906eec8890b4ca5a7f40fecb70260/transformed/picasso-2.71828/AndroidManifest.xml" />
       <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/ffd6ab66b195e720f3260e54a0d5d798/transformed/jetified-picasso-2.71828/AndroidManifest.xml" />
       <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/ffd6ab66b195e720f3260e54a0d5d798/transformed/jetified-picasso-2.71828/res" />
       <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/ffd6ab66b195e720f3260e54a0d5d798/transformed/jetified-picasso-2.71828/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/8a890cc2013b9ed71995bf5a697a038e/transformed/jetified-picasso-2.71828/AndroidManifest.xml" />
       <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/8a890cc2013b9ed71995bf5a697a038e/transformed/jetified-picasso-2.71828/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/transforms-3/8a890cc2013b9ed71995bf5a697a038e/transformed/jetified-picasso-2.71828/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/daf40ab92ad036fdccf81264cdb07383/transformed/jetified-picasso-2.71828/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/daf40ab92ad036fdccf81264cdb07383/transformed/jetified-picasso-2.71828/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/daf40ab92ad036fdccf81264cdb07383/transformed/jetified-picasso-2.71828/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.71828/2843564e6bac90b1e125104d7c842c87a96a8ee9/picasso-2.71828-javadoc.jar!/" />

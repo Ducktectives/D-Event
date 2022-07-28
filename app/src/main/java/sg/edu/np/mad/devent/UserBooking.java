@@ -98,7 +98,6 @@ public class UserBooking extends AppCompatActivity {
         ImageButton removeticket = (ImageButton)findViewById(R.id.TicketDeduct);
 
 
-
         String emailPattern = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]+[a-zA-Z0-9.-]";
         String namePattern = "^[a-zA-Z- ]{3,30}";
 
@@ -325,6 +324,7 @@ public class UserBooking extends AppCompatActivity {
                                                             }
                                                             else {
                                                                 //Pass intent into the Profile Page - carrot
+                                                                //Pass intent into the Profile Page
                                                                 Intent profileData = new Intent(UserBooking.this,BookingSummary.class);
                                                                 Bundle profileDatas = new Bundle();
                                                                 profileDatas.putString("EventID",eventid);
@@ -336,14 +336,13 @@ public class UserBooking extends AppCompatActivity {
                                                                 profileDatas.putString("EventName",eventName);
                                                                 profileDatas.putString("EventImage",imageLinkfromEventDetails);
                                                                 profileData.putExtras(profileDatas);
-                                                                profileData.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                                 startActivity(profileData);
+                                                                finish();
                                                             }
 
                                                         }
                                                     }
                                                 });
-
                                     }
                                 });
 
@@ -370,7 +369,7 @@ public class UserBooking extends AppCompatActivity {
                             notifyIntent, 0);
 
                     long timeAtButtonClick = System.currentTimeMillis();
-                    long seconds = 5000; // 10 seconds,
+                    long seconds = 10000; // 10 seconds,
                     AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                     alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtButtonClick + seconds, pendingIntent);
 

@@ -22,9 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
+
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -38,10 +36,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Statistics extends AppCompatActivity {
-
-    TextView noOfEvents = findViewById(R.id.NoNumberOfEvents);
-    TextView noOfTickets = findViewById(R.id.NoNumberOfTickets);
-    BarChart barChart;
 
     // Firebase stuff
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -67,6 +61,10 @@ public class Statistics extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
+        TextView noOfEvents = findViewById(R.id.NoNumberOfEvents);
+        TextView noOfTickets = findViewById(R.id.NoNumberOfTickets);
+        BarChart barChart;
+
 
         // Looking through all events
         event_path.orderByChild("event_UserID").addChildEventListener(new ChildEventListener() {
@@ -85,15 +83,18 @@ public class Statistics extends AppCompatActivity {
                 String eventStartTime = snapshot.child("event_StartTime").getValue(String.class);
                 String eventEndTime = snapshot.child("event_EndTime").getValue(String.class);
 
+                List<String> eventTypes = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.child("eventTypes").getChildren()) {
+                    eventTypes.add(dataSnapshot.getValue(String.class));
+                };
+
                 // Meant to prevent duplication of data display in gridAdapter
                 if (eventsIDList.contains(eventID)) return;
 
-                List<String> eventType = Arrays.asList(eventDetail.replaceAll("\\s+","").split(", "));
-                // Removes all whitespaces and non-visible characters, (\n, tab) and splits them into a list
 
 
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
-                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked);
+                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked, eventTypes);
 
                 if(eventUserID == userID){
                     createdEvents.add(event);
