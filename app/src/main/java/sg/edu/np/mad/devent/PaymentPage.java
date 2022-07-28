@@ -42,6 +42,7 @@ public class PaymentPage extends AppCompatActivity  {
     String eventID;
     String email;
     String imageLink;
+    String eventName;
 
 
     private static PayPalConfiguration config = new PayPalConfiguration()
@@ -72,7 +73,7 @@ public class PaymentPage extends AppCompatActivity  {
 
         //receive Bundle
         Intent paying = getIntent();
-        String eventName = paying.getStringExtra("EventName");
+        eventName = paying.getStringExtra("EventName");
         String stringNoTix = paying.getStringExtra("NoTix");
         String stringTixPrice = paying.getStringExtra("TixPrice");
         noTix = Integer.parseInt(stringNoTix);
@@ -152,6 +153,7 @@ public class PaymentPage extends AppCompatActivity  {
                 stuffForSum.putInt("ContactNum", Integer.parseInt(userContactNo));
                 stuffForSum.putInt("NumberofTix",noTix);
                 stuffForSum.putString("EventImage",imageLink);
+                stuffForSum.putString("EventName",eventName);
                 booksum.putExtras(stuffForSum);
                 startActivity(booksum);
 

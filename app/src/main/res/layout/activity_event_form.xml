@@ -352,16 +352,19 @@
                 android:fontFamily="@font/zcool"
                 android:text="Event type tags:"
                 android:textSize="21dp"
-                app:layout_constraintTop_toBottomOf="@id/event_form_details"/>
+                app:layout_constraintTop_toBottomOf="@id/event_form_Ticket_Price"/>
 
             <LinearLayout
                 android:id="@+id/event_form_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="18dp"
                 android:orientation="vertical"
-                tools:layout_editor_absoluteY="311dp"
-                app:layout_constraintTop_toBottomOf="@id/event_form_eventTypeTitle"
-                >
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_form_eventTypeTitle">
 
                 <CheckBox
                     android:id="@+id/sportsCheckbox"
@@ -376,24 +379,28 @@
                     android:layout_height="wrap_content"
                     android:onClick="checkBoxes"
                     android:text="Gaming" />
+
                 <CheckBox
                     android:id="@+id/animeCheckbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="checkBoxes"
                     android:text="Anime" />
+
                 <CheckBox
                     android:id="@+id/musicCheckbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="checkBoxes"
                     android:text="Music" />
+
                 <CheckBox
                     android:id="@+id/educationCheckbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="checkBoxes"
                     android:text="Education" />
+
                 <CheckBox
                     android:id="@+id/animalsCheckbox"
                     android:layout_width="match_parent"
@@ -424,7 +431,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/event_form_Ticket_Price" />
+                app:layout_constraintTop_toBottomOf="@+id/event_form_type" />
 
 
             <ProgressBar

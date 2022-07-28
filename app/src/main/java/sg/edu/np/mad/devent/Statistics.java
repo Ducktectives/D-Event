@@ -84,6 +84,7 @@ public class Statistics extends AppCompatActivity {
                 String eventDetail = snapshot.child("event_Detail").getValue(String.class);
                 String eventUserID = snapshot.child("event_UserID").getValue(String.class);
                 Boolean eventBooked = snapshot.child("bookmarked").getValue(Boolean.class);
+                Double eventTicketPrice = snapshot.child("event_TicketPrice").getValue(Double.class);
                 String eventStorageID = snapshot.child("event_StorageReferenceID").getValue(String.class);
                 String eventStartTime = snapshot.child("event_StartTime").getValue(String.class);
                 String eventEndTime = snapshot.child("event_EndTime").getValue(String.class);
@@ -100,7 +101,7 @@ public class Statistics extends AppCompatActivity {
 
 
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
-                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked, eventTypes);
+                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked,eventTicketPrice, eventTypes);
 
                 if(eventUserID == userID){
                     createdEvents.add(event);
