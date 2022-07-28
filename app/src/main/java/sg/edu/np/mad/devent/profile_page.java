@@ -59,13 +59,13 @@ import java.util.List;
 public class profile_page extends AppCompatActivity {
 
     Profile p = new Profile();
-    Integer saltvalue;
+    //Integer saltvalue;
     String userid;
     String username;
     String usertitle;
     String useremail;
     Integer usercontact;
-    String userpass;
+    //String userpass;
     Uri new_img;
     String user_id_unique;
     int[] imageId;
@@ -311,7 +311,7 @@ public class profile_page extends AppCompatActivity {
                 catch (Exception e){
                     usercontact = null;
                 }
-                userpass = String.valueOf(task.getResult().child("hashedpassword").getValue());
+                //userpass = String.valueOf(task.getResult().child("hashedpassword").getValue());
                 //saltvalue = Integer.parseInt(String.valueOf(task.getResult().child("saltvalue").getValue()));
 
 
@@ -325,7 +325,7 @@ public class profile_page extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                p.setHashedpassword(userpass);
+                //p.setHashedpassword(userpass);
 
                 // Set default texts
                 UserDesc.setText(p.Title);
@@ -556,6 +556,5 @@ public class profile_page extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 }

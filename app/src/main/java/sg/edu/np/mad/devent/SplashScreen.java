@@ -134,14 +134,12 @@ public class SplashScreen extends AppCompatActivity {
             login.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
             progressbar.setProgress(100);
             startActivity(login);
-            finish();
         }
         else {
             Intent i2 = new Intent(SplashScreen.this, LoginActivity.class);
             i2.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
             progressbar.setProgress(100);
             startActivity(i2);
-            finish();
         }
     }
 }

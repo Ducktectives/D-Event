@@ -41,6 +41,7 @@ public class Event_List_Adapter extends FirebaseRecyclerAdapter<Events, Event_Li
         holder.firstname.setText(model.Event_Name);
         holder.lastname.setText(model.Event_Detail);
         holder.age.setText(model.Event_Date);
+        holder.time.setText(model.Event_StartTime + " - " + model.getEvent_EndTime());
 
 
         holder.buttonViewOption.setOnClickListener(new View.OnClickListener() {

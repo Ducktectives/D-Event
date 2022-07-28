@@ -285,7 +285,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        Profile profile = new Profile(name, job, email, finalContact, password);
+                                        Profile profile = new Profile(name, job, email, finalContact);
                                         firebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Users")
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                 .setValue(profile).addOnCompleteListener(new OnCompleteListener<Void>() {

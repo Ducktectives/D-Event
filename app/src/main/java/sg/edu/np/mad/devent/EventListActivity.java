@@ -48,8 +48,6 @@ public class EventListActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = user.getUid();
 
-        Toast.makeText(EventListActivity.this, "User ID " + userID, Toast.LENGTH_LONG).show();
-
         databaseReference = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference()
                 .child("Event");
