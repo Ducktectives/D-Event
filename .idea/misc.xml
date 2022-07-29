@@ -61,6 +61,7 @@
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout-land/activity_event_list.xml" value="0.18738977072310406" />
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_booking_page.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_change_password.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_change_profile_pic.xml" value="0.25" />
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_edit_description.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_event_form.xml" value="0.165" />
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/activity_event_list.xml" value="0.2203125" />
@@ -80,6 +81,7 @@
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/fragment_home.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/fragment_slideshow.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/home_grid_item.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/nav_header_nav_drawer.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/layout/past_events.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/menu/event_menu_item.xml" value="0.2203125" />
         <entry key="..\:/Users/arthu/StudioProjects/D-Event/app/src/main/res/menu/menu_booking_page.xml" value="0.22135416666666666" />
