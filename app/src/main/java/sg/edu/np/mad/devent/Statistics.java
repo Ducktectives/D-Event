@@ -65,6 +65,10 @@ public class Statistics extends AppCompatActivity {
     long dayDifference;
     Boolean flag = false;
     static List<Events> eventsList = new ArrayList<>();
+    twoLists twoLists = new twoLists();
+    static List<Integer> paxPerDay = new ArrayList<>(7);
+    static ArrayList<String> dates = new ArrayList<>();
+    Integer pax;
 
 
 
@@ -76,14 +80,151 @@ public class Statistics extends AppCompatActivity {
 
         noOfEvents = (TextView) findViewById(R.id.NoNumberOfEvents);
         noOfTickets = (TextView) findViewById(R.id.NoNumberOfTickets);
+        // Looking through all events
+        event_path.orderByChild("event_ID").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                String eventID = snapshot.child("event_ID").getValue(String.class);
+
+                String eventUserID = snapshot.child("event_UserID").getValue(String.class);
+
+                pax += snapshot.child("totalPax").getValue(Integer.class);
 
 
-        twoLists datas = null;
-        createdEventsID = getEventData();
-        datas = getBookingData();
+                List<String> eventTypes = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.child("eventTypes").getChildren()) {
+                    eventTypes.add(dataSnapshot.getValue(String.class));
+                }
+                ;
+                Log.d("eventUserID", eventUserID);
+                Log.d("userID", userID);
 
-        List<Integer> paxPerDay = datas.paxPerDays;
-        ArrayList<String> dates = datas.datess;
+                // Meant to prevent duplication of data display in gridAdapter
+                if (eventsIDList.contains(eventID)) return;
+
+
+//                Events event = new Events(eventID, eventTitle, eventLoc, eventDate, eventDesc,
+//                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked, eventTicketPrice, eventTypes);
+//
+//                eventsIDList.add(eventID);
+//                eventsList.add(event);
+
+                if (String.valueOf(eventUserID).equals(String.valueOf(userID))) {
+//                        createdEvents.add(event);
+                    createdEventsID.add(eventID);
+                    Log.d("createdEvents", "" + createdEvents.size());
+                    Log.d("createdEventsID", "" + createdEventsID.size());
+                    Log.d("sizelmao", "" + createdEventsID);
+                    noOfEvents.setText(String.valueOf(createdEventsID.size()));
+                    noOfTickets.setText(String.valueOf(totalPax));
+
+
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
+        long DAY_IN_MS = 1000 * 60 * 60 * 24;
+        Date lastWeek = new Date(System.currentTimeMillis() - (7 * DAY_IN_MS));
+        Date today = new Date();
+        Calendar lastWeekCal = toCalendar(lastWeek);
+        Calendar todayCal = toCalendar(today);
+//         Get last weeks date and todays date
+
+        // Create list with all the dates in between
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        while (!lastWeekCal.after(todayCal)) {
+            // adding this if statement breaks it for some reason
+//            if(!lastWeekCal.equals(todayCal)){
+            try {
+                Log.d("lastweek", "" + sdf.parse(sdf.format(lastWeekCal.getTime())));
+                Log.d("lastweek2", "" + (sdf.format(lastWeekCal.getTime())));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            dates.add(sdf.format(lastWeekCal.getTime()));
+            lastWeekCal.add(Calendar.DATE, 1);
+//            }
+        }
+        // Create list for all the tickets
+        dayDifference = today.getTime() - lastWeek.getTime();
+        dayDifference = TimeUnit.DAYS.convert(dayDifference, TimeUnit.MILLISECONDS); // why did i do this
+
+
+        Log.d("createdEventsID", "" + createdEventsID);
+        for (String eventID : createdEventsID) {
+            Log.d("eventIDis", "" + eventID);
+            bookings_path.child(eventID).orderByChild("Pax").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    Integer pax = snapshot.child("Pax").getValue(Integer.class);
+                    String orderedDateString = snapshot.child("DayOrdered").getValue(String.class);
+                    try {
+                        orderedDate = sdf.parse(orderedDateString);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (dates.contains(orderedDate)) {
+                        dayDifference = TimeUnit.DAYS.convert(dayDifference, TimeUnit.MILLISECONDS);
+                        paxPerDay.set((int) dayDifference, paxPerDay.get((int) dayDifference) + pax);
+                    }
+                    totalPax += pax;
+                    Log.d("totalPax", "" + totalPax);
+
+
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+
+
+//        twoLists datas = null;
+//        createdEventsID = getEventData();
+//        datas = getBookingData();
+
+//        List<Integer> paxPerDay = datas.paxPerDays;
+//        ArrayList<String> dates = datas.datess;
 
 
 
@@ -116,179 +257,171 @@ public class Statistics extends AppCompatActivity {
     }
 
 
-    public twoLists getBookingData(){
-
-        twoLists twoLists = new twoLists();
-        List<Integer> paxPerDay = new ArrayList<>(7);
-        ArrayList<String> dates = new ArrayList<>();
-//        synchronized (this) {
-//                eventsIDList = getEventData();
-//                flag = !flag;
-//        }
-//        synchronized (this) {
-//            while (!flag) {
-//                wait();
-//            }
-
-
-            //         Looking through all bookings that user has created
-//         Find number of tickets sold from all events
-
-//         Get last weeks date and todays date
-            long DAY_IN_MS = 1000 * 60 * 60 * 24;
-            Date lastWeek = new Date(System.currentTimeMillis() - (7 * DAY_IN_MS));
-            Date today = new Date();
-            Calendar lastWeekCal = toCalendar(lastWeek);
-            Calendar todayCal = toCalendar(today);
-//         Get last weeks date and todays date
-
-            // Create list with all the dates in between
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            while (!lastWeekCal.after(todayCal)) {
-                // adding this if statement breaks it for some reason
-//            if(!lastWeekCal.equals(todayCal)){
-                try {
-                    Log.d("lastweek", "" + sdf.parse(sdf.format(lastWeekCal.getTime())));
-                    Log.d("lastweek2", "" + (sdf.format(lastWeekCal.getTime())));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                dates.add(sdf.format(lastWeekCal.getTime()));
-                lastWeekCal.add(Calendar.DATE, 1);
-//            }
-            }
-            // Create list for all the tickets
-            dayDifference = today.getTime() - lastWeek.getTime();
-            dayDifference = TimeUnit.DAYS.convert(dayDifference, TimeUnit.MILLISECONDS); // why did i do this
-
-
-            Log.d("createdEventsID", "" + createdEventsID);
-            for (String eventID : createdEventsID) {
-                Log.d("eventIDis", "" + eventID);
-                bookings_path.child(eventID).orderByChild("Pax").addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                        Integer pax = snapshot.child("Pax").getValue(Integer.class);
-                        String orderedDateString = snapshot.child("DayOrdered").getValue(String.class);
-                        try {
-                            orderedDate = sdf.parse(orderedDateString);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        if (dates.contains(orderedDate)) {
-                            dayDifference = TimeUnit.DAYS.convert(dayDifference, TimeUnit.MILLISECONDS);
-                            paxPerDay.set((int) dayDifference, paxPerDay.get((int) dayDifference) + pax);
-                        }
-                        totalPax += pax;
-                        Log.d("totalPax", "" + totalPax);
-                        noOfTickets.setText(String.valueOf(totalPax));
-
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            }
-            twoLists.paxPerDays = paxPerDay;
-            twoLists.datess = dates;
-            return twoLists;
-        }
-
-
-
-
-    public List<String> getEventData(){
-
-        // Looking through all events
-        event_path.orderByChild("event_ID").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                String eventID = snapshot.child("event_ID").getValue(String.class);
-//                String eventTitle = snapshot.child("event_Name").getValue(String.class);
-//                String eventLoc = snapshot.child("event_Location").getValue(String.class);
-//                String eventDate = snapshot.child("event_Date").getValue(String.class);
-//                String eventDesc = snapshot.child("event_Description").getValue(String.class);
-//                String eventDetail = snapshot.child("event_Detail").getValue(String.class);
-                String eventUserID = snapshot.child("event_UserID").getValue(String.class);
-//                Boolean eventBooked = snapshot.child("bookmarked").getValue(Boolean.class);
-//                Double eventTicketPrice = snapshot.child("event_TicketPrice").getValue(Double.class);
-//                String eventStorageID = snapshot.child("event_StorageReferenceID").getValue(String.class);
-//                String eventStartTime = snapshot.child("event_StartTime").getValue(String.class);
-//                String eventEndTime = snapshot.child("event_EndTime").getValue(String.class);
-
-
-                List<String> eventTypes = new ArrayList<>();
-                for (DataSnapshot dataSnapshot : snapshot.child("eventTypes").getChildren()) {
-                    eventTypes.add(dataSnapshot.getValue(String.class));
-                }
-                ;
-                Log.d("eventUserID", eventUserID);
-                Log.d("userID", userID);
-
-                // Meant to prevent duplication of data display in gridAdapter
-                if (eventsIDList.contains(eventID)) return;
-
-
-//                Events event = new Events(eventID, eventTitle, eventLoc, eventDate, eventDesc,
-//                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked, eventTicketPrice, eventTypes);
+//    public twoLists getBookingData(){
 //
-//                eventsIDList.add(eventID);
-//                eventsList.add(event);
-
-                    if (String.valueOf(eventUserID).equals(String.valueOf(userID))) {
-//                        createdEvents.add(event);
-                        createdEventsID.add(eventID);
-                        Log.d("createdEvents", "" + createdEvents.size());
-                        Log.d("createdEventsID", "" + createdEventsID.size());
-                        Log.d("sizelmao", "" + createdEventsID);
-                        noOfEvents.setText(String.valueOf(createdEventsID.size()));
-
-                   }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
-
-        Log.d("returnCreate", "" + createdEventsID);
-            return createdEventsID;
-
-    }
+//        twoLists twoLists = new twoLists();
+//        List<Integer> paxPerDay = new ArrayList<>(7);
+//        ArrayList<String> dates = new ArrayList<>();
+////        synchronized (this) {
+////                eventsIDList = getEventData();
+////                flag = !flag;
+////        }
+////        synchronized (this) {
+////            while (!flag) {
+////                wait();
+////            }
+//
+//
+//            //         Looking through all bookings that user has created
+////         Find number of tickets sold from all events
+//
+////         Get last weeks date and todays date
+//            long DAY_IN_MS = 1000 * 60 * 60 * 24;
+//            Date lastWeek = new Date(System.currentTimeMillis() - (7 * DAY_IN_MS));
+//            Date today = new Date();
+//            Calendar lastWeekCal = toCalendar(lastWeek);
+//            Calendar todayCal = toCalendar(today);
+////         Get last weeks date and todays date
+//
+//            // Create list with all the dates in between
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//            while (!lastWeekCal.after(todayCal)) {
+//                // adding this if statement breaks it for some reason
+////            if(!lastWeekCal.equals(todayCal)){
+//                try {
+//                    Log.d("lastweek", "" + sdf.parse(sdf.format(lastWeekCal.getTime())));
+//                    Log.d("lastweek2", "" + (sdf.format(lastWeekCal.getTime())));
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//                dates.add(sdf.format(lastWeekCal.getTime()));
+//                lastWeekCal.add(Calendar.DATE, 1);
+////            }
+//            }
+//            // Create list for all the tickets
+//            dayDifference = today.getTime() - lastWeek.getTime();
+//            dayDifference = TimeUnit.DAYS.convert(dayDifference, TimeUnit.MILLISECONDS); // why did i do this
+//
+//
+//            Log.d("createdEventsID", "" + createdEventsID);
+//            for (String eventID : createdEventsID) {
+//                Log.d("eventIDis", "" + eventID);
+//                bookings_path.child(eventID).orderByChild("Pax").addChildEventListener(new ChildEventListener() {
+//                    @Override
+//                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                        Integer pax = snapshot.child("Pax").getValue(Integer.class);
+//                        String orderedDateString = snapshot.child("DayOrdered").getValue(String.class);
+//                        try {
+//                            orderedDate = sdf.parse(orderedDateString);
+//                        } catch (ParseException e) {
+//                            e.printStackTrace();
+//                        }
+//                        if (dates.contains(orderedDate)) {
+//                            dayDifference = TimeUnit.DAYS.convert(dayDifference, TimeUnit.MILLISECONDS);
+//                            paxPerDay.set((int) dayDifference, paxPerDay.get((int) dayDifference) + pax);
+//                        }
+//                        totalPax += pax;
+//                        Log.d("totalPax", "" + totalPax);
+//                        noOfTickets.setText(String.valueOf(totalPax));
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//            }
+//            twoLists.paxPerDays = paxPerDay;
+//            twoLists.datess = dates;
+//            return twoLists;
+//        }
+//
+//
+//
+//
+//    public List<String> getEventData(){
+//
+//        // Looking through all events
+//        event_path.orderByChild("event_ID").addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//                String eventID = snapshot.child("event_ID").getValue(String.class);
+//
+//                String eventUserID = snapshot.child("event_UserID").getValue(String.class);
+//
+//
+//
+//                List<String> eventTypes = new ArrayList<>();
+//                for (DataSnapshot dataSnapshot : snapshot.child("eventTypes").getChildren()) {
+//                    eventTypes.add(dataSnapshot.getValue(String.class));
+//                }
+//                ;
+//                Log.d("eventUserID", eventUserID);
+//                Log.d("userID", userID);
+//
+//                // Meant to prevent duplication of data display in gridAdapter
+//                if (eventsIDList.contains(eventID)) return;
+//
+//
+////                Events event = new Events(eventID, eventTitle, eventLoc, eventDate, eventDesc,
+////                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked, eventTicketPrice, eventTypes);
+////
+////                eventsIDList.add(eventID);
+////                eventsList.add(event);
+//
+//                    if (String.valueOf(eventUserID).equals(String.valueOf(userID))) {
+////                        createdEvents.add(event);
+//                        createdEventsID.add(eventID);
+//                        Log.d("createdEvents", "" + createdEvents.size());
+//                        Log.d("createdEventsID", "" + createdEventsID.size());
+//                        Log.d("sizelmao", "" + createdEventsID);
+//                        noOfEvents.setText(String.valueOf(createdEventsID.size()));
+//
+//                   }
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//
+//        });
+//
+//        Log.d("returnCreate", "" + createdEventsID);
+//            return createdEventsID;
+//
+//    }
 
 }

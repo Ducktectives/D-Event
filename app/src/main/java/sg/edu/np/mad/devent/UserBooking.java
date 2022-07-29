@@ -296,6 +296,7 @@ public class UserBooking extends AppCompatActivity {
                                         user.child(userID).child("event_booked").child(eventid).child("Pax").setValue(finalbookingpax);
 
 
+
                                         //check whether ticket price is more than 0
                                         Ref.child(eventid).get()
                                                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -307,6 +308,17 @@ public class UserBooking extends AppCompatActivity {
                                                         else{
                                                             String stringTicketPrice = String.valueOf(task.getResult().child("event_TicketPrice").getValue());
                                                             Double TicketPrice = Double.parseDouble(stringTicketPrice);
+                                                            Integer pax;
+                                                            try{
+
+                                                                pax = task.getResult().child("totalPax").getValue(Integer.class);
+                                                            }
+                                                            catch (NullPointerException ex){
+                                                                pax = 0;
+                                                            }
+                                                            pax += finalbookingpax;
+                                                            Ref.child(eventid).child("totalPax");
+
 
                                                             if (TicketPrice > 0){
                                                                 Intent payment = new Intent(UserBooking.this,PaymentPage.class);
