@@ -22,6 +22,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,6 +40,7 @@ import java.util.List;
 
 import sg.edu.np.mad.devent.Events;
 import sg.edu.np.mad.devent.R;
+import sg.edu.np.mad.devent.Statistics;
 import sg.edu.np.mad.devent.databinding.FragmentHomeBinding;
 import sg.edu.np.mad.devent.profile_page;
 
@@ -50,6 +53,9 @@ public class HomeFragment extends Fragment {
     Button sportsFilter, gamingFilter, animeFilter, musicFilter, educationFilter, animalsFilter;
     GridView gridView;
     boolean flag = false;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String userID = user.getUid();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +71,10 @@ public class HomeFragment extends Fragment {
         musicFilter = binding.MusicFilter;
         educationFilter = binding.EducationFilter;
         animalsFilter = binding.AnimalsFilter;
+
+        List<String> eventsIDList = new ArrayList<>();
+        List<Events> createdEvents = new ArrayList<>();
+        List<String> createdEventsID = new ArrayList<>();
 
 
         sportsFilter.setOnClickListener(new View.OnClickListener() {
@@ -217,6 +227,12 @@ public class HomeFragment extends Fragment {
                 eventsIDList.add(eventID);
                 eventsList.add(event);
 
+                if (String.valueOf(eventUserID).equals(String.valueOf(userID))) {
+                    createdEvents.add(event);
+                    createdEventsID.add(event.getEvent_ID());
+
+                }
+
 
                 gridAdapter.notifyDataSetChanged();
             }
@@ -264,6 +280,7 @@ public class HomeFragment extends Fragment {
         inflater.inflate(R.menu.nav_drawer, menu);
         MenuItem menuItem = menu.findItem(R.id.search_view);
         SearchView searchView = (SearchView) menuItem.getActionView();
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
