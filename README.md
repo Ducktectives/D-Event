@@ -39,7 +39,7 @@ Team members’ names, student IDs
   
 Roles and contributions of each member
 
-  ALFRED LEANDRO LIANG - Home Page (Displaying CardView of events), Search bar, Filter buttons, Nav Drawer
+  ALFRED LEANDRO LIANG - Home Page (Displaying CardView of events), Search bar, Filter buttons, Nav Drawer 
   
   CHONG WEI QIN - Addition of Events, Database, Authentication, Read | Update | Delete User's Own Event, Forgot Password, Change and Setup Profile Image
   
