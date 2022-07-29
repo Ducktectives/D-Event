@@ -1,10 +1,13 @@
 package sg.edu.np.mad.devent;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -44,6 +47,20 @@ public class EventListActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent i = new Intent(EventListActivity.this,NavDrawer.class);
+                Log.d("backbutton","hey the back button is being pressed");
+                i.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this,callback);
+
+
+
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = user.getUid();

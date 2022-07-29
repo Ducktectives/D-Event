@@ -1,11 +1,13 @@
 package sg.edu.np.mad.devent;
 
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -164,6 +166,25 @@ public class EventFormActivity extends AppCompatActivity{
 
 
         Geocoder geocoder = new Geocoder(EventFormActivity.this, Locale.getDefault());
+
+     /*   ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+        // Set this to true if you want back button on the actionbar
+        // Intents dont send over when you press back on the action bar for some raeason
+        // so im stuck
+        actionBar.setDisplayHomeAsUpEnabled(true);*/
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent i = new Intent(EventFormActivity.this,NavDrawer.class);
+                Log.d("backbutton","hey the back button is being pressed");
+                i.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this,callback);
 
 
 

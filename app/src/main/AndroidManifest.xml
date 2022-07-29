@@ -13,6 +13,7 @@
     <uses-permission-sdk-23 android:name="android.permission.READ_CALENDAR"/>
     <uses-permission-sdk-23 android:name="android.permission.WRITE_CALENDAR"/>
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -43,12 +44,7 @@
             android:name=".SplashScreen"
             android:exported="true">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-
-            </intent-filter>
         </activity>
         <activity
             android:name=".UserBooking"
@@ -63,7 +59,15 @@
             android:parentActivityName=".NavDrawer" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="true" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+        </activity>
         <activity
             android:name=".RegistrationActivity"
             android:exported="true"
@@ -116,6 +120,7 @@
         <activity android:name="com.paypal.android.sdk.payments.LoginActivity"/>
         <activity android:name="com.paypal.android.sdk.payments.PaymentMethodActivity"/>
         <activity android:name="com.paypal.android.sdk.payments.PaymentConfirmActivity"/>
+
 
         //for google maps
         <meta-data

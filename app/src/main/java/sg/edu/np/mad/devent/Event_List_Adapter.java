@@ -72,6 +72,14 @@ public class Event_List_Adapter extends FirebaseRecyclerAdapter<Events, Event_Li
                                 activity.startActivity(intent);
 
                                 break;
+
+                       /*     case R.id.map_event_list:
+                                AppCompatActivity eventMapActivity = (AppCompatActivity) view.getContext();
+                                intent = new Intent(eventMapActivity, EventListMapActivity.class);
+                                intent.putExtra("Event Location", model.getEvent_Location());
+
+                                eventMapActivity.startActivity(intent);
+                                break;*/
                         }
                         return false;
                     }

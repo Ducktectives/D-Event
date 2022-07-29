@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
+/*import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;*/
 
 import android.content.Context;
 import android.content.Intent;
@@ -420,7 +420,7 @@ public class profile_page extends AppCompatActivity {
                 PreferenceManager.getDefaultSharedPreferences(profile_page.this);
 
         ImageButton insta = findViewById(R.id.InstaButton);
-        ImageButton facebook = findViewById(R.id.FacebookButton);
+       /* ImageButton facebook = findViewById(R.id.FacebookButton);*/
         ImageButton linkedin = findViewById(R.id.linkedInButton);
         final ImageButton[] website = {findViewById(R.id.WebsiteButton)};
 
@@ -428,12 +428,12 @@ public class profile_page extends AppCompatActivity {
 
         if (enableMedia) {
             insta.setVisibility(View.VISIBLE);
-            facebook.setVisibility(View.VISIBLE);
+            /*facebook.setVisibility(View.VISIBLE);*/
             linkedin.setVisibility(View.VISIBLE);
             website[0].setVisibility(View.VISIBLE);
         } else {
             insta.setVisibility(View.INVISIBLE);
-            facebook.setVisibility(View.INVISIBLE);
+           /* facebook.setVisibility(View.INVISIBLE);*/
             linkedin.setVisibility(View.INVISIBLE);
             website[0].setVisibility(View.INVISIBLE);
 
@@ -447,9 +447,9 @@ public class profile_page extends AppCompatActivity {
                 if(instaURL == null || instaURL.length() == 0 ){
                     instaURL = snapshot.child("Instagram").getValue(String.class);
                 }
-                if(facebookURL == null || facebookURL.length() == 0){
+               /* if(facebookURL == null || facebookURL.length() == 0){
                     facebookURL = snapshot.child("Facebook").getValue(String.class);
-                }
+                }*/
                 if(linkedinURL == null || linkedinURL.length() == 0){
                     linkedinURL = snapshot.child("LinkedIn").getValue(String.class);
                 }
@@ -480,12 +480,12 @@ public class profile_page extends AppCompatActivity {
         });
 
         instaURL = sharedPreferences.getString("Instagram",null);
-        facebookURL = sharedPreferences.getString("Facebook",null);
+     /*   facebookURL = sharedPreferences.getString("Facebook",null);*/
         linkedinURL = sharedPreferences.getString("LinkedIn",null);
         websiteURL = sharedPreferences.getString("Website",null);
 
         user_path.child(userID).child("Media").child("Instagram").setValue(instaURL);
-        user_path.child(userID).child("Media").child("Facebook").setValue(facebookURL);
+        /*user_path.child(userID).child("Media").child("Facebook").setValue(facebookURL);*/
         user_path.child(userID).child("Media").child("LinkedIn").setValue(linkedinURL);
         user_path.child(userID).child("Media").child("Website").setValue(websiteURL);
 
@@ -507,7 +507,7 @@ public class profile_page extends AppCompatActivity {
                         }
                     }
                 });
-        facebook.setOnClickListener(new View.OnClickListener() {
+      /*  facebook.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try {
@@ -522,7 +522,7 @@ public class profile_page extends AppCompatActivity {
                             Toast.makeText(getBaseContext(),"Media not connected", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                });*/
 
         linkedin.setOnClickListener(new View.OnClickListener() {
                     @Override
