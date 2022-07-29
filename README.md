@@ -39,13 +39,13 @@ Team members’ names, student IDs
   
 Roles and contributions of each member
 
-  ALFRED LEANDRO LIANG - Home Page
+  ALFRED LEANDRO LIANG - Home Page (Displaying CardView of events), Search bar, Filter buttons, Nav Drawer
   
   CHONG WEI QIN - Addition of Events, Database, Authentication, Read | Update | Delete User's Own Event, Forgot Password, Change and Setup Profile Image
   
-  CHUA HAO ZHONG - Profile Page
+  CHUA HAO ZHONG - Profile Page, 
   
-  NGUI JIA LE SHERLENA - Login Page, Registration Page, Booking Page, Integration of Code, Database, App Writeup and Design
+  NGUI JIA LE SHERLENA - Splash Screen (Persistent Memory), Login Page, Registration Page, Booking Page, Integration of Code, Database, App Writeup and Design, Application TroubleShooting, Booking Confirmation, Ensuring user can only book once
   
   TAN YEE MING - Event Page (Listing of event information), Booking Page, Integration of Code, Database, Design
 
