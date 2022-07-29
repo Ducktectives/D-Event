@@ -29,6 +29,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -109,8 +111,6 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         ImageView eventPicture = findViewById(R.id.eventPicture);
         TextView eventDateMonth = findViewById(R.id.EventMonth);
         TextView eventDateDay = findViewById(R.id.EventDate);
-        FloatingActionButton bookmark = findViewById(R.id.BookmarkButton);
-        bookmark.setVisibility(View.GONE);
         TextView eventTime = findViewById(R.id.timing);
 
 
@@ -168,7 +168,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if (!task.isSuccessful()){
-                                        Toast.makeText(EventDetailsPage.this,"No such user exists.", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(EventDetailsPage.this,"No such user exists.", Toast.LENGTH_SHORT).show();
                                     }
                                     else{
                                         String username = String.valueOf(task.getResult().child("username").getValue());
@@ -245,8 +245,9 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onClick(View view) {
                 Intent profile = new Intent(EventDetailsPage.this, profile_page.class);
-               profile.putExtra("EventOrganizer", eventOrganizerUID);
-              startActivity(profile);
+                profile.putExtra("EventOrganizer", eventOrganizerUID);
+                startActivity(profile);
+                //no finish because can go back
 
            }
         });
@@ -257,6 +258,47 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         bookEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                DatabaseReference Ref = database.getReference("Users");
+                Ref.child(user.getUid()).child("event_booked").equalTo(eventID).get()
+                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (!task.isSuccessful()){
+                                    //if the task is unsucessful
+                                    Intent book = new Intent(EventDetailsPage.this,UserBooking.class);
+                                    Bundle bookingInfo = new Bundle();
+                                    bookingInfo.putString("EventPicture",imageLink);
+                                    bookingInfo.putString("User_Email",userEmail);
+                                    bookingInfo.putSerializable("EventList",(Serializable) eventList);
+                                    bookingInfo.putString("Event", eventID);
+                                    book.putExtras(bookingInfo);
+                                    book.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(book);
+                                }
+                                else{
+                                    //get event booking confirmation page
+                                    Booking bookinginfo = new Booking();
+
+                                    Intent BookingSummaryBundle = new Intent(EventDetailsPage.this, BookingSummary.class);
+                                    Bundle BookingSummary = new Bundle();
+                                    BookingSummary.putString("EventID",eventID);
+                                    BookingSummary.putString("Email",userEmail);
+                                    BookingSummary.putString("Name",bookinginfo.Name);
+                                    BookingSummary.putString("UserEmail",bookinginfo.Email);
+                                    BookingSummary.putInt("ContactNum",bookinginfo.Contact);
+                                    BookingSummary.putInt("NumberofTix",bookinginfo.Pax);
+                                    BookingSummary.putString("EventName",eventNamedIs);
+                                    BookingSummaryBundle.putExtras(BookingSummary);
+                                    startActivity(BookingSummaryBundle);
+                                    finish();
+                                }
+                            }
+                        });
+
+
+                /*
                 Intent book = new Intent(EventDetailsPage.this,UserBooking.class);
                 Bundle bookingInfo = new Bundle();
                 bookingInfo.putString("EventPicture",imageLink);
@@ -267,7 +309,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                 bookingInfo.putString("EventPicture",imageLink);
                 book.putExtras(bookingInfo);
                 startActivity(book);
-                book.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //users should be able to go back
                 /*
                 // Code below is used to set up notification for the user on the day of the event
                 Toast.makeText(EventDetailsPage.this,"Reminder has been set!", Toast.LENGTH_SHORT).show();
@@ -294,7 +336,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
         supportMapFragment.getMapAsync(this);
 
 
-        //for bookmark
+        /*//for bookmark
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -313,7 +355,7 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                             }
                         });
             }
-        });
+        });*/
 
 
     }
@@ -360,11 +402,15 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
                     builder.include(marker1.getPosition());
                     LatLngBounds markerLoc = builder.build();
-                    googleMap.setLatLngBoundsForCameraTarget(markerLoc);
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(markerLoc,12);
+                    googleMap.moveCamera(cu);
+                    //googleMap.setLatLngBoundsForCameraTarget(markerLoc);
 
                     //add zoom controls
                     googleMap.getUiSettings().setZoomControlsEnabled(true);
                     googleMap.getUiSettings().setZoomGesturesEnabled(true);
+
+
 
                 }
                 catch (Exception e){
@@ -385,9 +431,4 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             notificationManager.createNotificationChannel(channel);
         }
     }
-
-
-
-
-
 }

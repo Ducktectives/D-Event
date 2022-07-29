@@ -141,6 +141,7 @@ public class EventFormActivity extends AppCompatActivity{
         et_eventPricing.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(5,2)}); //set ticket price -  2f
 
 
+
         retrieveAddress = (TextView) findViewById(R.id.locate_address);
         updateAddress = (TextView) findViewById(R.id.event_form_address);
 
@@ -469,7 +470,7 @@ public class EventFormActivity extends AppCompatActivity{
         try {
             Date dateStr = dateFormat.parse(event_Date);
             if (new Date().before(dateStr)) {
-                Toast.makeText(EventFormActivity.this, "Date must be created after today", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EventFormActivity.this, "Event date has passed", Toast.LENGTH_SHORT).show();
 
             }
         } catch (ParseException e) {
@@ -507,7 +508,7 @@ public class EventFormActivity extends AppCompatActivity{
             public void onFailure(@NonNull Exception e){
                 // Error, Image not uploaded
                 progressDialog.dismiss();
-                Toast.makeText(EventFormActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EventFormActivity.this, "Image failed to uploaded" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override

@@ -90,10 +90,11 @@ public class BookingSummary extends AppCompatActivity {
         Close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i2 = new Intent(BookingSummary.this, profile_page.class);
+                Intent i2 = new Intent(BookingSummary.this, NavDrawer.class);
                 i2.putExtra("Email", Email);
                 i2.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i2);
+                finish(); // should not be able to go back
             }
         });
 

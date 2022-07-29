@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.api.Authentication;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -64,7 +65,6 @@ public class NavDrawer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-
         binding = ActivityNavDrawerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -76,49 +76,21 @@ public class NavDrawer extends AppCompatActivity {
         /* Arthur Edit */
         nav_view = (NavigationView) findViewById(R.id.nav_view);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        getuserprofileId = user.getUid();
-        getemailofuser = user.getEmail();
+        try{
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = mAuth.getCurrentUser();
+            getuserprofileId = user.getUid();
+            getemailofuser = user.getEmail();
 
-        Toast.makeText(this, "User ID : " + user.toString(), Toast.LENGTH_SHORT).show();
-
-        try {
-            FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
-            DatabaseReference Ref = database.getReference("Users");
-
-
-
-
-            Ref.equalTo(getuserprofileId).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()) {
-                            // Getting the values required to authenticate the user
-                            Ref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    if (!task.isSuccessful()) {
-                                        Log.e("firebase", "Error getting data. Please reload.", task.getException());
-                                    }
-                                    else {
-                                        Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                                        getusernameofuser = task.getResult().child("username").getValue(String.class);
-                                    }
-                                }
-                            });
-                        }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        catch (Exception e){
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            FirebaseUser user = auth.getCurrentUser();
 
+            //user = FirebaseAuth.getInstance().getCurrentUser();
+            getuserprofileId = user.getUid();
+            getemailofuser = user.getEmail();
+        }
 
         setSupportActionBar(binding.appBarNavDrawer.toolbar);
         /*
@@ -165,6 +137,7 @@ public class NavDrawer extends AppCompatActivity {
                                                 // below line is to go to MainActivity via an intent.
                                                 Intent i = new Intent(NavDrawer.this, LoginActivity.class);
                                                 startActivity(i);
+                                                finish();
                                             }
                                         });
                             }
@@ -181,24 +154,24 @@ public class NavDrawer extends AppCompatActivity {
                         Intent settingAct = new Intent(NavDrawer.this, Settings.class);
                         settingAct.putExtra("Email", getemailofuser);
                         startActivity(settingAct);
-
+                        finish();
                         break;
                     case R.id.nav_AddEvent:
                         Intent eventForm = new Intent(NavDrawer.this, EventFormActivity.class);
                         startActivity(eventForm);
-
+                        finish();
                         break;
                     case R.id.nav_eventList:
                         Intent eventList = new Intent(NavDrawer.this, EventListActivity.class);
                         startActivity(eventList);
-
+                        finish();
                         break;
 
                     case R.id.nav_stats:
                         Intent stats = new Intent(NavDrawer.this,Statistics.class);
                         stats.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(stats);
-
+                        finish();
                         break;
 
                 }
@@ -291,11 +264,44 @@ public class NavDrawer extends AppCompatActivity {
             }
         });
 //
-        TextView username = (TextView) navHeader.findViewById(R.id.nav_username);
-        username.setText(getusernameofuser);
-
         TextView email = (TextView) navHeader.findViewById(R.id.nav_email);
-        email.setText(getemailofuser);
+        TextView username = (TextView) navHeader.findViewById(R.id.nav_username);
+
+        try {
+            FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+            DatabaseReference Ref = database.getReference("Users");
+
+            Ref.equalTo(getuserprofileId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()) {
+                        // Getting the values required to authenticate the user
+                        Ref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (!task.isSuccessful()) {
+                                    Log.e("firebase", "Error getting data. Please reload.", task.getException());
+                                }
+                                else {
+                                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                                    getusernameofuser = task.getResult().child("username").getValue(String.class);
+                                    username.setText(getusernameofuser);
+                                    email.setText(user.getEmail());
+                                }
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
