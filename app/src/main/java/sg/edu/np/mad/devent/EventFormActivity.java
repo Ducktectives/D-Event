@@ -7,7 +7,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -16,7 +15,6 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -26,17 +24,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -47,13 +39,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -64,11 +51,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,8 +60,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class EventFormActivity extends AppCompatActivity{
     TextView imgPath, updateAddress, retrieveAddress;
@@ -115,8 +97,6 @@ public class EventFormActivity extends AppCompatActivity{
     FirebaseStorage firebaseStorage;
     private FirebaseDatabase database;
 
-    FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,8 +129,8 @@ public class EventFormActivity extends AppCompatActivity{
 
 
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
+        /*progressBar = (ProgressBar) findViewById(R.id.progressBar);
+*/
         database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
 
@@ -611,135 +591,10 @@ public class EventFormActivity extends AppCompatActivity{
         });
 
 
-
-
-//        Toast.makeText(EventFormActivity.this, "Failed to write to database!" + download_ImageUrl, Toast.LENGTH_LONG).show();
-
-
-
-        // Create an object of Firebase Database Reference
-//        DatabaseReference reference ;
-//        reference = database.getReference();
-//        event = new Events( event_ID,  event_Name,  event_Location,  event_Date,  event_Description,  event_Detail,  userID, download_ImageUrl,  bookmarked);
-//        // Insert the user-defined object to the database
-//        reference.child("Event").push().setValue(event).addOnSuccessListener(
-//                new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void unused) {
-//                        Toast.makeText(EventFormActivity.this, "Success !!!", Toast.LENGTH_SHORT).show();
-//
-//
-//
-//                    }
-//                }
-//        ).addOnFailureListener(
-//                new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(EventFormActivity.this, "Failed to write to database!", Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                }
-//        );
-
         Intent submitform = new Intent(EventFormActivity.this, NavDrawer.class);
         startActivity(submitform);
 
     }
-
-
-
-
-    // uploadimage method
-//    public void uploadImage(){
-//
-//
-//        firebaseStorage = firebaseStorage.getInstance("gs://authentication-b12c2.appspot.com");
-//
-//        reference = firebaseStorage.getReference();
-//
-//
-//        ImageView imageView = (ImageView)findViewById(R.id.img);
-//
-//        imageView.setDrawingCacheEnabled(true);
-//        imageView.buildDrawingCache();
-//        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-//        byte[] data = baos.toByteArray();
-//
-//        // Defining the child of storageReference
-//        //selectedImage => URI
-//        // SorageReference represents a reference to Google Cloud Storage Object
-//        StorageReference ref = reference.child("images").child(System.currentTimeMillis() + '.' + getFileExtension(selectedImage));
-//
-//
-//            // progressDialogue while uploading
-//            ProgressDialog progressDialog = new ProgressDialog(this);
-//            progressDialog.setTitle("Uploading...");
-//            progressDialog.show();
-//
-//
-//
-//
-//            UploadTask uploadTask = ref.putFile(selectedImage);
-//            // adding listeners on event progression of image upload
-//            uploadTask.addOnFailureListener(new OnFailureListener(){
-//                @Override
-//                public void onFailure(@NonNull Exception e){
-//                    // Error, Image not uploaded
-//                    progressDialog.dismiss();
-//                    Toast.makeText(EventFormActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-//            }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-//                    // Image uploaded successfully
-//                    progressDialog.dismiss();
-//                    Toast.makeText(EventFormActivity.this, "Form Uploaded", Toast.LENGTH_SHORT).show();
-//
-//
-//                    ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Uri> task) {
-//                            download_ImageUrl = task.getResult().toString();
-//
-//                        }
-//                    });
-//                }
-//            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                // Progress listneer for loading on the dialog box
-//                @Override
-//                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-//                    double progress = (100.0 * snapshot.getBytesTransferred()
-//                            / snapshot.getTotalByteCount());
-//                    progressDialog.setMessage(
-//                            "Uploaded " + (int) progress + "%"
-//                    );
-//                }
-//            });
-//
-//
-//        }
-
-
-
 }
 
-//Creating the Input Filter to ensure that the Ticket Price does not run past 2dp
-class DecimalDigitsInputFilter implements InputFilter{
-    private Pattern mPattern;
-    DecimalDigitsInputFilter(int digitsBeforePoint,int digitsAfterPoint){
-       mPattern = Pattern.compile("[0-9]{0," + (digitsBeforePoint- 1) + "}+((\\.[0-9]{0," + (digitsAfterPoint - 1) + "})?)||(\\.)?");
-    }
-
-    @Override
-    public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned toBeFiltered, int i2, int i3) {
-        Matcher matchThePattern = mPattern.matcher(toBeFiltered);
-        if (!matchThePattern.matches()){
-            return "";
-        }
-        return null;
-    }
-}
 

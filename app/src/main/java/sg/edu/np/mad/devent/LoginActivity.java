@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     /* Firebase Auth */
 
+    TextView txt_forgetten;
     private ProgressBar progressBar;
     /* Arthur edit */
 
@@ -55,6 +56,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Button submittologin = (Button)findViewById(R.id.loginsubmit);
         TextView createuseraccount = (TextView)findViewById(R.id.registernewaccount);
+
+        txt_forgetten = (TextView) findViewById(R.id.forgetPassword);
 
 
         /* Firebase Auth */
@@ -167,6 +170,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent registeractivitystart = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(registeractivitystart);
+            }
+        });
+
+        txt_forgetten.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ayeAyeCaptain = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
+                startActivity(ayeAyeCaptain);
             }
         });
     }

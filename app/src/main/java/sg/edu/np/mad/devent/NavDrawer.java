@@ -6,15 +6,18 @@ import static sg.edu.np.mad.devent.R.id.nav_host_fragment_content_nav_drawer;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -56,14 +59,14 @@ public class NavDrawer extends AppCompatActivity {
 
     /* Arthur Edit */
     private FirebaseUser user;
-    private String userID;
+    private String userID, profilePic;
     private NavigationView nav_view;
 
+    ImageView imgView_profilePic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         binding = ActivityNavDrawerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -103,8 +106,46 @@ public class NavDrawer extends AppCompatActivity {
         });
          */
 
+
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
+
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        View view = navigationView.getHeaderView(0);
+        imgView_profilePic = (ImageView) view.findViewById(R.id.nav_profilePic);
+        Toast.makeText(NavDrawer.this,"User Signed Out " + imgView_profilePic , Toast.LENGTH_SHORT).show();
+        DatabaseReference databaseReference ;
+        databaseReference = firebaseDatabase.getInstance().getReference();
+
+
+        /* 26/07 - Set the form when user comes in */
+        // Get username to send in activity
+        databaseReference.child("Users").child(getuserprofileId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile profile = dataSnapshot.getValue(Profile.class);
+                profilePic = profile.ProfilePicReference;
+
+                try{
+
+                    Glide.with(NavDrawer.this).load(profilePic).into(imgView_profilePic);
+
+
+                }catch (Exception ex){
+                    Log.d("image", "error : " + ex);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -178,6 +219,37 @@ public class NavDrawer extends AppCompatActivity {
                 return true;
             }
         });
+
+
+       /* reference = database.getInstance().getReference();*/
+
+
+        /* 26/07 - Set the form when user comes in */
+        // Get username to send in activity
+
+   /*     reference.child("Event").child(event_ID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile profile = dataSnapshot.getValue(Profile.class);
+
+
+                try{
+
+                    Glide.with(EventListUpdateActivity.this).load(storageReference_ID).into(image);
+                    selectedImage = Uri.parse(storageReference_ID);
+
+                }catch (Exception ex){
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });*/
+
         // ^ Used for displaying bottom right icon of email
 
         // Sign out menu item's Alert dialog

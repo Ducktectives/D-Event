@@ -204,7 +204,11 @@ public class EventListUpdateActivity extends AppCompatActivity{
                 et_eventDescription.setText(event_Description);
                 et_location.setText(event_Location);
                 et_eventDetail.setText(event_Detail);
-                et_eventTicketPrice.setText(event_TicketPrice.toString());
+                try {
+                    et_eventTicketPrice.setText(event_TicketPrice.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 et_eventStartTime.setText(event_StartTime);
                 et_eventStopTime.setText(event_StopTime);
 
@@ -570,8 +574,8 @@ public class EventListUpdateActivity extends AppCompatActivity{
 //                        reference.updateChildren(hashMap);
 
 
-                        image.setImageDrawable(getResources().getDrawable(R.drawable.file_upload_image_border));
-         /*               et_eventName.setText("");
+         /*               image.setImageDrawable(getResources().getDrawable(R.drawable.file_upload_image_border));
+                       et_eventName.setText("");
                         et_location.setText("");
                         et_date.setText("");
                         et_eventDescription.setText("");
