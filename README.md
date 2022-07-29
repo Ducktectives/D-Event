@@ -43,7 +43,7 @@ Roles and contributions of each member
   
   CHONG WEI QIN - Addition of Events, Database, Authentication, Read | Update | Delete User's Own Event, Forgot Password, Change and Setup Profile Image
   
-  CHUA HAO ZHONG - Profile Page, 
+  CHUA HAO ZHONG - Profile Page (Some fixing of broken images), Settings Page (Changing basic information), Social Media links and buttons, Statistics Page.
   
   NGUI JIA LE SHERLENA - Splash Screen (Persistent Memory), Login Page, Registration Page, Booking Page, Integration of Code, Database, App Writeup and Design, Application TroubleShooting, Booking Confirmation, Ensuring user can only book once
   
