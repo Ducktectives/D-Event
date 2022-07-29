@@ -74,7 +74,7 @@ public class NavDrawer extends AppCompatActivity {
 //        String getuserprofileId = i1.getStringExtra("profile_id");
 
         /* Arthur Edit */
-        nav_view = (NavigationView) findViewById(R.id.nav_view);
+       /* nav_view = (NavigationView) findViewById(R.id.nav_view);*/
 
         try{
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -114,13 +114,13 @@ public class NavDrawer extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_nav_drawer);
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
 
                     case R.id.nav_signout:
-                        AlertDialog.Builder builder = new AlertDialog.Builder(nav_view.getContext());
+                        AlertDialog.Builder builder = new AlertDialog.Builder(navigationView.getContext());
                         builder.setTitle("Profile");
                         builder.setMessage("Are you sure you want to sign out?");
                         builder.setCancelable(false);

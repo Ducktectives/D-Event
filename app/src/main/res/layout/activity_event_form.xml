@@ -186,9 +186,8 @@
 
             <TextView
                 android:id="@+id/event_form_address"
-                style="@android:style/Widget.EditText"
                 android:layout_width="0dp"
-                android:layout_height="21dp"
+                android:layout_height="24dp"
                 android:text="Event Address"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/event_form_location"

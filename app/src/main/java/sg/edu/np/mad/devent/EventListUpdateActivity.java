@@ -16,6 +16,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -27,11 +29,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -69,7 +73,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
     //  Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked)
     Uri selectedImage; // event_Picture
-    EditText et_date, et_location, et_eventDescription, et_eventName, et_eventDetail, et_eventStartTime, et_eventStopTime; // event_Date, event_Location, event_Description
+    EditText et_date, et_location, et_eventDescription, et_eventName, et_eventDetail, et_eventStartTime, et_eventStopTime, et_eventTicketPrice; // event_Date, event_Location, event_Description
 
     private int _day, _month, _birthYear;
 
@@ -77,6 +81,8 @@ public class EventListUpdateActivity extends AppCompatActivity{
     // Declaring the variables to upload the values to firebase
     private String event_ID, event_Name, event_Location, event_Date, event_Description, userID, storageReference_ID, event_Detail, download_ImageUrl, event_StartTime, event_StopTime;
     private Boolean bookmarked;
+
+    private Double event_TicketPrice;
 
     private FirebaseUser user;
 
@@ -120,7 +126,6 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
 
 
-
         imgPath = findViewById(R.id.item_img);
         image = findViewById(R.id.img);
 
@@ -130,7 +135,11 @@ public class EventListUpdateActivity extends AppCompatActivity{
         et_location = (EditText) findViewById(R.id.txt_event_form_location);
         et_date = (EditText) findViewById(R.id.txt_Date);
         et_eventDescription = (EditText) findViewById(R.id.txt_Event_Description);
-        et_eventDetail = (EditText) findViewById(R.id.txt_Event_Ticket_Price);
+
+        et_eventDetail = (EditText) findViewById(R.id.txt_Event_Details);
+
+        et_eventTicketPrice = (EditText) findViewById(R.id.txt_Event_Ticket_Price);
+
 
         et_eventStartTime = (EditText) findViewById(R.id.txt_event_StartTime);
         et_eventStopTime = (EditText) findViewById(R.id.txt_event_EndTime);
@@ -144,6 +153,10 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+
+        //set the eventsPricing input keyboard to be numbers only
+        et_eventTicketPrice.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        et_eventTicketPrice.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(5,2)}); //set ticket price -  2f
 
 
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -179,8 +192,10 @@ public class EventListUpdateActivity extends AppCompatActivity{
                 event_Description = events.Event_Description;
                 storageReference_ID = events.Event_StorageReferenceID;
                 event_Detail = events.Event_Detail;
+                event_TicketPrice = events.Event_TicketPrice;
                 event_StartTime = events.Event_StartTime;
                 event_StopTime = events.Event_EndTime;
+
 
 
                 et_eventName.setText(event_Name);
@@ -189,6 +204,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
                 et_eventDescription.setText(event_Description);
                 et_location.setText(event_Location);
                 et_eventDetail.setText(event_Detail);
+                et_eventTicketPrice.setText(event_TicketPrice.toString());
                 et_eventStartTime.setText(event_StartTime);
                 et_eventStopTime.setText(event_StopTime);
 
@@ -493,8 +509,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
         byte[] data = baos.toByteArray();
 
 
-       /* Toast.makeText(EventListUpdateActivity.this, "Selected Image " + selectedImage, Toast.LENGTH_SHORT).show();
-*/
+        Toast.makeText(EventListUpdateActivity.this, "Selected Image " + selectedImage, Toast.LENGTH_SHORT).show();
 
         ref.putBytes(data).addOnFailureListener(new OnFailureListener(){
             @Override

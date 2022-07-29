@@ -55,4 +55,6 @@
     <string name="change_password">Change Password</string>
     <string name="change_pic">Change Profile Picture</string>
     <string name="title_activity_change_password">change_password</string>
+
+
 </resources>
