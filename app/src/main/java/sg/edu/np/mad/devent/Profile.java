@@ -20,22 +20,81 @@ public class Profile implements Serializable {
     int Eventsattended;
     //int Saltvalue;
     //String Hashedpassword;
-    Bitmap profpic;
+
+
+    String ProfilePicReference;
 
 
     public Profile() {}
 
-    public Profile(String username, String title, String email,Integer contact){
+    public Profile(String username, String title, String email, int contactnum, int eventsattended, String profilePicReference) {
+        Username = username;
+        Title = title;
+        Email = email;
+        Contactnum = contactnum;
+        Eventsattended = eventsattended;
+        ProfilePicReference = profilePicReference;
+    }
+
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String username) {
+        Username = username;
+    }
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String title) {
+        Title = title;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public int getContactnum() {
+        return Contactnum;
+    }
+
+    public void setContactnum(int contactnum) {
+        Contactnum = contactnum;
+    }
+
+    public int getEventsattended() {
+        return Eventsattended;
+    }
+
+    public void setEventsattended(int eventsattended) {
+        Eventsattended = eventsattended;
+    }
+
+    public String getProfilePicReference() {
+        return ProfilePicReference;
+    }
+
+    public void setProfilePicReference(String profilePicReference) {
+        ProfilePicReference = profilePicReference;
+    }
+
+    /*public Profile(String username, String title, String email,Integer contact){
         Username = username;
         Title = title;
         Contactnum = contact;
-        Email = email;
-        try {
+        Email = email;*/
+        /*try {
             profpic = BitmapFactory.decodeFile(File.createTempFile("image",".jpg").getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+*/
 
         /*
         // Creating Salt Values
@@ -78,7 +137,7 @@ public class Profile implements Serializable {
             e.printStackTrace();
         }
          */
-    }
+   /* }*/
 
     /*
     // Hash the Password
@@ -128,7 +187,7 @@ public class Profile implements Serializable {
 
     */
 
-    public String getUsername() {
+  /*  public String getUsername() {
         return Username;
     }
 
@@ -166,7 +225,7 @@ public class Profile implements Serializable {
 
     public void setEventsattended(int eventsattended) {
         Eventsattended = eventsattended;
-    }
+    }*/
 
     /*
     public int getSaltvalue() {
@@ -186,11 +245,11 @@ public class Profile implements Serializable {
     }
     */
 
-    public Bitmap getProfpic() {
+/*    public Bitmap getProfpic() {
         return profpic;
     }
 
     public void setProfpic(Bitmap profpic) {
         this.profpic = profpic;
-    }
+    }*/
 }
