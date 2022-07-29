@@ -41,7 +41,7 @@ Roles and contributions of each member
 
   ALFRED LEANDRO LIANG - Home Page
   
-  CHONG WEI QIN - Addition of Events, Database, Authentication, Read | Update | Delete User's Own Event
+  CHONG WEI QIN - Addition of Events, Database, Authentication, Read | Update | Delete User's Own Event, Forgot Password, Change and Setup Profile Image
   
   CHUA HAO ZHONG - Profile Page
   
