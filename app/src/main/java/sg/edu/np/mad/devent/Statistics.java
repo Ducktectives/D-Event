@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -46,6 +47,7 @@ public class Statistics extends AppCompatActivity {
 
     BarChart barChart;
 
+
     // Firebase stuff
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
     DatabaseReference event_path = database.getReference("Event");
@@ -55,13 +57,14 @@ public class Statistics extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
 
-    List<String> eventsIDList = new ArrayList<>();
-    List<Events> createdEvents = new ArrayList<>();
-    List<String> createdEventsID = new ArrayList<>();
+    static List<String> eventsIDList = new ArrayList<>();
+    static List<Events> createdEvents = new ArrayList<>();
+    static List<String> createdEventsID = new ArrayList<>();
     Integer totalPax = 0;
     Date orderedDate;
     long dayDifference;
     Boolean flag = false;
+    static List<Events> eventsList = new ArrayList<>();
 
 
 
@@ -76,7 +79,8 @@ public class Statistics extends AppCompatActivity {
 
 
         twoLists datas = null;
-        datas = getBookingData(getEventData());
+        createdEventsID = getEventData();
+        datas = getBookingData();
 
         List<Integer> paxPerDay = datas.paxPerDays;
         ArrayList<String> dates = datas.datess;
@@ -112,11 +116,11 @@ public class Statistics extends AppCompatActivity {
     }
 
 
-    public twoLists getBookingData(List<String> eventsIDLists){
+    public twoLists getBookingData(){
+
         twoLists twoLists = new twoLists();
         List<Integer> paxPerDay = new ArrayList<>(7);
         ArrayList<String> dates = new ArrayList<>();
-        createdEventsID = eventsIDLists;
 //        synchronized (this) {
 //                eventsIDList = getEventData();
 //                flag = !flag;
@@ -211,23 +215,24 @@ public class Statistics extends AppCompatActivity {
 
 
     public List<String> getEventData(){
+
         // Looking through all events
-        event_path.orderByChild("event_UserID").addChildEventListener(new ChildEventListener() {
+        event_path.orderByChild("event_ID").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                 String eventID = snapshot.child("event_ID").getValue(String.class);
-                String eventTitle = snapshot.child("event_Name").getValue(String.class);
-                String eventLoc = snapshot.child("event_Location").getValue(String.class);
-                String eventDate = snapshot.child("event_Date").getValue(String.class);
-                String eventDesc = snapshot.child("event_Description").getValue(String.class);
-                String eventDetail = snapshot.child("event_Detail").getValue(String.class);
+//                String eventTitle = snapshot.child("event_Name").getValue(String.class);
+//                String eventLoc = snapshot.child("event_Location").getValue(String.class);
+//                String eventDate = snapshot.child("event_Date").getValue(String.class);
+//                String eventDesc = snapshot.child("event_Description").getValue(String.class);
+//                String eventDetail = snapshot.child("event_Detail").getValue(String.class);
                 String eventUserID = snapshot.child("event_UserID").getValue(String.class);
-                Boolean eventBooked = snapshot.child("bookmarked").getValue(Boolean.class);
-                Double eventTicketPrice = snapshot.child("event_TicketPrice").getValue(Double.class);
-                String eventStorageID = snapshot.child("event_StorageReferenceID").getValue(String.class);
-                String eventStartTime = snapshot.child("event_StartTime").getValue(String.class);
-                String eventEndTime = snapshot.child("event_EndTime").getValue(String.class);
+//                Boolean eventBooked = snapshot.child("bookmarked").getValue(Boolean.class);
+//                Double eventTicketPrice = snapshot.child("event_TicketPrice").getValue(Double.class);
+//                String eventStorageID = snapshot.child("event_StorageReferenceID").getValue(String.class);
+//                String eventStartTime = snapshot.child("event_StartTime").getValue(String.class);
+//                String eventEndTime = snapshot.child("event_EndTime").getValue(String.class);
 
 
                 List<String> eventTypes = new ArrayList<>();
@@ -242,16 +247,19 @@ public class Statistics extends AppCompatActivity {
                 if (eventsIDList.contains(eventID)) return;
 
 
-                Events event = new Events(eventID, eventTitle, eventLoc, eventDate, eventDesc,
-                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked, eventTicketPrice, eventTypes);
+//                Events event = new Events(eventID, eventTitle, eventLoc, eventDate, eventDesc,
+//                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked, eventTicketPrice, eventTypes);
+//
+//                eventsIDList.add(eventID);
+//                eventsList.add(event);
 
                     if (String.valueOf(eventUserID).equals(String.valueOf(userID))) {
-                        createdEvents.add(event);
-                        createdEventsID.add(event.getEvent_ID());
+//                        createdEvents.add(event);
+                        createdEventsID.add(eventID);
                         Log.d("createdEvents", "" + createdEvents.size());
                         Log.d("createdEventsID", "" + createdEventsID.size());
                         Log.d("sizelmao", "" + createdEventsID);
-                        noOfEvents.setText(String.valueOf(createdEvents.size()));
+                        noOfEvents.setText(String.valueOf(createdEventsID.size()));
 
                    }
             }
