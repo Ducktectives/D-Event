@@ -72,6 +72,9 @@
             android:exported="true"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity
+            android:name=".ForgetPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".EventDetailsPage"
             android:exported="false" />
         <activity
