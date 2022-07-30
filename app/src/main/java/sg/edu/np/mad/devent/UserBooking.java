@@ -60,7 +60,8 @@ public class UserBooking extends AppCompatActivity {
     List<Events> eventList;
     String eventDate;
     String username;
-
+    Integer pax;
+    Double TicketPrice;
 
 
 
@@ -273,7 +274,6 @@ public class UserBooking extends AppCompatActivity {
                                 Date today = Calendar.getInstance().getTime();
                                 String todayString = sdf.format(today);
 
-
                                 // Create subfolder in the event and name the subfolder booking and create another subfolder within with the booking email as the key to store the record
                                 book.child(eventid).child(userID).setValue(userbooking);
                                 book.child(eventid).child(userID).child("DayOrdered").setValue(todayString);
@@ -307,8 +307,14 @@ public class UserBooking extends AppCompatActivity {
                                                         }
                                                         else{
                                                             String stringTicketPrice = String.valueOf(task.getResult().child("event_TicketPrice").getValue());
-                                                            Double TicketPrice = Double.parseDouble(stringTicketPrice);
-                                                            Integer pax;
+                                                            if (stringTicketPrice == null || stringTicketPrice =="0" || stringTicketPrice=="null"){
+                                                                TicketPrice = 0.0;
+                                                            }
+                                                            else{
+                                                                TicketPrice = Double.parseDouble(stringTicketPrice);
+                                                            }
+
+
                                                             try{
 
                                                                 pax = task.getResult().child("totalPax").getValue(Integer.class);

@@ -71,6 +71,9 @@ public class BookingSummary extends AppCompatActivity {
         String eventName = autofill.getString("EventName");
         String imageLink = autofill.getString("EventImage");
 
+        Log.d("debug",userEmailFromBundle);
+        Log.d("debug",numberOfTixFromBundle.toString());
+
         // Set the image of the event
         try {
             Glide.with(BookingSummary.this).load(imageLink).into(eventPicture);

@@ -260,58 +260,67 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             public void onClick(View v) {
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
-                DatabaseReference Ref = database.getReference("Users");
+                DatabaseReference Ref = database.getReference("Event");
                 Ref.child(user.getUid()).child("event_booked").equalTo(eventID).get()
                         .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                if (!task.isSuccessful()){
-                                    //if the task is unsucessful
+                                if (task.getResult().child(eventID).getChildrenCount() > 0){
+                                    //if the task is unsucessful - meaning that no event under the reference link is booked
                                     Intent book = new Intent(EventDetailsPage.this,UserBooking.class);
                                     Bundle bookingInfo = new Bundle();
                                     bookingInfo.putString("EventPicture",imageLink);
                                     bookingInfo.putString("User_Email",userEmail);
                                     bookingInfo.putSerializable("EventList",(Serializable) eventList);
                                     bookingInfo.putString("Event", eventID);
+                                    bookingInfo.putString("EventName",eventNamedIs);
+                                    bookingInfo.putString("EventPicture",imageLink);
                                     book.putExtras(bookingInfo);
                                     book.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(book);
                                 }
                                 else{
                                     //get event booking confirmation page
-                                    Booking bookinginfo = new Booking();
+                                    DatabaseReference Ref2 = database.getReference("Booking");
+                                    Ref2.child(eventID).child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                            String bookinginfoName = String.valueOf(task.getResult().child("Name").getValue());
+                                            String bookinginfoEmail = String.valueOf(task.getResult().child("Email").getValue());
+                                            String bookingContact = String.valueOf(task.getResult().child("Contact").getValue());
+                                            String bookingPax = String.valueOf(task.getResult().child("Pax").getValue());
+                                            Log.d("AAA",bookinginfoEmail);
+                                            Log.d("aAA",bookingContact);
 
-                                    Intent BookingSummaryBundle = new Intent(EventDetailsPage.this, BookingSummary.class);
-                                    Bundle BookingSummary = new Bundle();
-                                    BookingSummary.putString("EventID",eventID);
-                                    BookingSummary.putString("Email",userEmail);
-                                    BookingSummary.putString("Name",bookinginfo.Name);
-                                    BookingSummary.putString("UserEmail",bookinginfo.Email);
-                                    BookingSummary.putInt("ContactNum",bookinginfo.Contact);
-                                    BookingSummary.putInt("NumberofTix",bookinginfo.Pax);
-                                    BookingSummary.putString("EventName",eventNamedIs);
-                                    BookingSummaryBundle.putExtras(BookingSummary);
-                                    startActivity(BookingSummaryBundle);
-                                    finish();
+                                            Integer bookinginfoPax = Integer.valueOf(bookingPax);
+                                            Integer bookinginfoContact = Integer.valueOf(bookingContact);
+
+                                            //set the things into intent
+                                            Intent BookingSummaryBundle = new Intent(EventDetailsPage.this, BookingSummary.class);
+                                            Bundle BookingSummary = new Bundle();
+                                            BookingSummary.putString("EventID",eventID);
+                                            BookingSummary.putString("Name",bookinginfoName);
+                                            BookingSummary.putString("UserEmail",bookinginfoEmail);
+                                            BookingSummary.putInt("ContactNum",bookinginfoContact);
+                                            BookingSummary.putInt("NumberofTix",bookinginfoPax);
+                                            BookingSummary.putString("EventName",eventNamedIs);
+                                            BookingSummary.putString("EventImage",imageLink);
+                                            BookingSummaryBundle.putExtras(BookingSummary);
+                                            startActivity(BookingSummaryBundle);
+
+                                        }
+                                    });
+
+
                                 }
+
                             }
                         });
 
 
-                /*
-                Intent book = new Intent(EventDetailsPage.this,UserBooking.class);
-                Bundle bookingInfo = new Bundle();
-                bookingInfo.putString("EventPicture",imageLink);
-                bookingInfo.putString("User_Email",userEmail);
-                bookingInfo.putSerializable("EventList",(Serializable) eventList);
-                bookingInfo.putString("Event", eventID);
-                bookingInfo.putString("EventName",eventNamedIs);
-                bookingInfo.putString("EventPicture",imageLink);
-                book.putExtras(bookingInfo);
-                startActivity(book);
-                //users should be able to go back
-                /*
-                // Code below is used to set up notification for the user on the day of the event
+
+
+              /*  // Code below is used to set up notification for the user on the day of the event
                 Toast.makeText(EventDetailsPage.this,"Reminder has been set!", Toast.LENGTH_SHORT).show();
                 Intent notifyIntent = new Intent(EventDetailsPage.this, NotifyService.class);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(EventDetailsPage.this, 0,
@@ -322,8 +331,8 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                 long tenSeconds = 1000 * 10;
 
                 alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtButtonClick + tenSeconds, pendingIntent);
+*/
 
-                 */
 
             }
         });
