@@ -162,7 +162,12 @@ public class UserBooking extends AppCompatActivity {
                             userinputname.setText(username);
                         }
                     });
-                    userinputemail.setText(userEmail);
+                    userinputemail.post(new Runnable(){
+                        @Override
+                        public void run() {
+                            userinputemail.setText(userEmail);
+                        }
+                    });
                     userinputcontact.post(new Runnable(){
                         @Override
                         public void run() {
@@ -223,7 +228,7 @@ public class UserBooking extends AppCompatActivity {
                     bookingpax = Integer.parseInt(userinputpax.getText().toString());
                 }
                 catch (Exception e){
-                    bookingpax = null;
+                    bookingpax = 0;
                 }
 
                 // Check for a filled name field which does not consist of invalid characters
@@ -280,6 +285,11 @@ public class UserBooking extends AppCompatActivity {
                                 // Let user know that Booking is successful
                                 Toast.makeText(getApplicationContext(), "Booking Made Successfully", Toast.LENGTH_LONG).show();
 
+                                user.child(userID).child("event_booked").child(eventid).child("Name").setValue(bookingname);
+                                user.child(userID).child("event_booked").child(eventid).child("Email").setValue(bookingemail);
+                                user.child(userID).child("event_booked").child(eventid).child("Contact").setValue(finalbookingnumber);
+                                user.child(userID).child("event_booked").child(eventid).child("Pax").setValue(finalbookingpax);
+
                                 //Add event to the list of booked events
                                 user.child(userID).child("event_booked").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                     @Override
@@ -289,13 +299,6 @@ public class UserBooking extends AppCompatActivity {
 
 //                                        Hao Zhong's change to use UUID upon booking
 //                                        user.child(bookingemail.toLowerCase().replace(".", "")).child("event_booked").child(String.valueOf(storeID)).setValue(eventid);
-                                        user.child(userID).child("event_booked").setValue(eventid);
-                                        user.child(userID).child("event_booked").child(eventid).child("Name").setValue(bookingname);
-                                        user.child(userID).child("event_booked").child(eventid).child("Email").setValue(bookingemail);
-                                        user.child(userID).child("event_booked").child(eventid).child("Contact").setValue(finalbookingnumber);
-                                        user.child(userID).child("event_booked").child(eventid).child("Pax").setValue(finalbookingpax);
-
-
 
                                         //check whether ticket price is more than 0
                                         Ref.child(eventid).get()
@@ -316,8 +319,8 @@ public class UserBooking extends AppCompatActivity {
 
 
                                                             try{
-
                                                                 pax = task.getResult().child("totalPax").getValue(Integer.class);
+                                                                if (pax == null) pax = 0;
                                                             }
                                                             catch (NullPointerException ex){
                                                                 pax = 0;

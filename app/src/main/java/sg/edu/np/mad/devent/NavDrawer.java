@@ -115,7 +115,6 @@ public class NavDrawer extends AppCompatActivity {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
         View view = navigationView.getHeaderView(0);
         imgView_profilePic = (ImageView) view.findViewById(R.id.nav_profilePic);
-        Toast.makeText(NavDrawer.this,"User Signed Out " + imgView_profilePic , Toast.LENGTH_SHORT).show();
         DatabaseReference databaseReference ;
         databaseReference = firebaseDatabase.getInstance().getReference();
 
@@ -126,6 +125,8 @@ public class NavDrawer extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Profile profile = dataSnapshot.getValue(Profile.class);
+                if (profile == null) return;
+
                 profilePic = profile.ProfilePicReference;
 
                 try{

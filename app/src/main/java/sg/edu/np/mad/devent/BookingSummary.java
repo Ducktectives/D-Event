@@ -173,6 +173,7 @@ public class BookingSummary extends AppCompatActivity {
                                             Calender.putExtra(CalendarContract.Events.EVENT_LOCATION, eventlocation);
                                             Calender.putExtra(CalendarContract.Events.DESCRIPTION, eventdescription);
                                             Calender.putExtra(CalendarContract.Events.AVAILABILITY, "Busy");
+                                            Calender.putExtra(CalendarContract.Events.EVENT_TIMEZONE, "Singapore Standard Time");
 
                                             if (Calender.resolveActivity(getPackageManager()) != null){
                                                 Calender.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);

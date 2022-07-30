@@ -260,17 +260,17 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
             public void onClick(View v) {
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance("https://dvent---ducktectives-default-rtdb.asia-southeast1.firebasedatabase.app/");
-                DatabaseReference Ref = database.getReference("Event");
-                Ref.child(user.getUid()).child("event_booked").equalTo(eventID).get()
+                DatabaseReference Ref = database.getReference("Users");
+                Ref.child(user.getUid()).child("event_booked").get()
                         .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                if (task.getResult().child(eventID).getChildrenCount() > 0){
+                                if (!task.isSuccessful() || task.getResult().child(eventID).getChildrenCount() == 0){
                                     //if the task is unsucessful - meaning that no event under the reference link is booked
                                     Intent book = new Intent(EventDetailsPage.this,UserBooking.class);
                                     Bundle bookingInfo = new Bundle();
                                     bookingInfo.putString("EventPicture",imageLink);
-                                    bookingInfo.putString("User_Email",userEmail);
+                                    bookingInfo.putString("User_Email",user.getEmail());
                                     bookingInfo.putSerializable("EventList",(Serializable) eventList);
                                     bookingInfo.putString("Event", eventID);
                                     bookingInfo.putString("EventName",eventNamedIs);
@@ -318,9 +318,20 @@ public class EventDetailsPage extends AppCompatActivity implements OnMapReadyCal
                         });
 
 
-
-
-              /*  // Code below is used to set up notification for the user on the day of the event
+                /*
+                Intent book = new Intent(EventDetailsPage.this,UserBooking.class);
+                Bundle bookingInfo = new Bundle();
+                bookingInfo.putString("EventPicture",imageLink);
+                bookingInfo.putString("User_Email",userEmail);
+                bookingInfo.putSerializable("EventList",(Serializable) eventList);
+                bookingInfo.putString("Event", eventID);
+                bookingInfo.putString("EventName",eventNamedIs);
+                bookingInfo.putString("EventPicture",imageLink);
+                book.putExtras(bookingInfo);
+                startActivity(book);
+                //users should be able to go back
+                /*
+                // Code below is used to set up notification for the user on the day of the event
                 Toast.makeText(EventDetailsPage.this,"Reminder has been set!", Toast.LENGTH_SHORT).show();
                 Intent notifyIntent = new Intent(EventDetailsPage.this, NotifyService.class);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(EventDetailsPage.this, 0,

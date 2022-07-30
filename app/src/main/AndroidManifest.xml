@@ -116,7 +116,7 @@
         <activity android:name=".EventListActivity"></activity>
 
 
-        //for paypal
+        <!-- for paypal -->
         <service android:name="com.paypal.android.sdk.payments.PayPalService"
             android:exported="false"/>
         <activity android:name="io.card.payment.DataEntryActivity"/>
@@ -126,7 +126,7 @@
         <activity android:name="com.paypal.android.sdk.payments.PaymentConfirmActivity"/>
 
 
-        //for google maps
+        <!-- for google maps -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

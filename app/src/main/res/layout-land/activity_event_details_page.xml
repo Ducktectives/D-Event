@@ -22,7 +22,8 @@
             android:cropToPadding="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/pink_circle" />
+            app:srcCompat="@drawable/pink_circle"
+            tools:ignore="ImageContrastCheck" />
 
         <ImageView
             android:id="@+id/smallC"
