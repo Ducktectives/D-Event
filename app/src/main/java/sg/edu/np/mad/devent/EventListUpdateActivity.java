@@ -21,6 +21,7 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -58,6 +59,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -74,6 +76,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
     //  Events(String event_Name, String event_Location, String event_Date, String event_Description, String event_UserID, String event_Picture, boolean bookmarked)
     Uri selectedImage; // event_Picture
     EditText et_date, et_location, et_eventDescription, et_eventName, et_eventDetail, et_eventStartTime, et_eventStopTime, et_eventTicketPrice; // event_Date, event_Location, event_Description
+
 
     private int _day, _month, _birthYear;
 
@@ -92,7 +95,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
     // Create a event-defined object
     Events event = new Events();
 
-
+    List<String> eventTypes = new ArrayList<>();
 
     // Firebase for storing Image
     private StorageReference storageReference;
@@ -171,11 +174,13 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
 
 
+
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
 
         DatabaseReference reference ;
         reference = database.getInstance().getReference();
+
 
 
         /* 26/07 - Set the form when user comes in */
@@ -195,8 +200,15 @@ public class EventListUpdateActivity extends AppCompatActivity{
                 event_TicketPrice = events.Event_TicketPrice;
                 event_StartTime = events.Event_StartTime;
                 event_StopTime = events.Event_EndTime;
+             /*   eventTypes = events.EventTypes;
 
-
+                if (events.EventTypes.isEmpty()){
+                    return;
+                }else{
+                    for (String checkBox : eventTypes){
+                        eventTypes.add(checkBox);
+                    }
+                }*/
 
                 et_eventName.setText(event_Name);
                 et_location.setText(event_Location);
@@ -211,6 +223,10 @@ public class EventListUpdateActivity extends AppCompatActivity{
                 }
                 et_eventStartTime.setText(event_StartTime);
                 et_eventStopTime.setText(event_StopTime);
+
+
+
+
 
                 try{
 
@@ -423,6 +439,16 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
     }
 
+    // Method for checking which eventType checkboxes are selected
+    public void checkBoxes(View view){
+        CheckBox checkBox = (CheckBox) view;
+        if (checkBox.isChecked()){
+            eventTypes.add(checkBox.getText().toString());
+        }
+        else {
+            eventTypes.remove(checkBox.getText().toString());
+        }
+    }
 
     private void uploadForm(){
 
@@ -435,6 +461,8 @@ public class EventListUpdateActivity extends AppCompatActivity{
         event_Detail = et_eventDetail.getText().toString();
 
         bookmarked = false;
+
+
 
 
         if (event_Name.isEmpty()){
@@ -457,6 +485,8 @@ public class EventListUpdateActivity extends AppCompatActivity{
             et_eventDescription.requestFocus();
             return;
         }
+
+
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
         try {
@@ -541,6 +571,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
                         hashMap.put("event_End", event_StopTime);
                         hashMap.put("event_Description", event_Description);
                         hashMap.put("event_Detail", event_Detail);
+                       /* hashMap.put("eventTypes", eventTypes);*/
                         hashMap.put("event_StorageReferenceID", downloadUrl.toString());
 
 

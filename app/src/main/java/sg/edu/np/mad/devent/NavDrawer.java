@@ -118,33 +118,38 @@ public class NavDrawer extends AppCompatActivity {
         DatabaseReference databaseReference ;
         databaseReference = firebaseDatabase.getInstance().getReference();
 
+        if (imgView_profilePic.getDrawable() == null){
+            return;
+        }else{
+            /* 26/07 - Set the form when user comes in */
+            // Get username to send in activity
+            databaseReference.child("Users").child(getuserprofileId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Profile profile = dataSnapshot.getValue(Profile.class);
+                    if (profile == null) return;
 
-        /* 26/07 - Set the form when user comes in */
-        // Get username to send in activity
-        databaseReference.child("Users").child(getuserprofileId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Profile profile = dataSnapshot.getValue(Profile.class);
-                if (profile == null) return;
+                    profilePic = profile.ProfilePicReference;
 
-                profilePic = profile.ProfilePicReference;
+                    try{
 
-                try{
-
-                    Glide.with(NavDrawer.this).load(profilePic).into(imgView_profilePic);
+                        Glide.with(NavDrawer.this).load(profilePic).into(imgView_profilePic);
 
 
-                }catch (Exception ex){
-                    Log.d("image", "error : " + ex);
+                    }catch (Exception ex){
+                        Log.d("image", "error : " + ex);
+                    }
+
                 }
 
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("The read failed: " + databaseError.getCode());
+                }
+            });
+        }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
+
 
 
         // Passing each menu ID as a set of Ids because each

@@ -112,28 +112,32 @@ public class Change_ProfilePic extends AppCompatActivity {
         /* 26/07 - Set the form when user comes in */
         // Get username to send in activity
 
-        databaseReference.child("Users").child(userID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Profile profile = dataSnapshot.getValue(Profile.class);
-                profilePic = profile.ProfilePicReference;
+        if (imgView.getDrawable() == null){
+            return;
+        }else {
+            databaseReference.child("Users").child(userID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Profile profile = dataSnapshot.getValue(Profile.class);
+                    profilePic = profile.ProfilePicReference;
 
-                try{
+                    try {
 
-                    Glide.with(Change_ProfilePic.this).load(profilePic).into(imgView);
+                        Glide.with(Change_ProfilePic.this).load(profilePic).into(imgView);
 
 
-                }catch (Exception ex){
-                    Log.d("image", "error : " + ex);
+                    } catch (Exception ex) {
+                        Log.d("image", "error : " + ex);
+                    }
+
                 }
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("The read failed: " + databaseError.getCode());
+                }
+            });
+        }
 
 /*
         user_id_unique = getIntent().getStringExtra("Email");
