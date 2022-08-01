@@ -97,6 +97,9 @@ public class EventFormActivity extends AppCompatActivity{
     FirebaseStorage firebaseStorage;
     private FirebaseDatabase database;
 
+    CheckBox checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +129,15 @@ public class EventFormActivity extends AppCompatActivity{
 
         retrieveAddress = (TextView) findViewById(R.id.locate_address);
         updateAddress = (TextView) findViewById(R.id.event_form_address);
+
+
+        // Finding CheckBox by its unique ID
+        checkbox1=(CheckBox)findViewById(R.id.sportsCheckbox);
+        checkbox2=(CheckBox)findViewById(R.id.gamingCheckbox);
+        checkbox3=(CheckBox)findViewById(R.id.animeCheckbox);
+        checkbox4=(CheckBox)findViewById(R.id.musicCheckbox);
+        checkbox5=(CheckBox)findViewById(R.id.educationCheckbox);
+        checkbox6=(CheckBox)findViewById(R.id.animalsCheckbox);
 
 
 
@@ -328,11 +340,14 @@ public class EventFormActivity extends AppCompatActivity{
 
     // Method for checking which eventType checkboxes are selected
     public void checkBoxes(View view){
+
         CheckBox checkBox = (CheckBox) view;
+
+
         if (checkBox.isChecked()){
             eventTypes.add(checkBox.getText().toString());
         }
-        else {
+        else if (checkBox.isChecked() == false){
             eventTypes.remove(checkBox.getText().toString());
         }
     }

@@ -107,6 +107,8 @@ public class EventListUpdateActivity extends AppCompatActivity{
 
     Query query;
 
+    CheckBox checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +159,15 @@ public class EventListUpdateActivity extends AppCompatActivity{
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
+        // Finding CheckBox by its unique ID
+        checkbox1=(CheckBox)findViewById(R.id.sportsCheckbox);
+        checkbox2=(CheckBox)findViewById(R.id.gamingCheckbox);
+        checkbox3=(CheckBox)findViewById(R.id.animeCheckbox);
+        checkbox4=(CheckBox)findViewById(R.id.musicCheckbox);
+        checkbox5=(CheckBox)findViewById(R.id.educationCheckbox);
+        checkbox6=(CheckBox)findViewById(R.id.animalsCheckbox);
+
+
         //set the eventsPricing input keyboard to be numbers only
         et_eventTicketPrice.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         et_eventTicketPrice.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(5,2)}); //set ticket price -  2f
@@ -200,15 +211,32 @@ public class EventListUpdateActivity extends AppCompatActivity{
                 event_TicketPrice = events.Event_TicketPrice;
                 event_StartTime = events.Event_StartTime;
                 event_StopTime = events.Event_EndTime;
-             /*   eventTypes = events.EventTypes;
-
+               eventTypes = events.EventTypes;
                 if (events.EventTypes.isEmpty()){
                     return;
                 }else{
-                    for (String checkBox : eventTypes){
-                        eventTypes.add(checkBox);
-                    }
-                }*/
+
+                        if(eventTypes.contains("Sports")){
+                            checkbox1.setChecked(true);
+                        }
+                        if(eventTypes.contains("Gaming")){
+                            checkbox2.setChecked(true);
+                        }
+                        if(eventTypes.contains("Anime")){
+                            checkbox3.setChecked(true);
+                        }
+                        if(eventTypes.contains("Music")){
+                            checkbox4.setChecked(true);
+                        }
+                        if(eventTypes.contains("Education")){
+                            checkbox5.setChecked(true);
+                        }
+                        if(eventTypes.contains("Animals")){
+                            checkbox6.setChecked(true);
+                        }
+
+                }
+
 
                 et_eventName.setText(event_Name);
                 et_location.setText(event_Location);
@@ -442,10 +470,11 @@ public class EventListUpdateActivity extends AppCompatActivity{
     // Method for checking which eventType checkboxes are selected
     public void checkBoxes(View view){
         CheckBox checkBox = (CheckBox) view;
+
         if (checkBox.isChecked()){
             eventTypes.add(checkBox.getText().toString());
         }
-        else {
+        else if (checkBox.isChecked() == false){
             eventTypes.remove(checkBox.getText().toString());
         }
     }
@@ -543,8 +572,8 @@ public class EventListUpdateActivity extends AppCompatActivity{
         byte[] data = baos.toByteArray();
 
 
-        Toast.makeText(EventListUpdateActivity.this, "Selected Image " + selectedImage, Toast.LENGTH_SHORT).show();
-
+        /*Toast.makeText(EventListUpdateActivity.this, "Selected Image " + selectedImage, Toast.LENGTH_SHORT).show();
+*/
         ref.putBytes(data).addOnFailureListener(new OnFailureListener(){
             @Override
             public void onFailure(@NonNull Exception e){
@@ -571,7 +600,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
                         hashMap.put("event_End", event_StopTime);
                         hashMap.put("event_Description", event_Description);
                         hashMap.put("event_Detail", event_Detail);
-                       /* hashMap.put("eventTypes", eventTypes);*/
+                        hashMap.put("eventTypes", eventTypes);
                         hashMap.put("event_StorageReferenceID", downloadUrl.toString());
 
 

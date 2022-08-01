@@ -143,4 +143,8 @@ public class Events implements Serializable {
         Event_TicketPrice = event_TicketPrice;
     }
     public List<String> getEventTypes() { return EventTypes; }
+
+    public void setEventTypes(List<String> eventTypes) {
+        EventTypes = eventTypes;
+    }
 }

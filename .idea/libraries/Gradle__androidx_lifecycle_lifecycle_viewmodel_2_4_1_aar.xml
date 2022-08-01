@@ -11,7 +11,6 @@
     <JAVADOC />
     <SOURCES>
       <root url="jar://$PROJECT_DIR$/../MAD21_Practical23_ChongWeiQin/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-viewmodel/2.4.1/c5e216fe2f1b1de75552f99f5a562ae89f7d7b84/lifecycle-viewmodel-2.4.1-sources.jar!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-viewmodel/2.4.1/c5e216fe2f1b1de75552f99f5a562ae89f7d7b84/lifecycle-viewmodel-2.4.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
