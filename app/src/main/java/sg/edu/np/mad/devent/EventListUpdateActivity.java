@@ -488,7 +488,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
         event_Date  = et_date.getText().toString();
         event_Description  = et_eventDescription.getText().toString();
         event_Detail = et_eventDetail.getText().toString();
-
+        event_TicketPrice = Double.parseDouble(et_eventTicketPrice.getText().toString());
         bookmarked = false;
 
 
@@ -601,6 +601,7 @@ public class EventListUpdateActivity extends AppCompatActivity{
                         hashMap.put("event_Description", event_Description);
                         hashMap.put("event_Detail", event_Detail);
                         hashMap.put("eventTypes", eventTypes);
+                        hashMap.put("event_TicketPrice", event_TicketPrice);
                         hashMap.put("event_StorageReferenceID", downloadUrl.toString());
 
 
