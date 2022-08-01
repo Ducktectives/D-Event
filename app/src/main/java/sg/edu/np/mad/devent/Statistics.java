@@ -89,7 +89,13 @@ public class Statistics extends AppCompatActivity {
 
                 String eventUserID = snapshot.child("event_UserID").getValue(String.class);
 
-                pax += snapshot.child("totalPax").getValue(Integer.class);
+                try {
+                    pax = snapshot.child("totalpax").getValue(Integer.class);
+                }
+                catch (Exception e){
+                    pax = 6;
+                }
+
 
 
                 List<String> eventTypes = new ArrayList<>();

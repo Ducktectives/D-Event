@@ -136,8 +136,9 @@ public class profile_page extends AppCompatActivity {
                 // Meant to prevent duplication of data display in gridAdapter
                 if (eventsIDList.contains(eventID)) return;
 
+                int totalpax = 0;
                 Events event = new Events(eventID,eventTitle, eventLoc, eventDate, eventDesc,
-                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked, eventTicketPrice,eventTypes);
+                        eventDetail, eventStartTime, eventEndTime, eventUserID, eventStorageID, eventBooked, eventTicketPrice,eventTypes, totalpax);
 
 
                 // Checking if past event or upcoming event

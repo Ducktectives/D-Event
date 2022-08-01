@@ -84,6 +84,7 @@ public class EventFormActivity extends AppCompatActivity{
 
     private FirebaseUser user;
 
+    Integer totalpax = 0;
 
     private ProgressBar progressBar;
 
@@ -538,7 +539,7 @@ public class EventFormActivity extends AppCompatActivity{
                         Uri downloadUrl = uri;
                         Events event = new Events( event_ID, event_Name, event_Location, event_Date,
                                 event_Description, event_Detail, event_StartTime, event_StopTime,
-                                userID, downloadUrl.toString(),  bookmarked,  event_TicketPrice, eventTypes);
+                                userID, downloadUrl.toString(),  bookmarked,  event_TicketPrice, eventTypes, totalpax);
 
 
                         progressDialog.show();
