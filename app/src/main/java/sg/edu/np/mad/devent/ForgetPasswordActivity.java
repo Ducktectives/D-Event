@@ -72,8 +72,12 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(ForgetPasswordActivity.this,"Check your email to reset your password!", Toast.LENGTH_SHORT).show();
+                    Intent loginActivity = new Intent(ForgetPasswordActivity.this, LoginActivity.class);
+                    startActivity(loginActivity);
                 }else{
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(ForgetPasswordActivity.this,"Try Again! Something went wrong!", Toast.LENGTH_SHORT).show();
                 }
             }
