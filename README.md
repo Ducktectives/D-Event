@@ -47,5 +47,5 @@ Roles and contributions of each member
   
   NGUI JIA LE SHERLENA - Splash Screen (Persistent Memory), Login Page, Registration Page, Booking Page, Integration of Code, Database, App Writeup and Design, Application TroubleShooting, Booking Confirmation, Ensuring user can only book once, Add to Calander feature 
   
-  TAN YEE MING - Event Page (Listing of event information), Booking Page, Integration of Code, Database, Design , Application TorubleShooting, Payment Page, Display location of the event using Google Map API
+  TAN YEE MING - Event Page (Listing of event information), Booking Page, Integration of Code, Database, Design , Application TroubleShooting, Payment Page, Display location of the event using Google Map API, Ensuring that Price entered when creating a new event only accepts 2dp and only numerical keyboard pops up(and not a normal textual keyboard)
 
