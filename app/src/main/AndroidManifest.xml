@@ -133,7 +133,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAkXSwH8YVEeSyYwH4XNDv1cTQOXk3zBe8" />
+            android:value="" />
 
         <receiver android:name=".NotifyService"/>
 
